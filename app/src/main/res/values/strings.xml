@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Project02</string>
+    <string name="mainMenuTravelButtonText">My Travel</string>
+    <string name="mainMenuWellnessButtonText">My Wellness</string>
+    <string name="mainMenuExerciseButtonText">My Exercise</string>
+    <string name="mainMenuEventButtonText">My Events</string>
 </resources>
