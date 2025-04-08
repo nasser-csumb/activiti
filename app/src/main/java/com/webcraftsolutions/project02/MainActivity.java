@@ -9,14 +9,12 @@
 package com.webcraftsolutions.project02;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.webcraftsolutions.project02.databinding.ActivityMainBinding;
 
@@ -48,13 +46,47 @@ public class MainActivity extends AppCompatActivity {
 
         // TODO Set OnClickListener for logoutButton
 
-        // TODO Set OnClickListener for mainMenuEventButton
+        // Set OnClickListener for mainMenuEventButton
+        binding.mainMenuEventButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO NOAH Start Event Activity
+//                Intent intent = Event Activity Intent Factory
+//                startActivity(intent);
+            }
+        });
 
-        // TODO Set OnClickListener for mainMenuExerciseButton
+        // Set OnClickListener for mainMenuExerciseButton
+        binding.mainMenuExerciseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO SUHAIB Start Exercise Activity
+//                Intent intent = Exercise Activity Intent Factory
+//                startActivity(intent);
 
-        // TODO Set OnClickListener for mainMenuWellnessButton
+            }
+        });
 
-        // TODO Set OnClickListener for mainMenuTravelButton
+        // Set OnClickListener for mainMenuWellnessButton
+        binding.mainMenuWellnessButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO NASSER Start Wellness Activity
+//                Intent intent = Wellness Activity Intent Factory
+//                startActivity(intent);
+            }
+        });
+
+        // Set OnClickListener for mainMenuTravelButton
+        binding.mainMenuTravelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO JIAN Start Travel Activity
+//                Intent intent = Travel Activity Intent Factory
+//                startActivity(intent);
+
+            }
+        });
     }
 
     // STATIC METHODS
