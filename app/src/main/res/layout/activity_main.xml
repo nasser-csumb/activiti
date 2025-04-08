@@ -19,46 +19,47 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:layout_width="300dp"
-        android:layout_height="100dp"
-        app:layout_constraintTop_toBottomOf="@id/mainMenuGreetingTextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="30dp"
         android:id="@+id/mainMenuEventButton"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="30dp"
         android:text="@string/mainMenuEventButtonText"
-        android:textSize="32sp" />
-    <Button
-        android:layout_width="300dp"
-        android:layout_height="100dp"
-        app:layout_constraintTop_toBottomOf="@id/mainMenuEventButton"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mainMenuGreetingTextView" />
+
+    <Button
         android:id="@+id/mainMenuExerciseButton"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="30dp"
         android:text="@string/mainMenuExerciseButtonText"
-        android:textSize="32sp" />
+        android:textSize="32sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mainMenuEventButton" />
 
     <Button
-        android:layout_width="300dp"
-        android:layout_height="100dp"
-        app:layout_constraintTop_toBottomOf="@id/mainMenuExerciseButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="30dp"
         android:id="@+id/mainMenuWellnessButton"
-        android:text="@string/mainMenuWellnessButtonText"
-        android:textSize="32sp" />
-
-    <Button
         android:layout_width="300dp"
         android:layout_height="100dp"
-        app:layout_constraintTop_toBottomOf="@id/mainMenuWellnessButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="30dp"
+        android:text="@string/mainMenuWellnessButtonText"
+        android:textSize="32sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mainMenuExerciseButton" />
+
+    <Button
         android:id="@+id/mainMenuTravelButton"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="30dp"
         android:text="@string/mainMenuTravelButtonText"
-        android:textSize="32sp" />
+        android:textSize="32sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mainMenuWellnessButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
