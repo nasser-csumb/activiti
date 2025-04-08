@@ -4,4 +4,6 @@
     <string name="mainMenuWellnessButtonText">My Wellness</string>
     <string name="mainMenuExerciseButtonText">My Exercise</string>
     <string name="mainMenuEventButtonText">My Events</string>
+    <string name="eventCreateEventButtonText">CREATE EVENT</string>
+    <string name="eventGreetingTextViewText">My Events</string>
 </resources>
