@@ -8,6 +8,8 @@
 
 package com.webcraftsolutions.project02;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -53,6 +55,16 @@ public class EventActivity extends AppCompatActivity {
     }
 
     // STATIC METHODS
+
+    /**
+     * Intent factory for EventActivity.
+     * @param context The application context.
+     * @return The EventActivity Intent.
+     */
+    static Intent mainActivityIntentFactory(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+        return intent;
+    }
 
     // GETTERS AND SETTERS
 }
