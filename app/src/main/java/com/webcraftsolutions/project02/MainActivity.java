@@ -92,6 +92,17 @@ public class MainActivity extends AppCompatActivity {
     // STATIC METHODS
 
     /**
+     * Intent factory for MainActivity.
+     * Stores the userId entered on the login page.
+     * @param context The application context.
+     * @return The MainActivity Intent.
+     */
+    static Intent mainActivityIntentFactory(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+        return intent;
+    }
+
+    /**
      * Creates a toast and displays it to the screen.
      * @param message The message to be displayed.
      */
