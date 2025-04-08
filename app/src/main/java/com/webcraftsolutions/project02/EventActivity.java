@@ -9,6 +9,7 @@
 package com.webcraftsolutions.project02;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -39,6 +40,16 @@ public class EventActivity extends AppCompatActivity {
         // Set binding
         binding = ActivityEventBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        // Set OnClickListener for eventCreateEventButton
+        binding.eventCreateEventButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO NOAH Start Create Event activity
+//                Intent intent = Create Event Activity Intent Factory
+//                startActivity(intent);
+            }
+        });
     }
 
     // STATIC METHODS
