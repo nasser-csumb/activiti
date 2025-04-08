@@ -8,7 +8,9 @@
 
 package com.webcraftsolutions.project02;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -56,7 +58,13 @@ public class MainActivity extends AppCompatActivity {
 
     // STATIC METHODS
 
-    // TODO Create toastMaker method
+    /**
+     * Creates a toast and displays it to the screen.
+     * @param message The message to be displayed.
+     */
+    public static void toastMaker(Context context, String message) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+    }
 
     // GETTERS & SETTERS
 }
