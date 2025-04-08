@@ -51,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO NOAH Start Event Activity
-//                Intent intent = Event Activity Intent Factory
-//                startActivity(intent);
+                Intent intent = EventActivity.eventActivityIntentFactory(getApplicationContext());
+                startActivity(intent);
             }
         });
 
@@ -93,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Intent factory for MainActivity.
-     * Stores the userId entered on the login page.
      * @param context The application context.
      * @return The MainActivity Intent.
      */

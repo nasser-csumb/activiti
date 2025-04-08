@@ -61,8 +61,8 @@ public class EventActivity extends AppCompatActivity {
      * @param context The application context.
      * @return The EventActivity Intent.
      */
-    static Intent mainActivityIntentFactory(Context context) {
-        Intent intent = new Intent(context, MainActivity.class);
+    static Intent eventActivityIntentFactory(Context context) {
+        Intent intent = new Intent(context, EventActivity.class);
         return intent;
     }
 
