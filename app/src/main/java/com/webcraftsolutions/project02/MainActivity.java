@@ -22,6 +22,9 @@ public class MainActivity extends AppCompatActivity {
 
     // CLASS FIELDS
 
+    // The identifier used for Logcat.
+    public static final String TAG = "JNNS_Activiti";
+
     // INSTANCE FIELDS
 
     private ActivityMainBinding binding;
