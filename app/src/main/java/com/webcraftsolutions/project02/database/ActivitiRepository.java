@@ -6,6 +6,8 @@
  */
 package com.webcraftsolutions.project02.database;
 
+import android.app.Application;
+
 import com.webcraftsolutions.project02.database.entities.Event;
 
 import java.util.ArrayList;
@@ -26,6 +28,11 @@ public class ActivitiRepository {
     private final EventDAO eventDAO;
 
     // CONSTRUCTORS
+    private ActivitiRepository(Application application) {
+        ActivitiDatabase db = ActivitiDatabase.getDatabase(application);
+        this.eventDAO = db.eventDAO();
+        this.allEventLogs = this.eventDAO.getAllEvents();
+    }
 
     // METHODS
 }
