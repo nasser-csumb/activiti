@@ -14,6 +14,8 @@ import androidx.room.Query;
 
 import com.webcraftsolutions.project02.database.entities.Event;
 
+import java.util.ArrayList;
+
 @Dao
 public interface EventDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -23,8 +25,8 @@ public interface EventDAO {
     void delete(Event event);
 
     @Query("SELECT * FROM " + ActivitiDatabase.EVENT_TABLE)
-    Event getAllEvents();
+    ArrayList<Event> getAllEvents();
 
     @Query("SELECT * FROM " + ActivitiDatabase.EVENT_TABLE + " WHERE userId == :userId")
-    Event getAllEventsByUserId(int userId);
+    ArrayList<Event> getAllEventsByUserId(int userId);
 }
