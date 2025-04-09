@@ -6,4 +6,13 @@
     <string name="mainMenuEventButtonText">My Events</string>
     <string name="eventCreateEventButtonText">CREATE EVENT</string>
     <string name="eventGreetingTextViewText">My Events</string>
+    <string name="eventCreateNameHint">Enter Event Name</string>
+    <string name="eventCreateDescHint">Enter Event Description</string>
+    <string name="eventCreateDateHint">Enter Event Date</string>
+    <string name="eventCreateTimeHint">Enter Event Time</string>
+    <string name="eventCreateSaveButton">SAVE EVENT</string>
+    <string name="eventCreateNameTextViewText">Name</string>
+    <string name="eventCreateDescTextViewText">Desc</string>
+    <string name="eventCreateDateTextViewText">Date</string>
+    <string name="eventCreateTimeTextViewText">Time</string>
 </resources>
