@@ -6,6 +6,8 @@
  */
 package com.webcraftsolutions.project02;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +23,14 @@ public class EventCreateActivity extends AppCompatActivity {
 
     // INSTANCE METHODS
 
+    /**
+     * Called when this activity is created.
+     * Sets an OnClickListener for each button.
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +41,16 @@ public class EventCreateActivity extends AppCompatActivity {
     }
 
     // STATIC METHODS
+
+    /**
+     * Intent factory for EventCreateActivity.
+     * @param context The application context.
+     * @return The EventCreateActivity Intent.
+     */
+    static Intent eventCreateActivityIntentFactory(Context context) {
+        Intent intent = new Intent(context, EventCreateActivity.class);
+        return intent;
+    }
 
     // GETTERS AND SETTERS
 }
