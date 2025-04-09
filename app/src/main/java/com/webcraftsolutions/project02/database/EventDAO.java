@@ -18,11 +18,12 @@ import java.util.ArrayList;
 
 @Dao
 public interface EventDAO {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Event... event);
 
     @Delete
-    void delete(Event event);
+    void delete(Event... event);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(Event... event);
 
     @Query("SELECT * FROM " + ActivitiDatabase.EVENT_TABLE)
     ArrayList<Event> getAllEvents();
