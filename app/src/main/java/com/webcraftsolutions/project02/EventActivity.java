@@ -47,9 +47,9 @@ public class EventActivity extends AppCompatActivity {
         binding.eventCreateEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO NOAH Start Create Event activity
-//                Intent intent = Create Event Activity Intent Factory
-//                startActivity(intent);
+                Intent intent = EventCreateActivity
+                        .eventCreateActivityIntentFactory(getApplicationContext());
+                startActivity(intent);
             }
         });
     }
