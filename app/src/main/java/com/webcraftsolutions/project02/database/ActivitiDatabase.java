@@ -26,7 +26,8 @@ public abstract class ActivitiDatabase extends RoomDatabase {
     private static final int NUMBER_OF_THREADS = 4;
 
     // The ExecutorService instance.
-    public static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
+    public static final ExecutorService databaseWriteExecutor
+            = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
     // This ActivitiDatabase instance
     public static ActivitiDatabase INSTANCE;
