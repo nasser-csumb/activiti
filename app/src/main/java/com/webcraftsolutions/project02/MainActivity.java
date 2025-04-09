@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
         binding.mainMenuEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO NOAH Start Event Activity
                 Intent intent = EventActivity.eventActivityIntentFactory(getApplicationContext());
                 startActivity(intent);
             }
