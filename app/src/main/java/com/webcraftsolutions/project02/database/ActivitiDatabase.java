@@ -58,4 +58,8 @@ public abstract class ActivitiDatabase extends RoomDatabase {
 
     // TODO Add addDefaultValues method here after User and UserDAO are setup.
 
+
+    // ABSTRACT METHODS
+
+    public abstract EventDAO eventDAO();
 }
