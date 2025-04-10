@@ -36,7 +36,7 @@ public class ActivitiRepository {
     private ActivitiRepository(Application application) {
         ActivitiDatabase db = ActivitiDatabase.getDatabase(application);
         this.eventDAO = db.eventDAO();
-        this.allEventLogs = this.eventDAO.getAllEvents();
+        this.allEventLogs = getAllEvents();
     }
 
     // STATIC METHODS
@@ -91,7 +91,7 @@ public class ActivitiRepository {
      * @return An ArrayList of Event objects.
      */
     public ArrayList<Event> getAllEvents() {
-        return eventDAO.getAllEvents();
+        return (ArrayList<Event>) eventDAO.getAllEvents();
     }
 
     /**
@@ -100,7 +100,7 @@ public class ActivitiRepository {
      * @return An ArrayList of Event objects.
      */
     public ArrayList<Event> getAllEventsByUserId(int userId) {
-        return eventDAO.getAllEventsByUserId(userId);
+        return (ArrayList<Event>) eventDAO.getAllEventsByUserId(userId);
     }
 
     /**
