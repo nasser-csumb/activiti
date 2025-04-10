@@ -66,7 +66,7 @@ public abstract class ActivitiDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
-    // TODO Add addDefaultValues method here after User and UserDAO are setup.
+    // TODO Add addDefaultValues, which adds default users to database, method here after User and UserDAO are setup.
 
 
     // ABSTRACT METHODS
