@@ -11,12 +11,17 @@ package com.webcraftsolutions.project02;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.webcraftsolutions.project02.database.ActivitiRepository;
+import com.webcraftsolutions.project02.database.entities.Event;
 import com.webcraftsolutions.project02.databinding.ActivityEventBinding;
+
+import java.util.ArrayList;
+import java.util.Locale;
 
 public class EventActivity extends AppCompatActivity {
 
@@ -47,8 +52,14 @@ public class EventActivity extends AppCompatActivity {
         binding = ActivityEventBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Add scrolling to eventEventsTextView
+        binding.eventEventsTextView.setMovementMethod(new ScrollingMovementMethod());
+
         // Get repository
         repository = ActivitiRepository.getRepository(getApplication());
+
+        // Update display with Event logs.
+        updateDisplay();
 
         // Set OnClickListener for eventCreateEventButton
         binding.eventCreateEventButton.setOnClickListener(new View.OnClickListener() {
@@ -59,6 +70,25 @@ public class EventActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    /**
+     * Constructs a String using logged events.
+     * Sets text of eventEventsTextView to constructed String.
+     */
+    private void updateDisplay() {
+        ArrayList<Event> allEvents = repository.allEventLogs;
+        StringBuilder sb = new StringBuilder();
+        for(Event event : allEvents) {
+            String str = String.format(Locale.US,
+                    "Name: %s%nDesc: %s%nDate: %s%nTime: %s%n-=-=-=-=-=-=-=-=-%n%n",
+                    event.getName(),
+                    event.getDescription(),
+                    event.getDate(),
+                    event.getTime());
+            sb.append(str);
+        }
+        binding.eventEventsTextView.setText(sb.toString());
     }
 
     // STATIC METHODS
