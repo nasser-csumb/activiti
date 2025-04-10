@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EventCreateActivity">
+
+    <TextView
+        android:id="@+id/eventCreateGreetingTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Create/Edit Event"
+        android:textSize="32sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/eventCreateEventTextView"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/eventCreateGreetingTextView" />
+
+    <TextView
+        android:id="@+id/eventCreateNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/eventCreateNameTextViewText"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/eventCreateEventTextView" />
+
+    <EditText
+        android:id="@+id/eventCreateNameEditText"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:hint="@string/eventCreateNameHint"
+        android:inputType="text"
+        app:layout_constraintBaseline_toBaselineOf="@+id/eventCreateNameTextView"
+        app:layout_constraintStart_toEndOf="@+id/eventCreateNameTextView" />
+
+    <TextView
+        android:id="@+id/eventCreateDescTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/eventCreateDescTextViewText"
+        android:textSize="32sp"
+        app:layout_constraintEnd_toEndOf="@id/eventCreateNameTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/eventCreateNameTextView" />
+
+    <EditText
+        android:id="@+id/eventCreateDescEditText"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/eventCreateDescHint"
+        android:inputType="text"
+        app:layout_constraintBaseline_toBaselineOf="@+id/eventCreateDescTextView"
+        app:layout_constraintStart_toStartOf="@+id/eventCreateNameEditText" />
+
+
+    <TextView
+        android:id="@+id/eventCreateDateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/eventCreateDateTextViewText"
+        android:textSize="32sp"
+        app:layout_constraintEnd_toEndOf="@id/eventCreateNameTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/eventCreateDescTextView" />
+
+    <EditText
+        android:id="@+id/eventCreateDateEditText"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/eventCreateDateHint"
+        android:inputType="date"
+        app:layout_constraintBaseline_toBaselineOf="@+id/eventCreateDateTextView"
+        app:layout_constraintStart_toStartOf="@+id/eventCreateNameEditText" />
+
+    <TextView
+        android:id="@+id/eventCreateTimeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/eventCreateTimeTextViewText"
+        android:textSize="32sp"
+        app:layout_constraintEnd_toEndOf="@id/eventCreateNameTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/eventCreateDateTextView" />
+
+    <EditText
+        android:id="@+id/eventCreateTimeEditText"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/eventCreateTimeHint"
+        android:inputType="time"
+        app:layout_constraintBaseline_toBaselineOf="@+id/eventCreateTimeTextView"
+        app:layout_constraintStart_toStartOf="@+id/eventCreateNameEditText" />
+
+    <Button
+        android:id="@+id/eventCreateSaveEventButton"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="100dp"
+        android:text="@string/eventCreateSaveButton"
+        android:textSize="32sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
