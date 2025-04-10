@@ -44,7 +44,7 @@ public class ActivitiRepository {
     /**
      * Returns an ActivitiRepository instance.
      * Attempts to create an ActivitiRepository instance with multi-threading.
-     * @param application
+     * @param application The current application.
      * @return The ActivitiRepository instance.
      */
     public static ActivitiRepository getRepository(Application application) {
@@ -65,6 +65,65 @@ public class ActivitiRepository {
     }
 
     // EVENT TABLE METHODS
+
+    /**
+     * Deletes an Event log from the database.
+     * @param event The Event log to be deleted.
+     */
+    public void deleteEvent(Event event) {
+        ActivitiDatabase.databaseWriteExecutor.execute(() -> {
+            eventDAO.delete(event);
+        });
+    }
+
+    /**
+     * Deletes an Event log from the database.
+     * @param event The Event log to be deleted.
+     */
+    public void deleteEvent(Event... event) {
+        ActivitiDatabase.databaseWriteExecutor.execute(() -> {
+            eventDAO.delete(event);
+        });
+    }
+
+    /**
+     * Returns an ArrayList containing all Event logs in the repository.
+     * @return An ArrayList of Event objects.
+     */
+    public ArrayList<Event> getAllEvents() {
+        return eventDAO.getAllEvents();
+    }
+
+    /**
+     * Returns an ArrayList containing all Event logs that were logged by the with userId.
+     * @param userId Used to select Event logs that were logged by a specific user.
+     * @return An ArrayList of Event objects.
+     */
+    public ArrayList<Event> getAllEventsByUserId(int userId) {
+        return eventDAO.getAllEventsByUserId(userId);
+    }
+
+    /**
+     * Inserts a new Event into the database.
+     * If two events have the same id, the new event will override it.
+     * @param event The event to be added to the database.
+     */
+    public void insertEvent(Event event) {
+        ActivitiDatabase.databaseWriteExecutor.execute(() -> {
+            eventDAO.insert(event);
+        });
+    }
+
+    /**
+     * Inserts new Events into the database.
+     * If two events have the same id, the new event will override it.
+     * @param event The events to be added to the database.
+     */
+    public void insertEvent(Event... event) {
+        ActivitiDatabase.databaseWriteExecutor.execute(() -> {
+            eventDAO.insert(event);
+        });
+    }
 
     // EXERCISE TABLE METHODS
 
