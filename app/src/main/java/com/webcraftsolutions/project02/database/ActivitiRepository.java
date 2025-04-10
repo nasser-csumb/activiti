@@ -103,7 +103,12 @@ public class ActivitiRepository {
         return eventDAO.getAllEventsByUserId(userId);
     }
 
-    public ArrayList<Event> getEventByEventId(int eventId) {
+    /**
+     * Returns an Event containing a specific id.
+     * @param eventId Used to select a specific Event log.
+     * @return An Event object.
+     */
+    public Event getEventByEventId(int eventId) {
         return eventDAO.getEventByEventId(eventId);
     }
 
