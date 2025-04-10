@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.webcraftsolutions.project02.database.ActivitiRepository;
 import com.webcraftsolutions.project02.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
     // INSTANCE FIELDS
 
     private ActivityMainBinding binding;
+
+    // The repository.
+    private ActivitiRepository repository;
 
     // METHODS
 
@@ -46,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
         // Set binding
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        // Get repository
+        repository = ActivitiRepository.getRepository(getApplication());
 
         // TODO Set OnClickListener for logoutButton
 

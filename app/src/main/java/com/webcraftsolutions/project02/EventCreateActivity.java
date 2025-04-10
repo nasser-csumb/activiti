@@ -12,6 +12,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.webcraftsolutions.project02.database.ActivitiRepository;
 import com.webcraftsolutions.project02.databinding.ActivityEventCreateBinding;
 
 public class EventCreateActivity extends AppCompatActivity {
@@ -20,6 +21,9 @@ public class EventCreateActivity extends AppCompatActivity {
 
     // INSTANCE FIELDS
     private ActivityEventCreateBinding binding;
+
+    // The repository.
+    private ActivitiRepository repository;
 
     // INSTANCE METHODS
 
@@ -38,6 +42,9 @@ public class EventCreateActivity extends AppCompatActivity {
         // Get binding
         binding = ActivityEventCreateBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        // Get repository
+        repository = ActivitiRepository.getRepository(getApplication());
     }
 
     // STATIC METHODS

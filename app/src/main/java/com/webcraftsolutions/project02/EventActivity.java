@@ -15,6 +15,7 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.webcraftsolutions.project02.database.ActivitiRepository;
 import com.webcraftsolutions.project02.databinding.ActivityEventBinding;
 
 public class EventActivity extends AppCompatActivity {
@@ -24,6 +25,9 @@ public class EventActivity extends AppCompatActivity {
     // INSTANCE FIELDS
 
     private ActivityEventBinding binding;
+
+    // The repository.
+    private ActivitiRepository repository;
 
     // METHODS
 
@@ -42,6 +46,9 @@ public class EventActivity extends AppCompatActivity {
         // Set binding
         binding = ActivityEventBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        // Get repository
+        repository = ActivitiRepository.getRepository(getApplication());
 
         // Set OnClickListener for eventCreateEventButton
         binding.eventCreateEventButton.setOnClickListener(new View.OnClickListener() {
