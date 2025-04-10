@@ -103,6 +103,10 @@ public class ActivitiRepository {
         return eventDAO.getAllEventsByUserId(userId);
     }
 
+    public ArrayList<Event> getEventByEventId(int eventId) {
+        return eventDAO.getEventByEventId(eventId);
+    }
+
     /**
      * Inserts a new Event into the database.
      * If two events have the same id, the new event will override it.

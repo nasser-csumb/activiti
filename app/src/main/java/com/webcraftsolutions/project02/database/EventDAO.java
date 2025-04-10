@@ -30,4 +30,7 @@ public interface EventDAO {
 
     @Query("SELECT * FROM " + ActivitiDatabase.EVENT_TABLE + " WHERE userId == :userId")
     ArrayList<Event> getAllEventsByUserId(int userId);
+
+    @Query("SELECT :eventId FROM " + ActivitiDatabase.EVENT_TABLE)
+    ArrayList<Event> getEventByEventId(int eventId);
 }
