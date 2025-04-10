@@ -9,10 +9,12 @@ package com.webcraftsolutions.project02;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.webcraftsolutions.project02.database.ActivitiRepository;
+import com.webcraftsolutions.project02.database.entities.Event;
 import com.webcraftsolutions.project02.databinding.ActivityEventCreateBinding;
 
 public class EventCreateActivity extends AppCompatActivity {
@@ -45,6 +47,19 @@ public class EventCreateActivity extends AppCompatActivity {
 
         // Get repository
         repository = ActivitiRepository.getRepository(getApplication());
+
+        // Set OnClickListener for eventCreateSaveEventButton
+        binding.eventCreateSaveEventButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = binding.eventCreateNameEditText.getText().toString();
+                String description = binding.eventCreateDescEditText.getText().toString();
+                String date = binding.eventCreateDateEditText.getText().toString();
+                String time = binding.eventCreateTimeEditText.getText().toString();
+                Event event = new Event(name, description, date, time, -1);
+                repository.insertEvent(event);
+            }
+        });
     }
 
     // STATIC METHODS
