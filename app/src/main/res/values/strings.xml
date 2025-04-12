@@ -15,4 +15,26 @@
     <string name="eventCreateDescTextViewText">Desc</string>
     <string name="eventCreateDateTextViewText">Date</string>
     <string name="eventCreateTimeTextViewText">Time</string>
+
+    <!-- ================= -->
+    <!-- Wellness Activity -->
+    <!-- ================= -->
+
+    <string name="wellnessActivityHeader">WELLNESS</string>
+
+    <!-- Sleep -->
+    <string name="wellnessActivitySleepCardHeader">Sleep</string>
+    <string name="wellnessActivitySleepCardSubtitle">How well did you sleep last night?</string>
+
+    <!-- Mood -->
+    <string name="wellnessActivityMoodCardHeader">Mood</string>
+    <string name="wellnessActivityMoodCardSubtitle">How have you been feeling today?</string>
+
+    <!-- Journal -->
+    <string name="wellnessActivityJournalCardHeader">Journal</string>
+    <string name="wellnessActivityJournalCardSubtitle">Lets write down whats on your mind</string>
+
+    <!-- Summary -->
+    <string name="wellnessActivitySummaryCardHeader">Summary</string>
+    <string name="wellnessActivitySummaryCardSubtitle">Click here to see a summary</string>
 </resources>
