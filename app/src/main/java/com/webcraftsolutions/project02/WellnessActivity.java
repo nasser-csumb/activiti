@@ -1,3 +1,9 @@
+/**
+ * Title: Project 02: Activiti - Wellness Activity
+ * Author: Nasser Akhter
+ * Description: The home page for the wellness activity
+ */
+
 package com.webcraftsolutions.project02;
 
 import android.content.Context;
@@ -5,15 +11,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.webcraftsolutions.project02.database.ActivitiRepository;
-import com.webcraftsolutions.project02.databinding.ActivityEventBinding;
 import com.webcraftsolutions.project02.databinding.ActivityWellnessBinding;
 
 public class WellnessActivity extends AppCompatActivity {
@@ -31,7 +32,34 @@ public class WellnessActivity extends AppCompatActivity {
 
         repository = ActivitiRepository.getRepository(getApplication());
 
+        setupHandlers();
     }
+
+    private void setupHandlers() {
+        setupSleepClickEventHandler();
+        setupSummaryClickEventHandler();
+    }
+
+    private void setupSleepClickEventHandler() {
+        binding.sleepButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = WellnessSleep.wellnessSleepActivityIntentFactory(getApplicationContext());
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void setupSummaryClickEventHandler() {
+        binding.sleepButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = WellnessSummary.wellnessSummaryActivityIntentFactory(getApplicationContext());
+                startActivity(intent);
+            }
+        });
+    }
+
     /**
      * Intent factory for WellnessActivity.
      * @param context The application context.
