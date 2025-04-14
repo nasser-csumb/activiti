@@ -22,9 +22,6 @@
             android:name=".WellnessSleep"
             android:exported="false" />
         <activity
-            android:name=".database.WellnessSleep"
-            android:exported="false" />
-        <activity
             android:name=".WellnessActivity"
             android:exported="false" />
         <activity
