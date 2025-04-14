@@ -14,6 +14,8 @@ import androidx.room.Entity;
 
 import com.webcraftsolutions.project02.database.ActivitiDatabase;
 
+import java.util.Objects;
+
 @Entity(tableName = ActivitiDatabase.TravelExploration_Table)
 public class TravelExploration {
 
@@ -29,6 +31,18 @@ public class TravelExploration {
         this.startDate = startDate;
         this.endDate = endDate;
         this.description = description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        TravelExploration that = (TravelExploration) o;
+        return travelID == that.travelID && Objects.equals(destination, that.destination) && Objects.equals(startDate, that.startDate) && Objects.equals(endDate, that.endDate) && Objects.equals(description, that.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(travelID, destination, startDate, endDate, description);
     }
 
     public int getTravelID() {
