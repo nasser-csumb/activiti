@@ -11,6 +11,9 @@ import android.util.Log;
 
 import com.webcraftsolutions.project02.MainActivity;
 import com.webcraftsolutions.project02.database.entities.Event;
+import com.webcraftsolutions.project02.database.entities.WellnessJournal;
+import com.webcraftsolutions.project02.database.entities.WellnessMood;
+import com.webcraftsolutions.project02.database.entities.WellnessSleep;
 
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
@@ -32,10 +35,22 @@ public class ActivitiRepository {
 
     private final EventDAO eventDAO;
 
+    // Wellness DAO
+    private final WellnessSleepDAO wellnessSleepDAO;
+    private final WellnessMoodDAO wellnessMoodDAO;
+    private final WellnessJournalDAO wellnessJournalDAO;
+
     // CONSTRUCTORS
     private ActivitiRepository(Application application) {
         ActivitiDatabase db = ActivitiDatabase.getDatabase(application);
+
+        // Init DAO
         this.eventDAO = db.eventDAO();
+
+        this.wellnessSleepDAO = db.wellnessSleepDAO();
+        this.wellnessMoodDAO = db.wellnessMoodDAO();
+        this.wellnessJournalDAO = db.wellnessJournalDAO();
+
         this.allEventLogs = getAllEvents();
     }
 
@@ -138,5 +153,87 @@ public class ActivitiRepository {
 
     // TRAVEL TABLE METHODS
 
-    // WELLNESS TABLE METHODS
+    // ===============
+    // Wellness
+    // ===============
+
+    // Sleep
+    /** Deletes one or more WellnessSleep entries. */
+    public void deleteSleep(WellnessSleep... entries) {
+        ActivitiDatabase.databaseWriteExecutor.execute(() -> wellnessSleepDAO.delete(entries));
+    }
+
+    /** Inserts one or more WellnessSleep entries. Replaces on conflict. */
+    public void insertSleep(WellnessSleep... entries) {
+        ActivitiDatabase.databaseWriteExecutor.execute(() -> wellnessSleepDAO.insert(entries));
+    }
+
+    /** Returns all WellnessSleep entries. */
+    public ArrayList<WellnessSleep> getAllSleep() {
+        return new ArrayList<>(wellnessSleepDAO.getAllEntries());
+    }
+
+    /** Returns WellnessSleep entries filtered by userId. */
+    public ArrayList<WellnessSleep> getAllSleepByUserId(int userId) {
+        return new ArrayList<>(wellnessSleepDAO.getAllEntriesByUserId(userId));
+    }
+
+    /** Returns a specific WellnessSleep entry by ID. */
+    public WellnessSleep getSleepById(int entryId) {
+        return wellnessSleepDAO.getEntryById(entryId);
+    }
+
+    // Mood
+
+    /** Deletes one or more Mood entries. */
+    public void deleteMood(WellnessMood... moods) {
+        ActivitiDatabase.databaseWriteExecutor.execute(() -> wellnessMoodDAO.delete(moods));
+    }
+
+    /** Inserts one or more Mood entries. Replaces on conflict. */
+    public void insertMood(WellnessMood... moods) {
+        ActivitiDatabase.databaseWriteExecutor.execute(() -> wellnessMoodDAO.insert(moods));
+    }
+
+    /** Returns all Mood entries. */
+    public ArrayList<WellnessMood> getAllMoods() {
+        return new ArrayList<>(wellnessMoodDAO.getAllEntries());
+    }
+
+    /** Returns Mood entries filtered by userId. */
+    public ArrayList<WellnessMood> getAllMoodsByUserId(int userId) {
+        return new ArrayList<>(wellnessMoodDAO.getAllEntriesByUserId(userId));
+    }
+
+    /** Returns a specific Mood entry by ID. */
+    public WellnessMood getMoodById(int entryId) {
+        return wellnessMoodDAO.getEntryById(entryId);
+    }
+
+    // Journal
+
+    /** Deletes one or more Journal entries. */
+    public void deleteJournal(WellnessJournal... entries) {
+        ActivitiDatabase.databaseWriteExecutor.execute(() -> wellnessJournalDAO.delete(entries));
+    }
+
+    /** Inserts one or more Journal entries. Replaces on conflict. */
+    public void insertJournal(WellnessJournal... entries) {
+        ActivitiDatabase.databaseWriteExecutor.execute(() -> wellnessJournalDAO.insert(entries));
+    }
+
+    /** Returns all Journal entries. */
+    public ArrayList<WellnessJournal> getAllJournals() {
+        return new ArrayList<>(wellnessJournalDAO.getAllEntries());
+    }
+
+    /** Returns Journal entries filtered by userId. */
+    public ArrayList<WellnessJournal> getAllJournalsByUserId(int userId) {
+        return new ArrayList<>(wellnessJournalDAO.getAllEntriesByUserId(userId));
+    }
+
+    /** Returns a specific Journal entry by ID. */
+    public WellnessJournal getJournalById(int entryId) {
+        return wellnessJournalDAO.getEntryById(entryId);
+    }
 }
