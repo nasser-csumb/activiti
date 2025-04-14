@@ -89,10 +89,8 @@ public class MainActivity extends AppCompatActivity {
         binding.mainMenuTravelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO JIAN Start Travel Activity
-//                Intent intent = Travel Activity Intent Factory
-//                startActivity(intent);
-
+                Intent intent = TravelAndExplorationActivity.travelAndExplorationActivityIntentFactory(getApplicationContext());
+                startActivity(intent);
             }
         });
     }

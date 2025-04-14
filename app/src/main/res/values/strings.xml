@@ -15,6 +15,10 @@
     <string name="eventCreateDescTextViewText">Desc</string>
     <string name="eventCreateDateTextViewText">Date</string>
     <string name="eventCreateTimeTextViewText">Time</string>
+    <string name="hiking_route">Hiking Route</string>
+    <string name="outdoor_activity">Outdoor Activity</string>
+    <string name="visited_place">Visited Place</string>
+    <string name="save_exploration">Save Exploration</string>
 
     <!-- ================= -->
     <!-- Wellness Activity -->

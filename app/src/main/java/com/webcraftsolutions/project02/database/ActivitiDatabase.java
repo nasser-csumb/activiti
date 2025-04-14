@@ -47,7 +47,7 @@ public abstract class ActivitiDatabase extends RoomDatabase {
     public static final String EVENT_TABLE = "Event_Table";
 
     // ID for the travel exploration table
-    public static final String TravelExploration_Table = "TravelExploration_Table";
+    public static final String TRAVEL_EXPLORATION_TABLE = "TravelExploration_Table";
 
     // ID for user table
     public static final String USER_TABLE = "User_Table";
