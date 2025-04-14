@@ -1,3 +1,12 @@
+/**
+ * Title: Project 02: Activiti - Travel & Exploration
+ * File: TravelExploration.java - Implementation of TravelExploration
+ * @author Jian Mitchell
+ * Professor: Dr. C
+ * Date: 13 April 2025
+ * Explanation/Abstract: This stores the travelExploration data.
+ */
+
 package com.webcraftsolutions.project02.database.entities;
 
 import androidx.room.PrimaryKey;

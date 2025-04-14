@@ -1,3 +1,12 @@
+/**
+ * Title: Project 02: Activiti - Travel & Exploration
+ * File: TravelExplorationDAO.java - Implementation of TravelExplorationDAO
+ * @author Jian Mitchell
+ * Professor: Dr. C
+ * Date: 13 April 2025
+ * Explanation/Abstract: DAO for the travel exploration table.
+ */
+
 package com.webcraftsolutions.project02.database;
 
 import androidx.room.Dao;
