@@ -47,7 +47,9 @@ public class WellnessSleep extends AppCompatActivity {
         binding.hoursSleptSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                binding.hoursSleptLabel.setText(getString(R.string.wellnessActivitySleepHoursValue, i));
+                binding.hoursSleptLabel.setText(
+                        getString(R.string.wellnessActivitySleepHoursValue, i)
+                );
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {}
@@ -67,14 +69,20 @@ public class WellnessSleep extends AppCompatActivity {
                     boolean refreshed = binding.refreshed.isChecked();
                     boolean restless = binding.restless.isChecked();
 
-                    var sleepObject = new com.webcraftsolutions.project02.database.entities.WellnessSleep(-1, hoursSlept, new Date(), refreshed, restless);
+                    Date today = DateWithoutTimeConverter.getDateWithoutTime(new Date());
+
+                    var sleepObject =
+                            new com.webcraftsolutions.project02.database.entities.WellnessSleep(
+                                    -1, hoursSlept, today, refreshed, restless);
 
                     repository.insertSleep(sleepObject);
 
-                    Toast.makeText(activity, R.string.wellnessActivitySaveSuccess, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity,
+                            R.string.wellnessActivitySaveSuccess, Toast.LENGTH_SHORT).show();
                     activity.finish();
                 } catch (Exception e) {
-                    Toast.makeText(activity, R.string.wellnessActivitySaveFail, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity,
+                            R.string.wellnessActivitySaveFail, Toast.LENGTH_SHORT).show();
                 }
             }
         });

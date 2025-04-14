@@ -51,7 +51,7 @@ public class WellnessActivity extends AppCompatActivity {
     }
 
     private void setupSummaryClickEventHandler() {
-        binding.sleepButton.setOnClickListener(new View.OnClickListener() {
+        binding.summaryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = WellnessSummary.wellnessSummaryActivityIntentFactory(getApplicationContext());
