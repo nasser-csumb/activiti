@@ -80,9 +80,8 @@ public class MainActivity extends AppCompatActivity {
         binding.mainMenuWellnessButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO NASSER Start Wellness Activity
-//                Intent intent = Wellness Activity Intent Factory
-//                startActivity(intent);
+                Intent intent = WellnessActivity.wellnessActivityIntentFactory(getApplicationContext());
+                startActivity(intent);
             }
         });
 

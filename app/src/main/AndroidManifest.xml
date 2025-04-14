@@ -16,6 +16,18 @@
             android:name=".TravelAndExplorationActivity"
             android:exported="false" />
         <activity
+            android:name=".WellnessSummary"
+            android:exported="false" />
+        <activity
+            android:name=".WellnessSleep"
+            android:exported="false" />
+        <activity
+            android:name=".database.WellnessSleep"
+            android:exported="false" />
+        <activity
+            android:name=".WellnessActivity"
+            android:exported="false" />
+        <activity
             android:name=".EventCreateActivity"
             android:exported="false" />
         <activity

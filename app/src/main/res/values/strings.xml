@@ -19,4 +19,40 @@
     <string name="outdoor_activity">Outdoor Activity</string>
     <string name="visited_place">Visited Place</string>
     <string name="save_exploration">Save Exploration</string>
+
+    <!-- ================= -->
+    <!-- Wellness Activity -->
+    <!-- ================= -->
+
+    <string name="wellnessActivityHeader">WELLNESS</string>
+
+    <string name="wellnessActivitySave">Save!</string>
+    <string name="wellnessActivitySaveSuccess">Entry recorded, view it in the summary page.</string>
+    <string name="wellnessActivitySaveFail">Failed to record entry, please report this issue.</string>
+
+    <!-- Sleep -->
+    <string name="wellnessActivitySleepCardHeader">Sleep</string>
+    <string name="wellnessActivitySleepCardSubtitle">How well did you sleep last night?</string>
+
+    <string name="wellnessActivitySleepHeader">How\'s your sleep for today?</string>
+
+    <string name="wellnessActivitySleepHoursLabel">How many hours did you sleep?</string>
+    <string name="wellnessActivitySleepHoursMinLabel">0 hours</string>
+    <string name="wellnessActivitySleepHoursMaxLabel">12+ hours</string>
+    <string name="wellnessActivitySleepHoursValue">%1$d hours</string>
+
+    <string name="wellnessActivitySleepRefreshedLabel">Are you feeling refreshed?</string>
+    <string name="wellnessActivitySleepRestlessLabel">Are you feeling restless?</string>
+
+    <!-- Mood -->
+    <string name="wellnessActivityMoodCardHeader">Mood</string>
+    <string name="wellnessActivityMoodCardSubtitle">How have you been feeling today?</string>
+
+    <!-- Journal -->
+    <string name="wellnessActivityJournalCardHeader">Journal</string>
+    <string name="wellnessActivityJournalCardSubtitle">Lets write down whats on your mind</string>
+
+    <!-- Summary -->
+    <string name="wellnessActivitySummaryCardHeader">Summary</string>
+    <string name="wellnessActivitySummaryCardSubtitle">Click here to see a summary</string>
 </resources>
