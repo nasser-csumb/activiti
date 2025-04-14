@@ -2,6 +2,9 @@
  * Title: Project 02: Activiti - Activiti Database
  * @author Noah deFer
  * Date Created: 4/9/2025
+ *
+ * @author Jian Mitchell
+ * Date Edited: 4/13/2025
  * Description: Database object for Activiti databse.
  */
 package com.webcraftsolutions.project02.database;
@@ -13,6 +16,8 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.webcraftsolutions.project02.database.entities.Event;
+
+import com.webcraftsolutions.project02.database.entities.TravelExploration;
 import com.webcraftsolutions.project02.database.entities.WellnessSleep;
 import com.webcraftsolutions.project02.database.entities.WellnessJournal;
 import com.webcraftsolutions.project02.database.entities.WellnessMood;
@@ -20,7 +25,7 @@ import com.webcraftsolutions.project02.database.entities.WellnessMood;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Event.class, WellnessJournal.class, WellnessMood.class, WellnessSleep.class}, version = 2, exportSchema = false)
+@Database(entities = {Event.class, WellnessJournal.class, WellnessMood.class, WellnessSleep.class, TravelExploration.class}, version = 3, exportSchema = false)
 public abstract class ActivitiDatabase extends RoomDatabase {
 
     // CLASS FIELDS
@@ -40,6 +45,9 @@ public abstract class ActivitiDatabase extends RoomDatabase {
 
     // ID for event table
     public static final String EVENT_TABLE = "Event_Table";
+
+    // ID for the travel exploration table
+    public static final String TravelExploration_Table = "TravelExploration_Table";
 
     // ID for user table
     public static final String USER_TABLE = "User_Table";
@@ -81,6 +89,7 @@ public abstract class ActivitiDatabase extends RoomDatabase {
 
     public abstract EventDAO eventDAO();
 
+    public abstract TravelExplorationDAO travelExplorationDAO();
     // Wellness
     public abstract WellnessSleepDAO wellnessSleepDAO();
     public abstract WellnessMoodDAO wellnessMoodDAO();

@@ -2,6 +2,9 @@
  * Title: CST-338 Project 02: Activiti - Activiti Repository
  * @author Noah deFer
  * Date Created: 4/9/2025
+ *
+ * @author Jian Mitchell
+ * Date Edited: 4/13/2025
  * Description: Repository class for Activiti database.
  */
 package com.webcraftsolutions.project02.database;
@@ -11,11 +14,13 @@ import android.util.Log;
 
 import com.webcraftsolutions.project02.MainActivity;
 import com.webcraftsolutions.project02.database.entities.Event;
+import com.webcraftsolutions.project02.database.entities.TravelExploration;
 import com.webcraftsolutions.project02.database.entities.WellnessJournal;
 import com.webcraftsolutions.project02.database.entities.WellnessMood;
 import com.webcraftsolutions.project02.database.entities.WellnessSleep;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -34,6 +39,7 @@ public class ActivitiRepository {
     public ArrayList<Event> allEventLogs;
 
     private final EventDAO eventDAO;
+    private final TravelExplorationDAO travelExplorationDAO;
 
     // Wellness DAO
     private final WellnessSleepDAO wellnessSleepDAO;
@@ -46,6 +52,8 @@ public class ActivitiRepository {
 
         // Init DAO
         this.eventDAO = db.eventDAO();
+      
+        this.travelExplorationDAO = db.travelExplorationDAO();
 
         this.wellnessSleepDAO = db.wellnessSleepDAO();
         this.wellnessMoodDAO = db.wellnessMoodDAO();
@@ -153,6 +161,44 @@ public class ActivitiRepository {
 
     // TRAVEL TABLE METHODS
 
+    /**
+     * Inserts TravelExploration into the database
+     * @param travelExploration the TravelExploration added
+     */
+    public void insertTravelExploration(TravelExploration travelExploration) {
+        ActivitiDatabase.databaseWriteExecutor.execute(() -> {
+            travelExplorationDAO.insert(travelExploration);
+        });
+    }
+
+    /**
+     * Deletes TravelExploration from the database.
+     * @param travelExploration The TravelExploration deleted
+     */
+    public void deleteTravelExploration(TravelExploration travelExploration) {
+        ActivitiDatabase.databaseWriteExecutor.execute(() -> {
+            travelExplorationDAO.delete(travelExploration);
+        });
+    }
+
+    /**
+     * returns a list of everything within TravelExploration
+     * @return A list of TravelExploration
+     */
+    public List<TravelExploration> getAllTravelExplorations() {
+        return travelExplorationDAO.getAllTravelExplorations();
+    }
+
+    /**
+     * Returns TravelExploration by its ID.
+     * @param id The ID of TravelExploration.
+     * @return The TravelExploration.
+     */
+    public TravelExploration getTravelExplorationById(int id) {
+        return travelExplorationDAO.getTravelExplorationById(id);
+    }
+
+    // WELLNESS TABLE METHODS
     // ===============
     // Wellness
     // ===============
