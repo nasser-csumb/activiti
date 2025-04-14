@@ -2,6 +2,9 @@
  * Title: Project 02: Activiti - Activiti Database
  * @author Noah deFer
  * Date Created: 4/9/2025
+ *
+ * @author Jian Mitchell
+ * Date Edited: 4/13/2025
  * Description: Database object for Activiti databse.
  */
 package com.webcraftsolutions.project02.database;
@@ -13,11 +16,12 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.webcraftsolutions.project02.database.entities.Event;
+import com.webcraftsolutions.project02.database.entities.TravelExploration;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Event.class}, version = 1, exportSchema = false)
+@Database(entities = {Event.class, TravelExploration.class}, version = 1, exportSchema = false)
 public abstract class ActivitiDatabase extends RoomDatabase {
 
     // CLASS FIELDS
@@ -37,6 +41,9 @@ public abstract class ActivitiDatabase extends RoomDatabase {
 
     // ID for event table
     public static final String EVENT_TABLE = "Event_Table";
+
+    // ID for the travel exploration table
+    public static final String TravelExploration_Table = "TravelExploration_Table";
 
     // ID for user table
     public static final String USER_TABLE = "User_Table";
@@ -72,4 +79,6 @@ public abstract class ActivitiDatabase extends RoomDatabase {
     // ABSTRACT METHODS
 
     public abstract EventDAO eventDAO();
+
+    public abstract TravelExplorationDAO travelExplorationDAO();
 }
