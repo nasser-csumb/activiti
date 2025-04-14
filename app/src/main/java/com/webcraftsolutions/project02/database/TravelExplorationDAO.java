@@ -12,6 +12,7 @@ package com.webcraftsolutions.project02.database;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -22,18 +23,14 @@ import java.util.List;
 @Dao
 public interface TravelExplorationDAO {
 
-    @Insert
-    void insert(TravelExploration travelExploration);
-
     @Delete
-    void delete(TravelExploration travelExploration);
+    void delete(TravelExploration... travelExploration);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(TravelExploration... travelExploration);
 
-    @Update
-    void update(TravelExploration travelExploration);
-
-    @Query("SELECT * FROM TravelExploration_Table")
+    @Query("SELECT * FROM " + ActivitiDatabase.TRAVEL_EXPLORATION_TABLE)
     List<TravelExploration> getAllTravelExplorations();
 
-    @Query("SELECT * FROM TravelExploration_Table WHERE travelID = :travelID")
-    TravelExploration getTravelExplorationById(int travelID);
+    @Query("SELECT * FROM " + ActivitiDatabase.TRAVEL_EXPLORATION_TABLE + " WHERE travelId = :travelId")
+    TravelExploration getTravelExplorationById(int travelId);
 }

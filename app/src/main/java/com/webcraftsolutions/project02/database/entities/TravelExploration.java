@@ -16,72 +16,63 @@ import com.webcraftsolutions.project02.database.ActivitiDatabase;
 
 import java.util.Objects;
 
-@Entity(tableName = ActivitiDatabase.TravelExploration_Table)
+@Entity(tableName = ActivitiDatabase.TRAVEL_EXPLORATION_TABLE)
 public class TravelExploration {
 
     @PrimaryKey(autoGenerate = true)
-    private int travelID;
-    private String destination;
-    private String startDate;
-    private String endDate;
-    private String description;
+    private int travelId;
+    private String hikingRoute;
+    private String outdoors;
+    private String visitedPlaces;
 
-    public TravelExploration(String destination, String startDate, String endDate, String description) {
-        this.destination = destination;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.description = description;
+    public TravelExploration(String hikingRoute, String outdoors, String visitedPlaces) {
+        this.hikingRoute = hikingRoute;
+        this.outdoors = outdoors;
+        this.visitedPlaces = visitedPlaces;
+        travelId = -1;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         TravelExploration that = (TravelExploration) o;
-        return travelID == that.travelID && Objects.equals(destination, that.destination) && Objects.equals(startDate, that.startDate) && Objects.equals(endDate, that.endDate) && Objects.equals(description, that.description);
+        return travelId == that.travelId && Objects.equals(hikingRoute, that.hikingRoute) && Objects.equals(outdoors, that.outdoors) && Objects.equals(visitedPlaces, that.visitedPlaces);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(travelID, destination, startDate, endDate, description);
+        return Objects.hash(travelId, hikingRoute, outdoors, visitedPlaces);
     }
 
-    public int getTravelID() {
-        return travelID;
+    public int getTravelId() {
+        return travelId;
     }
 
-    public void setTravelID(int travelID) {
-        this.travelID = travelID;
+    public void setTravelId(int travelId) {
+        this.travelId = travelId;
     }
 
-    public String getDestination() {
-        return destination;
+    public String getHikingRoute() {
+        return hikingRoute;
     }
 
-    public void setDestination(String destination) {
-        this.destination = destination;
+    public void setHikingRoute(String hikingRoute) {
+        this.hikingRoute = hikingRoute;
     }
 
-    public String getStartDate() {
-        return startDate;
+    public String getOutdoors() {
+        return outdoors;
     }
 
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
+    public void setOutdoors(String outdoors) {
+        this.outdoors = outdoors;
     }
 
-    public String getEndDate() {
-        return endDate;
+    public String getVisitedPlaces() {
+        return visitedPlaces;
     }
 
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setVisitedPlaces(String visitedPlaces) {
+        this.visitedPlaces = visitedPlaces;
     }
 }
