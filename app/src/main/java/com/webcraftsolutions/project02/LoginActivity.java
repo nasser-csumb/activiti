@@ -6,13 +6,16 @@
  */
 package com.webcraftsolutions.project02;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 
 import com.webcraftsolutions.project02.database.ActivitiRepository;
+import com.webcraftsolutions.project02.database.entities.User;
 import com.webcraftsolutions.project02.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
@@ -24,6 +27,8 @@ public class LoginActivity extends AppCompatActivity {
 
     // The repository
     private ActivitiRepository repository;
+
+    // METHODS
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,5 +70,58 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    /**
+     * Compares the entered username and password with the repository.
+     * Shows a toast if the username or password are invalid.
+     * Starts MainActivity if the username and password are valid.
+     */
+    // TODO Update MainActivity intent factory call to include userId.
+    private void verifyUser() {
+        // Get entered username
+        String username = binding.loginUsernameEditText.getText().toString();
+
+        // Check if username is empty
+        if(username.isEmpty()) {
+            MainActivity.toastMaker(this, "Username may not be blank.");
+            return;
+        }
+
+        // Get user from repository
+        LiveData<User> userObserver = repository.getUserByUsername(username);
+        userObserver.observe(this, user -> {
+            /*
+             * If the user exists:
+             *      Start MainActivity if it is valid.
+             *      Show toast if it is NOT valid.
+             * Or show toast if the user does NOT exist.
+             */
+            if(user != null) {
+                String password = binding.loginPasswordEditText.getText().toString();
+                if(password.equals(user.getPassword())) {
+                    Intent intent = MainActivity.mainActivityIntentFactory(getApplicationContext());
+                    startActivity(intent);
+                } else {
+                    MainActivity.toastMaker(this, "Invalid Password");
+                }
+            } else {
+                MainActivity.toastMaker(this,
+                        username + " Is not a valid username.");
+
+            }
+        });
+    }
+
+    // STATIC METHODS
+
+    /**
+     * Intent factory for LoginActivity.
+     * @param context The application context.
+     * @return The LoginActivity Intent.
+     */
+    public static Intent loginActivityIntentFactory(Context context) {
+        Intent intent = new Intent(context, LoginActivity.class);
+        return intent;
     }
 }

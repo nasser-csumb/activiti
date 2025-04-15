@@ -63,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
         testUser.setId(2);
         repository.insertUser(admin, testUser);
 
+        // Navigate to LoginActivity
+        startActivity(LoginActivity.loginActivityIntentFactory(getApplicationContext()));
+
         // TODO Set OnClickListener for logoutButton
 
         // Set OnClickListener for mainMenuEventButton
@@ -111,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
      * @param context The application context.
      * @return The MainActivity Intent.
      */
+    // TODO Update method to store userId.
     static Intent mainActivityIntentFactory(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
         return intent;
