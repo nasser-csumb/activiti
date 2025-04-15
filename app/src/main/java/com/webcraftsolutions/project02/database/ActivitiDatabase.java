@@ -16,6 +16,10 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.webcraftsolutions.project02.database.entities.Event;
+import com.webcraftsolutions.project02.database.CardioWorkout;
+import com.webcraftsolutions.project02.database.WeightLiftingWorkout;
+import com.webcraftsolutions.project02.database.CardioWorkoutDAO;
+import com.webcraftsolutions.project02.database.WeightLiftingWorkoutDAO;
 
 import com.webcraftsolutions.project02.database.entities.TravelExploration;
 import com.webcraftsolutions.project02.database.entities.WellnessSleep;
@@ -25,7 +29,8 @@ import com.webcraftsolutions.project02.database.entities.WellnessMood;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Event.class, WellnessJournal.class, WellnessMood.class, WellnessSleep.class, TravelExploration.class}, version = 3, exportSchema = false)
+@Database(entities = {Event.class, WellnessJournal.class, WellnessMood.class, WellnessSleep.class, TravelExploration.class, CardioWorkout.class,
+        WeightLiftingWorkout.class}, version = 4, exportSchema = false)
 public abstract class ActivitiDatabase extends RoomDatabase {
 
     // CLASS FIELDS
@@ -56,6 +61,12 @@ public abstract class ActivitiDatabase extends RoomDatabase {
     public static final String WELLNESS_SLEEP_TABLE = "Wellness_Sleep_Table";
     public static final String WELLNESS_MOOD_TABLE = "Wellness_Mood_Table";
     public static final String WELLNESS_JOURNAL_TABLE = "Wellness_Journal_Table";
+
+    // ID for cardio table
+    public static final String CARDIO_TABLE = "Cardio_Workout_Table";
+
+    // ID for weightlifting table
+    public static final String LIFTING_TABLE = "Weight_Lifting_Table";
 
     // METHODS
     /**
@@ -94,4 +105,8 @@ public abstract class ActivitiDatabase extends RoomDatabase {
     public abstract WellnessSleepDAO wellnessSleepDAO();
     public abstract WellnessMoodDAO wellnessMoodDAO();
     public abstract WellnessJournalDAO  wellnessJournalDAO();
+
+    // Exercise
+    public abstract CardioWorkoutDAO cardioWorkoutDAO();
+    public abstract WeightLiftingWorkoutDAO weightLiftingWorkoutDAO();
 }
