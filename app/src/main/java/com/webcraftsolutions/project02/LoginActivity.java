@@ -10,11 +10,21 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.webcraftsolutions.project02.databinding.ActivityLoginBinding;
+
 public class LoginActivity extends AppCompatActivity {
+
+    // INSTANCE FIELDS
+
+    // The binding object for LoginActivity
+    ActivityLoginBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+
+        // Get Binding
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
     }
 }
