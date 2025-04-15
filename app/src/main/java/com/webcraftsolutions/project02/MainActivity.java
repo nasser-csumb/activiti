@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.webcraftsolutions.project02.database.ActivitiRepository;
+import com.webcraftsolutions.project02.database.entities.User;
 import com.webcraftsolutions.project02.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -53,6 +54,14 @@ public class MainActivity extends AppCompatActivity {
 
         // Get repository
         repository = ActivitiRepository.getRepository(getApplication());
+
+        // Add Default Users
+        User admin = new User("admin1", "admin1");
+        admin.setId(1);
+        admin.setAdmin(true);
+        User testUser = new User("testuser1", "testuser1");
+        testUser.setId(2);
+        repository.insertUser(admin, testUser);
 
         // TODO Set OnClickListener for logoutButton
 

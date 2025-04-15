@@ -59,7 +59,8 @@ public class EventActivity extends AppCompatActivity {
         repository = ActivitiRepository.getRepository(getApplication());
 
         // Update display with Event logs.
-        updateDisplay();
+        // TODO: Fix updateDisplay
+//        updateDisplay();
 
         // Set OnClickListener for eventCreateEventButton
         binding.eventCreateEventButton.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +79,9 @@ public class EventActivity extends AppCompatActivity {
      */
     private void updateDisplay() {
         ArrayList<Event> allEvents = repository.allEventLogs;
+        if(allEvents == null) {
+            return;
+        }
         StringBuilder sb = new StringBuilder();
         for(Event event : allEvents) {
             String str = String.format(Locale.US,

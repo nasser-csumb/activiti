@@ -297,7 +297,7 @@ public class ActivitiRepository {
      * Inserts a new user object into the user table.
      * @param user The user object to be inserted.
      */
-    public void insertUser(User user) {
+    public void insertUser(User... user) {
         ActivitiDatabase.databaseWriteExecutor.execute(() -> userDAO.insert(user));
     }
 
