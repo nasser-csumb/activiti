@@ -13,11 +13,23 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.webcraftsolutions.project02.database.entities.Event;
+import com.webcraftsolutions.project02.database.CardioWorkout;
+import com.webcraftsolutions.project02.database.WeightLiftingWorkout;
+import com.webcraftsolutions.project02.database.CardioWorkoutDAO;
+import com.webcraftsolutions.project02.database.WeightLiftingWorkoutDAO;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Event.class}, version = 1, exportSchema = false)
+@Database(
+        entities = {
+                Event.class,
+                CardioWorkout.class,
+                WeightLiftingWorkout.class
+        },
+        version = 2,
+        exportSchema = false
+)
 public abstract class ActivitiDatabase extends RoomDatabase {
 
     // CLASS FIELDS
@@ -41,6 +53,12 @@ public abstract class ActivitiDatabase extends RoomDatabase {
     // ID for user table
     public static final String USER_TABLE = "User_Table";
 
+    // ID for cardio table
+    public static final String CARDIO_TABLE = "Cardio_Workout_Table";
+
+    // ID for weightlifting table
+    public static final String LIFTING_TABLE = "Weight_Lifting_Table";
+
     // METHODS
     /**
      * Returns a GymLogDatabase instance.
@@ -54,9 +72,9 @@ public abstract class ActivitiDatabase extends RoomDatabase {
             synchronized (ActivitiDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(
-                            context.getApplicationContext(),
-                            ActivitiDatabase.class,
-                            DATABASE_NAME)
+                                    context.getApplicationContext(),
+                                    ActivitiDatabase.class,
+                                    DATABASE_NAME)
                             .fallbackToDestructiveMigration()
 //                            .addCallback(addDefaultValues)
                             .build();
@@ -68,8 +86,9 @@ public abstract class ActivitiDatabase extends RoomDatabase {
 
     // TODO Add addDefaultValues, which adds default users to database, method here after User and UserDAO are setup.
 
-
     // ABSTRACT METHODS
 
     public abstract EventDAO eventDAO();
+    public abstract CardioWorkoutDAO cardioWorkoutDAO();
+    public abstract WeightLiftingWorkoutDAO weightLiftingWorkoutDAO();
 }
