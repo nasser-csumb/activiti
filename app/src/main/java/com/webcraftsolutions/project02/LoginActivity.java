@@ -45,8 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         binding.loginLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = MainActivity.mainActivityIntentFactory(getApplicationContext());
-                startActivity(intent);
+                verifyUser();
             }
         });
 
@@ -57,7 +56,8 @@ public class LoginActivity extends AppCompatActivity {
         binding.loginLoginButton.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Intent intent = MainActivity.mainActivityIntentFactory(getApplicationContext());
+                Intent intent = MainActivity
+                        .mainActivityIntentFactory(getApplicationContext(), 1);
                 startActivity(intent);
                 return false;
             }
@@ -77,7 +77,6 @@ public class LoginActivity extends AppCompatActivity {
      * Shows a toast if the username or password are invalid.
      * Starts MainActivity if the username and password are valid.
      */
-    // TODO Update MainActivity intent factory call to include userId.
     private void verifyUser() {
         // Get entered username
         String username = binding.loginUsernameEditText.getText().toString();
@@ -100,14 +99,15 @@ public class LoginActivity extends AppCompatActivity {
             if(user != null) {
                 String password = binding.loginPasswordEditText.getText().toString();
                 if(password.equals(user.getPassword())) {
-                    Intent intent = MainActivity.mainActivityIntentFactory(getApplicationContext());
+                    Intent intent = MainActivity
+                            .mainActivityIntentFactory(getApplicationContext(), user.getId());
                     startActivity(intent);
                 } else {
                     MainActivity.toastMaker(this, "Invalid Password");
                 }
             } else {
                 MainActivity.toastMaker(this,
-                        username + " Is not a valid username.");
+                        String.format("%s is not a valid username", username));
 
             }
         });

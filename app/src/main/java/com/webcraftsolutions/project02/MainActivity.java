@@ -24,12 +24,22 @@ public class MainActivity extends AppCompatActivity {
 
     // CLASS FIELDS
 
+    // The key for the logged in user extra/
+    public static final String LOGGED_IN_USER_ID_KEY =
+            "com.webcraftsolutions.project02.LOGGED_IN_USER_ID_KEY";
+
+    // The default value for when no user is logged in.
+    public static final int LOGGED_OUT = -1;
+
     // The identifier used for Logcat.
     public static final String TAG = "JNNS_Activiti";
 
     // INSTANCE FIELDS
 
     private ActivityMainBinding binding;
+
+    // The ID of the logged in user. Defaults to LOGGED_OUT.
+    private int loggedInUserId = LOGGED_OUT;
 
     // The repository.
     private ActivitiRepository repository;
@@ -114,9 +124,9 @@ public class MainActivity extends AppCompatActivity {
      * @param context The application context.
      * @return The MainActivity Intent.
      */
-    // TODO Update method to store userId.
-    static Intent mainActivityIntentFactory(Context context) {
+    static Intent mainActivityIntentFactory(Context context, int userId) {
         Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtra(LOGGED_IN_USER_ID_KEY, userId);
         return intent;
     }
 
