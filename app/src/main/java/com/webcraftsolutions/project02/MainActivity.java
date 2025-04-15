@@ -10,11 +10,14 @@ package com.webcraftsolutions.project02;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 
 import com.webcraftsolutions.project02.database.ActivitiRepository;
 import com.webcraftsolutions.project02.database.entities.User;
@@ -24,12 +27,19 @@ public class MainActivity extends AppCompatActivity {
 
     // CLASS FIELDS
 
-    // The key for the logged in user extra/
+    // The key for the logged in user extra
     public static final String LOGGED_IN_USER_ID_KEY =
             "com.webcraftsolutions.project02.LOGGED_IN_USER_ID_KEY";
 
     // The default value for when no user is logged in.
     public static final int LOGGED_OUT = -1;
+
+    // The key for the application's shared preferences.
+    public static final String PREFERENCES_KEY = "WebcraftSolutionsPreferencesActiviti";
+
+    // The key for the application's user id preference.
+    public static final String PREFERENCES_USER_ID_KEY =
+            "WebCraftSolutionsPreferencesUserIdKeyActiviti";
 
     // The identifier used for Logcat.
     public static final String TAG = "JNNS_Activiti";
@@ -44,7 +54,63 @@ public class MainActivity extends AppCompatActivity {
     // The repository.
     private ActivitiRepository repository;
 
+    // The data of the logged in user.
+    private User user;
+
     // METHODS
+
+    /**
+     * Attempts to get user and user id from the application shared preferences, instance state,
+     *      intent extras, and user repository.
+     * loggedInUserId is set to LOGGED_OUT by default if no user id is found.
+     * Starts LoginActivity if a user id is found but no valid user.
+     */
+    private void loginUser(Bundle savedInstanceState) {
+        // Get Shared Preferences
+        SharedPreferences sharedPreferences = getApplicationContext()
+                .getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+        // Check shared preferences for logged in user.
+        loggedInUserId = sharedPreferences.getInt(PREFERENCES_USER_ID_KEY, LOGGED_OUT);
+
+        // Check instance state for user id.
+        if(loggedInUserId == LOGGED_OUT && savedInstanceState != null
+                && savedInstanceState.containsKey(PREFERENCES_USER_ID_KEY)) {
+            loggedInUserId = savedInstanceState.getInt(PREFERENCES_USER_ID_KEY, LOGGED_OUT);
+        }
+
+        // Check intent for user id.
+        if(loggedInUserId == LOGGED_OUT) {
+            loggedInUserId = getIntent().getIntExtra(LOGGED_IN_USER_ID_KEY, LOGGED_OUT);
+        }
+
+        // Check if loggedInUserId is -1
+        if(loggedInUserId == LOGGED_OUT) {
+            return;
+        }
+
+        // Check repository for logged in user.
+        LiveData<User> userObserver = repository.getUserByUserId(loggedInUserId);
+        userObserver.observe(this, user -> {
+            this.user = user;
+            if(this.user != null) {
+                invalidateOptionsMenu();
+            }
+        });
+    }
+
+    /**
+     * Sets the application shared preference for the logged in user to LOGGED_OUT.
+     * Starts the LoginActivity.
+     */
+    private void logout() {
+        // Set user id preference to LOGGED_OUT
+        loggedInUserId = LOGGED_OUT;
+        updateSharedPreference();
+
+        // Start LoginActivity
+        getIntent().putExtra(LOGGED_IN_USER_ID_KEY, LOGGED_OUT);
+        startActivity(LoginActivity.loginActivityIntentFactory(getApplicationContext()));
+    }
 
     /**
      * Called when this activity is created.
@@ -73,8 +139,14 @@ public class MainActivity extends AppCompatActivity {
         testUser.setId(2);
         repository.insertUser(admin, testUser);
 
-        // Navigate to LoginActivity
-        startActivity(LoginActivity.loginActivityIntentFactory(getApplicationContext()));
+        // Go back to LoginActivity if user is not logged in.
+        loginUser(savedInstanceState);
+        if(loggedInUserId == LOGGED_OUT){
+            logout();
+        }
+
+        // Store user id in preferences.
+        updateSharedPreference();
 
         // TODO Set OnClickListener for logoutButton
 
@@ -115,6 +187,34 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    /**
+     * Called before MainActivity is killed.
+     * Attempts to save user id preference.
+     * @param outState Bundle in which to place your saved state.
+     */
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        // Save user id preference.
+        outState.putInt(LOGGED_IN_USER_ID_KEY, loggedInUserId);
+        updateSharedPreference();
+    }
+
+    /**
+     * Updates user id shared preference to loggedInUserId.
+     */
+    private void updateSharedPreference() {
+        // Create SharedPreferences and SharedPreferences.Editor
+        SharedPreferences sharedPreferences = getApplicationContext()
+                .getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+        SharedPreferences.Editor sharedPrefEditor = sharedPreferences.edit();
+
+        // Insert loggedInUserId
+        sharedPrefEditor.putInt(PREFERENCES_USER_ID_KEY, loggedInUserId);
+        sharedPrefEditor.apply();
     }
 
     // STATIC METHODS
