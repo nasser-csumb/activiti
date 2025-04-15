@@ -4,6 +4,7 @@ import androidx.room.TypeConverter;
 
 import java.util.Date;
 
+// From GymLog videos where Dr. C uses ZonedDateTime
 public class DateConverter {
     @TypeConverter
     public static Date toDate(Long timestamp) {

@@ -198,7 +198,6 @@ public class ActivitiRepository {
         return travelExplorationDAO.getTravelExplorationById(id);
     }
 
-    // WELLNESS TABLE METHODS
     // ===============
     // Wellness
     // ===============

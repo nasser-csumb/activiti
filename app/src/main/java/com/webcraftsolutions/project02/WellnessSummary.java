@@ -29,6 +29,9 @@ public class WellnessSummary extends AppCompatActivity {
     ActivityWellnessSummaryBinding binding;
     ActivitiRepository repository;
 
+    /**
+     * Store an array of wellnessEntries in cache of activity
+     */
     ArrayList<WellnessEntry> wellnessEntries = new ArrayList<>();
 
     @Override
@@ -43,6 +46,9 @@ public class WellnessSummary extends AppCompatActivity {
         populateCache();
     }
 
+    /**
+     * Function to populate cache from database itself.
+     */
     private void populateCache() {
         Future<Object> future = ActivitiDatabase.databaseWriteExecutor.submit(
                 new Callable<Object>() {
@@ -62,6 +68,9 @@ public class WellnessSummary extends AppCompatActivity {
     }
 
 
+    /**
+     * Convert three entries per day WelnessEntry items.
+     */
     private void getEntries() {
         var sleepEntries = repository.getAllSleep();
         var moodEntries = repository.getAllMoods();
