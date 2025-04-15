@@ -12,9 +12,12 @@ package com.webcraftsolutions.project02.database;
 import android.app.Application;
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
+
 import com.webcraftsolutions.project02.MainActivity;
 import com.webcraftsolutions.project02.database.entities.Event;
 import com.webcraftsolutions.project02.database.entities.TravelExploration;
+import com.webcraftsolutions.project02.database.entities.User;
 import com.webcraftsolutions.project02.database.entities.WellnessJournal;
 import com.webcraftsolutions.project02.database.entities.WellnessMood;
 import com.webcraftsolutions.project02.database.entities.WellnessSleep;
@@ -38,6 +41,7 @@ public class ActivitiRepository {
     // Stores an array of Event instances.
     public ArrayList<Event> allEventLogs;
 
+    // Event DAO
     private final EventDAO eventDAO;
     private final TravelExplorationDAO travelExplorationDAO;
 
@@ -45,6 +49,9 @@ public class ActivitiRepository {
     private final WellnessSleepDAO wellnessSleepDAO;
     private final WellnessMoodDAO wellnessMoodDAO;
     private final WellnessJournalDAO wellnessJournalDAO;
+
+    // User DAO
+    private final UserDAO userDAO;
 
     // CONSTRUCTORS
     private ActivitiRepository(Application application) {
@@ -58,6 +65,8 @@ public class ActivitiRepository {
         this.wellnessSleepDAO = db.wellnessSleepDAO();
         this.wellnessMoodDAO = db.wellnessMoodDAO();
         this.wellnessJournalDAO = db.wellnessJournalDAO();
+
+        this.userDAO = db.userDAO();
 
         this.allEventLogs = getAllEvents();
     }
@@ -280,5 +289,51 @@ public class ActivitiRepository {
     /** Returns a specific Journal entry by ID. */
     public WellnessJournal getJournalById(int entryId) {
         return wellnessJournalDAO.getEntryById(entryId);
+    }
+
+    // USER METHODS
+
+    /**
+     * Inserts a new user object into the user table.
+     * @param user The user object to be inserted.
+     */
+    public void insertUser(User user) {
+        ActivitiDatabase.databaseWriteExecutor.execute(() -> userDAO.insert(user));
+    }
+
+    /** Deletes all users from the user table */
+    public void deleteAllUsers() {
+        ActivitiDatabase.databaseWriteExecutor.execute(userDAO::deleteAll);
+    }
+
+    /**
+     * Deletes a user from the user table.
+     * @param user The user to be deleted.
+     */
+    public void deleteUser(User user) {
+        ActivitiDatabase.databaseWriteExecutor.execute(() -> userDAO.delete(user));
+    }
+
+    /** Returns all users in the user table. */
+    public LiveData<List<User>> getAllUsers() {
+        return userDAO.getAllUsers();
+    }
+
+    /**
+     * Returns a LiveData object containing a specific user.
+     * @param userId The unique id for a specific user.
+     * @return A LiveData object containing the user.
+     */
+    public LiveData<User> getUserByUserId(int userId) {
+        return userDAO.getUserByUserId(userId);
+    }
+
+    /**
+     * Returns a LiveData object containing a specific user.
+     * @param username The unique username for a specific user.
+     * @return A LiveData object containing the user.
+     */
+    public LiveData<User> getUserByUsername(String username) {
+        return userDAO.getUserByUsername(username);
     }
 }

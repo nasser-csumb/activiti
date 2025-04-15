@@ -16,6 +16,8 @@ import androidx.room.Query;
 
 import com.webcraftsolutions.project02.database.entities.User;
 
+import java.util.List;
+
 @Dao
 public interface UserDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -25,13 +27,13 @@ public interface UserDAO {
     void delete(User user);
 
     @Query("SELECT * FROM " + ActivitiDatabase.USER_TABLE)
-    LiveData<User> getAllUsers();
+    LiveData<List<User>> getAllUsers();
 
     @Query("DELETE FROM " + ActivitiDatabase.USER_TABLE)
     void deleteAll();
 
     @Query("SELECT * FROM " + ActivitiDatabase.USER_TABLE + " WHERE username == :username")
-    LiveData<User> getUserByUserName(String username);
+    LiveData<User> getUserByUsername(String username);
 
     @Query("SELECT * FROM " + ActivitiDatabase.USER_TABLE + " WHERE id == :userId")
     LiveData<User> getUserByUserId(int userId);
