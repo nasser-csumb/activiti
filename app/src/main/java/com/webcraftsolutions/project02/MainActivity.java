@@ -9,6 +9,7 @@
 package com.webcraftsolutions.project02;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 
@@ -105,17 +107,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Sets the application shared preference for the logged in user to LOGGED_OUT.
-     * Starts the LoginActivity.
+     * Stores loggedInUserId into the activity intent.
+     * Calls the static logout method.
      */
     private void logout() {
         // Set user id preference to LOGGED_OUT
         loggedInUserId = LOGGED_OUT;
-        updateSharedPreference();
+        getIntent().putExtra(LOGGED_IN_USER_ID_KEY, LOGGED_OUT);
 
         // Start LoginActivity
-        getIntent().putExtra(LOGGED_IN_USER_ID_KEY, LOGGED_OUT);
-        startActivity(LoginActivity.loginActivityIntentFactory(getApplicationContext()));
+        logout(getApplicationContext());
     }
 
     /**
@@ -154,7 +155,9 @@ public class MainActivity extends AppCompatActivity {
         // Store user id in preferences.
         updateSharedPreference();
 
-        // TODO Set OnClickListener for logoutButton
+        // Set OnClickListener for Back button
+
+        // TODO Set OnClickListener for logout button
 
         // Set OnClickListener for mainMenuEventButton
         binding.mainMenuEventButton.setOnClickListener(new View.OnClickListener() {
@@ -210,11 +213,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Updates user id shared preference to loggedInUserId.
+     * Calls the static version of updateSharedPreferences to store userId.
      */
     private void updateSharedPreference() {
+        updateSharedPreference(getApplicationContext(), loggedInUserId);
+    }
+
+    // STATIC METHODS
+
+    /**
+     * Sets the application shared preference for the logged in user to LOGGED_OUT.
+     * Starts LoginActivity.
+     */
+    static void logout(Context context) {
+        // Set user id preference to LOGGED_OUT
+        updateSharedPreference(context, LOGGED_OUT);
+
+        // Start LoginActivity
+        context.startActivity(LoginActivity.loginActivityIntentFactory(context));
+    }
+
+    /**
+     * Updates user id shared preference to loggedInUserId.
+     */
+    static void updateSharedPreference(Context context, int loggedInUserId) {
         // Create SharedPreferences and SharedPreferences.Editor
-        SharedPreferences sharedPreferences = getApplicationContext()
+        SharedPreferences sharedPreferences = context
                 .getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
         SharedPreferences.Editor sharedPrefEditor = sharedPreferences.edit();
 
@@ -222,12 +246,6 @@ public class MainActivity extends AppCompatActivity {
         sharedPrefEditor.putInt(PREFERENCES_USER_ID_KEY, loggedInUserId);
         sharedPrefEditor.apply();
     }
-
-    private void updateTitleText() {
-
-    }
-
-    // STATIC METHODS
 
     /**
      * Intent factory for MainActivity.
@@ -238,6 +256,35 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra(LOGGED_IN_USER_ID_KEY, userId);
         return intent;
+    }
+
+    /**
+     * Called when logoutMenuItem is clicked.
+     * Displays an alert message to the user.
+     * User clicks 'Logout': logout() is called.
+     * User clicks 'Cancel': alert message is dismissed.
+     */
+    static void showLogoutDialog(Context context) {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+        final AlertDialog alertDialog = alertBuilder.create();
+
+        alertBuilder.setMessage("Logout?");
+
+        alertBuilder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                logout(context);
+            }
+        });
+
+        alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                alertDialog.dismiss();
+            }
+        });
+
+        alertBuilder.create().show();
     }
 
     /**
