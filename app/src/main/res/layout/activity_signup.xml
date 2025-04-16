@@ -7,4 +7,55 @@
     android:layout_height="match_parent"
     tools:context=".SignupActivity">
 
+    <TextView
+        android:id="@+id/signupTitleTextView"
+        android:layout_width="match_parent"
+        android:layout_height="150dip"
+        android:layout_margin="16dip"
+        android:gravity="center"
+        android:text="@string/signupTitleTextViewText"
+        android:textSize="42sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <EditText
+        android:id="@+id/signupUsernameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_margin="16dp"
+        android:autofillHints="Please enter username"
+        android:gravity="center"
+        android:hint="@string/loginUsernameEditTextHint"
+        android:inputType="text"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/signupTitleTextView" />
+
+    <EditText
+        android:id="@+id/signupPasswordEditText"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_margin="16dp"
+        android:autofillHints="Please enter password"
+        android:gravity="center"
+        android:hint="@string/loginPasswordEditTextHint"
+        android:inputType="textPassword"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/signupUsernameEditText" />
+
+    <Button
+        android:id="@+id/signupSignupButton"
+        android:layout_width="match_parent"
+        android:layout_height="105dp"
+        android:layout_margin="16dp"
+        android:text="@string/signupSignupButtonText"
+        android:textSize="32sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/signupPasswordEditText" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
