@@ -104,7 +104,7 @@ public class EventActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = EventCreateActivity
-                        .eventCreateActivityIntentFactory(getApplicationContext());
+                        .eventCreateActivityIntentFactory(getApplicationContext(), user.getId());
                 startActivity(intent);
             }
         });

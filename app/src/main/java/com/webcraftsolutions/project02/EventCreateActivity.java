@@ -7,14 +7,18 @@
 package com.webcraftsolutions.project02;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 
 import com.webcraftsolutions.project02.database.ActivitiRepository;
 import com.webcraftsolutions.project02.database.entities.Event;
+import com.webcraftsolutions.project02.database.entities.User;
 import com.webcraftsolutions.project02.databinding.ActivityEventCreateBinding;
 
 public class EventCreateActivity extends AppCompatActivity {
@@ -26,6 +30,9 @@ public class EventCreateActivity extends AppCompatActivity {
 
     // The repository.
     private ActivitiRepository repository;
+
+    // The user.
+    User user;
 
     // INSTANCE METHODS
 
@@ -48,6 +55,36 @@ public class EventCreateActivity extends AppCompatActivity {
         // Get repository
         repository = ActivitiRepository.getRepository(getApplication());
 
+        // Get user.
+        LiveData<User> userObserver = repository.getUserByUserId(getIntent()
+                .getIntExtra(MainActivity.LOGGED_IN_USER_ID_KEY, MainActivity.LOGGED_OUT));
+        userObserver.observe(this, user -> {
+            this.user = user;
+            if (user != null) {
+                // Update Text
+                binding.eventCreateTopMenu.topMenuUserTextView.setText(String
+                        .format("%s", user.getUsername()));
+            }
+        });
+
+        // Set OnClickListener for logout button
+        binding.eventCreateTopMenu.topMenuUserTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showLogoutDialog(EventCreateActivity.this);
+            }
+        });
+
+        // Set OnClickListener for back button
+        binding.eventCreateTopMenu.topMenuBackTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = EventActivity
+                        .eventActivityIntentFactory(getApplicationContext(), user.getId());
+                startActivity(intent);
+            }
+        });
+
         // Set OnClickListener for eventCreateSaveEventButton
         binding.eventCreateSaveEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +99,37 @@ public class EventCreateActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Called when logoutMenuItem is clicked.
+     * Displays an alert message to the user.
+     * User clicks 'Logout': logout() is called.
+     * User clicks 'Cancel': alert message is dismissed.
+     */
+    private void showLogoutDialog(Context context) {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+        final AlertDialog alertDialog = alertBuilder.create();
+
+        alertBuilder.setMessage("Logout?");
+
+        alertBuilder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startActivity(MainActivity
+                        .mainActivityIntentFactory(getApplicationContext(), true));
+
+            }
+        });
+
+        alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                alertDialog.dismiss();
+            }
+        });
+
+        alertBuilder.create().show();
+    }
+
     // STATIC METHODS
 
     /**
@@ -69,8 +137,9 @@ public class EventCreateActivity extends AppCompatActivity {
      * @param context The application context.
      * @return The EventCreateActivity Intent.
      */
-    static Intent eventCreateActivityIntentFactory(Context context) {
+    static Intent eventCreateActivityIntentFactory(Context context, int userId) {
         Intent intent = new Intent(context, EventCreateActivity.class);
+        intent.putExtra(MainActivity.LOGGED_IN_USER_ID_KEY, userId);
         return intent;
     }
 
