@@ -151,6 +151,9 @@ public class MainActivity extends AppCompatActivity {
         testUser.setId(2);
         repository.insertUser(admin, testUser);
 
+        // Go back to LoginActivity if user is trying to logout.
+        if(getIntent().getBooleanExtra(USER_LOGOUT_KEY, false)) { logout(); }
+
         // Go back to LoginActivity if user is not logged in.
         loginUser(savedInstanceState);
         if(loggedInUserId == LOGGED_OUT){
