@@ -288,12 +288,11 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Intent factory for MainActivity.
      * @param context The application context.
-     * @param userId The id of the logged in user.
      * @param logout If the user is trying to logout (true) or not logout (false)
      * @return The MainActivity Intent.
      */
-    static Intent mainActivityIntentFactory(Context context, int userId, boolean logout) {
-        Intent intent = mainActivityIntentFactory(context, userId);
+    static Intent mainActivityIntentFactory(Context context, boolean logout) {
+        Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra(USER_LOGOUT_KEY, logout);
         return intent;
     }
