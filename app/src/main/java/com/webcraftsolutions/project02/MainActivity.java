@@ -113,10 +113,12 @@ public class MainActivity extends AppCompatActivity {
     private void logout() {
         // Set user id preference to LOGGED_OUT
         loggedInUserId = LOGGED_OUT;
+        updateSharedPreference();
         getIntent().putExtra(LOGGED_IN_USER_ID_KEY, LOGGED_OUT);
 
         // Start LoginActivity
-        logout(getApplicationContext());
+        Intent intent = LoginActivity.loginActivityIntentFactory(getApplicationContext());
+        startActivity(intent);
     }
 
     /**
@@ -163,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showLogoutDialog(MainActivity.this);
+
             }
         });
 
@@ -220,58 +223,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Calls the static version of updateSharedPreferences to store userId.
-     */
-    private void updateSharedPreference() {
-        updateSharedPreference(getApplicationContext(), loggedInUserId);
-    }
-
-    // STATIC METHODS
-
-    /**
-     * Sets the application shared preference for the logged in user to LOGGED_OUT.
-     * Starts LoginActivity.
-     */
-    static void logout(Context context) {
-        // Set user id preference to LOGGED_OUT
-        updateSharedPreference(context, LOGGED_OUT);
-
-        // Start LoginActivity
-        context.startActivity(LoginActivity.loginActivityIntentFactory(context));
-    }
-
-    /**
-     * Updates user id shared preference to loggedInUserId.
-     */
-    static void updateSharedPreference(Context context, int loggedInUserId) {
-        // Create SharedPreferences and SharedPreferences.Editor
-        SharedPreferences sharedPreferences = context
-                .getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
-        SharedPreferences.Editor sharedPrefEditor = sharedPreferences.edit();
-
-        // Insert loggedInUserId
-        sharedPrefEditor.putInt(PREFERENCES_USER_ID_KEY, loggedInUserId);
-        sharedPrefEditor.apply();
-    }
-
-    /**
-     * Intent factory for MainActivity.
-     * @param context The application context.
-     * @return The MainActivity Intent.
-     */
-    static Intent mainActivityIntentFactory(Context context, int userId) {
-        Intent intent = new Intent(context, MainActivity.class);
-        intent.putExtra(LOGGED_IN_USER_ID_KEY, userId);
-        return intent;
-    }
-
-    /**
      * Called when logoutMenuItem is clicked.
      * Displays an alert message to the user.
      * User clicks 'Logout': logout() is called.
      * User clicks 'Cancel': alert message is dismissed.
      */
-    static void showLogoutDialog(Context context) {
+    private void showLogoutDialog(Context context) {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
         final AlertDialog alertDialog = alertBuilder.create();
 
@@ -280,7 +237,7 @@ public class MainActivity extends AppCompatActivity {
         alertBuilder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                logout(context);
+                logout();
             }
         });
 
@@ -292,6 +249,33 @@ public class MainActivity extends AppCompatActivity {
         });
 
         alertBuilder.create().show();
+    }
+
+    /**
+     * Updates user id shared preference to loggedInUserId.
+     */
+    private void updateSharedPreference() {
+        // Create SharedPreferences and SharedPreferences.Editor
+        SharedPreferences sharedPreferences = getApplicationContext()
+                .getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+        SharedPreferences.Editor sharedPrefEditor = sharedPreferences.edit();
+
+        // Insert loggedInUserId
+        sharedPrefEditor.putInt(PREFERENCES_USER_ID_KEY, loggedInUserId);
+        sharedPrefEditor.apply();
+    }
+
+    // STATIC METHODS
+
+    /**
+     * Intent factory for MainActivity.
+     * @param context The application context.
+     * @return The MainActivity Intent.
+     */
+    static Intent mainActivityIntentFactory(Context context, int userId) {
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtra(LOGGED_IN_USER_ID_KEY, userId);
+        return intent;
     }
 
     /**
