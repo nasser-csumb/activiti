@@ -9,12 +9,15 @@
 package com.webcraftsolutions.project02;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 
 import com.webcraftsolutions.project02.database.ActivitiRepository;
 import com.webcraftsolutions.project02.database.entities.Event;
@@ -36,6 +39,7 @@ public class EventActivity extends AppCompatActivity {
     private ActivitiRepository repository;
 
     // The logged in user.
+
 
     // METHODS
 
@@ -61,9 +65,19 @@ public class EventActivity extends AppCompatActivity {
         // Get repository
         repository = ActivitiRepository.getRepository(getApplication());
 
+        // Get User
+
         // Update display with Event logs.
         // TODO: Fix updateDisplay
 //        updateDisplay();
+
+        // Set OnClickListener for logout button
+        binding.mainMenuTopMenu.topMenuUserTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showLogoutDialog(EventActivity.this);
+            }
+        });
 
         // Set OnClickListener for eventCreateEventButton
         binding.eventCreateEventButton.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +88,37 @@ public class EventActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    /**
+     * Called when logoutMenuItem is clicked.
+     * Displays an alert message to the user.
+     * User clicks 'Logout': logout() is called.
+     * User clicks 'Cancel': alert message is dismissed.
+     */
+    private void showLogoutDialog(Context context) {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+        final AlertDialog alertDialog = alertBuilder.create();
+
+        alertBuilder.setMessage("Logout?");
+
+        alertBuilder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startActivity(MainActivity
+                        .mainActivityIntentFactory(getApplicationContext(), true));
+
+            }
+        });
+
+        alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                alertDialog.dismiss();
+            }
+        });
+
+        alertBuilder.create().show();
     }
 
     /**
