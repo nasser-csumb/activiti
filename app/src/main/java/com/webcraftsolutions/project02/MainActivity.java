@@ -94,6 +94,12 @@ public class MainActivity extends AppCompatActivity {
             this.user = user;
             if(this.user != null) {
                 invalidateOptionsMenu();
+
+                // Update Text
+                binding.mainMenuGreetingTextView.setText(String
+                        .format("Hello %s!", user.getUsername()));
+                binding.mainMenuTopMenu.topMenuUserTextView.setText(String
+                        .format("%s", user.getUsername()));
             }
         });
     }
@@ -215,6 +221,10 @@ public class MainActivity extends AppCompatActivity {
         // Insert loggedInUserId
         sharedPrefEditor.putInt(PREFERENCES_USER_ID_KEY, loggedInUserId);
         sharedPrefEditor.apply();
+    }
+
+    private void updateTitleText() {
+
     }
 
     // STATIC METHODS
