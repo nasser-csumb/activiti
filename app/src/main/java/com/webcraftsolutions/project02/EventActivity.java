@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.webcraftsolutions.project02.database.ActivitiRepository;
 import com.webcraftsolutions.project02.database.entities.Event;
+import com.webcraftsolutions.project02.database.entities.User;
 import com.webcraftsolutions.project02.databinding.ActivityEventBinding;
 
 import java.util.ArrayList;
@@ -33,6 +34,8 @@ public class EventActivity extends AppCompatActivity {
 
     // The repository.
     private ActivitiRepository repository;
+
+    // The logged in user.
 
     // METHODS
 
@@ -100,10 +103,12 @@ public class EventActivity extends AppCompatActivity {
     /**
      * Intent factory for EventActivity.
      * @param context The application context.
+     * @param userId The id of the logged in user.
      * @return The EventActivity Intent.
      */
-    static Intent eventActivityIntentFactory(Context context) {
+    static Intent eventActivityIntentFactory(Context context, int userId) {
         Intent intent = new Intent(context, EventActivity.class);
+        intent.putExtra(MainActivity.LOGGED_IN_USER_ID_KEY, userId);
         return intent;
     }
 

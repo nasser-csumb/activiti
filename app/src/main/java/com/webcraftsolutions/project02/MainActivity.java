@@ -179,7 +179,8 @@ public class MainActivity extends AppCompatActivity {
         binding.mainMenuEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = EventActivity.eventActivityIntentFactory(getApplicationContext());
+                Intent intent = EventActivity
+                        .eventActivityIntentFactory(getApplicationContext(), loggedInUserId);
                 startActivity(intent);
             }
         });
@@ -286,7 +287,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Intent factory for MainActivity.
+     * Intent factory for MainActivity. Used when the user is logging out.
      * @param context The application context.
      * @param logout If the user is trying to logout (true) or not logout (false)
      * @return The MainActivity Intent.
