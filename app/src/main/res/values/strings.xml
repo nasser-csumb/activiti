@@ -60,4 +60,6 @@
     <string name="loginPasswordEditTextHint">Password</string>
     <string name="loginLoginButtonText">LOGIN!</string>
     <string name="loginSignUpButtonText">SIGN UP!</string>
+    <string name="topMenuBackTextViewText">Back</string>
+    <string name="topMenuUserTextViewText">USER</string>
 </resources>
