@@ -39,7 +39,7 @@ public class EventActivity extends AppCompatActivity {
     private ActivitiRepository repository;
 
     // The logged in user.
-
+    User user;
 
     // METHODS
 
@@ -66,13 +66,23 @@ public class EventActivity extends AppCompatActivity {
         repository = ActivitiRepository.getRepository(getApplication());
 
         // Get User
+        LiveData<User> userObserver = repository.getUserByUserId(getIntent()
+                        .getIntExtra(MainActivity.LOGGED_IN_USER_ID_KEY, MainActivity.LOGGED_OUT));
+        userObserver.observe(this, user -> {
+            this.user = user;
+            if (user != null) {
+                // Update Text
+                binding.eventTopMenu.topMenuUserTextView.setText(String
+                        .format("%s", user.getUsername()));
+            }
+        });
 
         // Update display with Event logs.
         // TODO: Fix updateDisplay
 //        updateDisplay();
 
         // Set OnClickListener for logout button
-        binding.mainMenuTopMenu.topMenuUserTextView.setOnClickListener(new View.OnClickListener() {
+        binding.eventTopMenu.topMenuUserTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showLogoutDialog(EventActivity.this);
