@@ -8,6 +8,8 @@
 
 package com.webcraftsolutions.project02;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,7 +40,16 @@ public class SignupActivity extends AppCompatActivity {
         // Get binding
         binding = ActivitySignupBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+
+
     }
 
     // STATIC METHODS
+
+    static Intent signupActivitiIntentFactory(Context context) {
+        Intent intent = new Intent(context, SignupActivity.class);
+        return intent;
+    }
+
 }
