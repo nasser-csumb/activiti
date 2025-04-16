@@ -89,6 +89,16 @@ public class EventActivity extends AppCompatActivity {
             }
         });
 
+        // Set OnClickListener for back button
+        binding.eventTopMenu.topMenuBackTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = MainActivity
+                        .mainActivityIntentFactory(getApplicationContext(), user.getId());
+                startActivity(intent);
+            }
+        });
+
         // Set OnClickListener for eventCreateEventButton
         binding.eventCreateEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
