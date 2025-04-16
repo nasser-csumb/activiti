@@ -155,9 +155,16 @@ public class MainActivity extends AppCompatActivity {
         // Store user id in preferences.
         updateSharedPreference();
 
-        // Set OnClickListener for Back button
+        // Hide Back Button
+        binding.mainMenuTopMenu.topMenuBackTextView.setText("");
 
-        // TODO Set OnClickListener for logout button
+        // Set OnClickListener for logout button
+        binding.mainMenuTopMenu.topMenuUserTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showLogoutDialog(MainActivity.this);
+            }
+        });
 
         // Set OnClickListener for mainMenuEventButton
         binding.mainMenuEventButton.setOnClickListener(new View.OnClickListener() {
