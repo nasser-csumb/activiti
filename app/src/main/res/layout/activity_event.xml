@@ -8,7 +8,7 @@
     tools:context=".EventActivity">
 
     <include
-        android:id="@+id/mainMenuTopMenu"
+        android:id="@+id/eventTopMenu"
         layout="@layout/top_menu_layout"
         android:layout_width="match_parent"
         android:layout_height="75dp"
