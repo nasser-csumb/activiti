@@ -55,4 +55,13 @@
     <!-- Summary -->
     <string name="wellnessActivitySummaryCardHeader">Summary</string>
     <string name="wellnessActivitySummaryCardSubtitle">Click here to see a summary</string>
+    <string name="loginTitleTextViewText">Welcome to Activiti!</string>
+    <string name="loginUsernameEditTextHint">Username</string>
+    <string name="loginPasswordEditTextHint">Password</string>
+    <string name="loginLoginButtonText">LOGIN!</string>
+    <string name="loginSignUpButtonText">SIGN UP!</string>
+    <string name="topMenuBackTextViewText">Back</string>
+    <string name="topMenuUserTextViewText">USER</string>
+    <string name="signupTitleTextViewText">Please Sign Up!</string>
+    <string name="signupSignupButtonText">SIGN UP!</string>
 </resources>
