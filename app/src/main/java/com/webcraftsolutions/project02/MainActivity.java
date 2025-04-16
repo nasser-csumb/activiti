@@ -29,9 +29,12 @@ public class MainActivity extends AppCompatActivity {
 
     // CLASS FIELDS
 
-    // The key for the logged in user extra
+    // The key for the logged in user extra.
     public static final String LOGGED_IN_USER_ID_KEY =
             "com.webcraftsolutions.project02.LOGGED_IN_USER_ID_KEY";
+
+    // The key for the logout user extra.
+    public static final String USER_LOGOUT_KEY = "com.webcraftsolutions.project02.USER_LOGOUT_KEY";
 
     // The default value for when no user is logged in.
     public static final int LOGGED_OUT = -1;
@@ -270,11 +273,25 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Intent factory for MainActivity.
      * @param context The application context.
+     * @param userId The id of the logged in user.
      * @return The MainActivity Intent.
      */
     static Intent mainActivityIntentFactory(Context context, int userId) {
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra(LOGGED_IN_USER_ID_KEY, userId);
+        return intent;
+    }
+
+    /**
+     * Intent factory for MainActivity.
+     * @param context The application context.
+     * @param userId The id of the logged in user.
+     * @param logout If the user is trying to logout (true) or not logout (false)
+     * @return The MainActivity Intent.
+     */
+    static Intent mainActivityIntentFactory(Context context, int userId, boolean logout) {
+        Intent intent = mainActivityIntentFactory(context, userId);
+        intent.putExtra(USER_LOGOUT_KEY, logout);
         return intent;
     }
 
