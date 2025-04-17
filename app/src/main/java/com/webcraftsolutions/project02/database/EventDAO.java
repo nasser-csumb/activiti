@@ -35,6 +35,9 @@ public interface EventDAO {
     @Query("SELECT * FROM " + ActivitiDatabase.EVENT_TABLE + " WHERE userId = :userId")
     LiveData<List<Event>> getAllEventsByUserId(int userId);
 
+    @Query("SELECT * FROM " + ActivitiDatabase.EVENT_TABLE + " WHERE userId = :userId")
+    List<Event> getAllEventsByUserIdSynchronous(int userId);
+
     @Query("SELECT * FROM " + ActivitiDatabase.EVENT_TABLE + " WHERE eventId = :eventId")
     LiveData<Event> getEventByEventId(int eventId);
 
