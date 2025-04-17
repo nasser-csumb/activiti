@@ -8,7 +8,7 @@
         android:id="@+id/adminUsernameEditText"
         android:layout_width="175dp"
         android:layout_height="50dp"
-        android:layout_margin="10dp"
+        android:layout_marginStart="10dp"
         android:hint="@string/adminUsernameEditTextHint"
         android:inputType="text"
         android:textSize="20sp"

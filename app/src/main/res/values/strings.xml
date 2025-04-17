@@ -67,4 +67,5 @@
     <string name="adminUsernameEditTextHint">Enter Username</string>
     <string name="adminToggleAdminButtonText">TOGGLE ADMIN</string>
     <string name="adminClearDatabaseButtonText">CLEAR DATABASE</string>
+    <string name="mainMenuGreetingTextViewText">Hello User!</string>
 </resources>
