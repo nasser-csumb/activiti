@@ -64,10 +64,6 @@ public class MainActivity extends AppCompatActivity {
 
     // METHODS
 
-    private void disableAdmin() {
-
-    }
-
     private void enableAdmin() {
 
     }
@@ -117,8 +113,6 @@ public class MainActivity extends AppCompatActivity {
                 // Activate or Deactivate Admin features
                 if(user.isAdmin()) {
                     enableAdmin();
-                } else {
-                    disableAdmin();
                 }
             }
         });
