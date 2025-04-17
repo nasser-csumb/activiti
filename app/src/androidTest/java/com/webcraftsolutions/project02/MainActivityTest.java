@@ -5,12 +5,22 @@ import android.content.Intent;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 
+import com.webcraftsolutions.project02.database.ActivitiRepository;
 import com.webcraftsolutions.project02.database.entities.User;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 
 public class MainActivityTest extends TestCase {
+
+    // Application Context
+    Context CONTEXT;
+
+    // Logout Boolean
+    boolean LOGOUT;
+
+    // Repository
+    ActivitiRepository REPOSITORY;
 
     // Test Admin User
     User TEST_ADMIN;
@@ -20,11 +30,6 @@ public class MainActivityTest extends TestCase {
     User TEST_USER;
     String TEST_USER_NAME = "TEST_USER";
 
-    // Application Context
-    Context CONTEXT;
-
-    // Logout Boolean
-    boolean LOGOUT;
 
     public void setUp() throws Exception {
         super.setUp();
@@ -32,13 +37,17 @@ public class MainActivityTest extends TestCase {
         // Get Application Context
         CONTEXT = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
+        // Set Logout Boolean
+        LOGOUT = true;
+
+        // Get Repository
+
         // Set Test Users
         TEST_ADMIN = new User(TEST_ADMIN_NAME, TEST_ADMIN_NAME);
         TEST_ADMIN.setAdmin(true);
         TEST_USER = new User(TEST_USER_NAME, TEST_USER_NAME);
 
-        // Set Logout Boolean
-        LOGOUT = true;
+
     }
 
     public void tearDown() throws Exception {
