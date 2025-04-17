@@ -11,7 +11,6 @@ import android.content.Intent;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import com.webcraftsolutions.project02.database.ActivitiRepository;
 import com.webcraftsolutions.project02.database.entities.User;
 
 import junit.framework.TestCase;
@@ -32,7 +31,7 @@ public class MainActivityTest extends TestCase {
     boolean logout;
 
     // Repository
-    ActivitiRepository repository;
+//    ActivitiRepository repository;
 
     // Test Admin User
     User testAdmin;
@@ -71,11 +70,12 @@ public class MainActivityTest extends TestCase {
         testUser = null;
     }
 
-    public void testDeleteUser() {
-    }
-
-    public void testToggleUserAdmin() {
-    }
+//    public void testDeleteUser() {
+//
+//    }
+//
+//    public void testToggleUserAdmin() {
+//    }
 
     public void testMainActivityIntentFactoryUserId() {
         // Get Intent
