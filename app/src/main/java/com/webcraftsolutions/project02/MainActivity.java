@@ -59,6 +59,9 @@ public class MainActivity extends AppCompatActivity {
     // The repository.
     private ActivitiRepository repository;
 
+    // Tracks whether the application has toggled a user's admin status already.
+    private boolean adminAlreadyToggled = false;
+
     // The data of the logged in user.
     private User user;
 
@@ -78,7 +81,8 @@ public class MainActivity extends AppCompatActivity {
                 .setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                adminAlreadyToggled = false;
+                toggleUserAdmin();
             }
         });
 
@@ -289,6 +293,51 @@ public class MainActivity extends AppCompatActivity {
         });
 
         alertBuilder.create().show();
+    }
+
+    /**
+     * Attempts to toggle the admin status of the user with the entered username.
+     * Returns and prints a message if the entered username is empty or invalid.
+     * Flips the admin status of the user if a valid username is entered,
+     *      and updates the user's database entry.
+     */
+    private void toggleUserAdmin() {
+        // Get username
+        String username = binding.mainMenuAdminMenu.adminUsernameEditText.getText().toString();
+
+        // Check if a username has been entered.
+        if(username.isEmpty()) {
+            toastMaker(getApplicationContext(), "Username cannot be empty.");
+            return;
+        }
+
+        // Get user from database
+        LiveData<User> userObserver = repository.getUserByUsername(username);
+        userObserver.observe(this, user -> {
+            // Check if admin was recently toggled
+            if(adminAlreadyToggled) { return; }
+            /*
+            If user doesn't exist, or is the current user, print an error message.
+            Otherwise, set user.isAdmin to true if false, or false if true, and print a message.
+             */
+            if(user == null) {
+                toastMaker(getApplicationContext(), username + " does not exist.");
+            } else if(user.equals(this.user)) {
+                toastMaker(getApplicationContext(), "You cannot toggle yourself.");
+            } else {
+                if(!user.isAdmin()) {
+                    user.setAdmin(true);
+                    repository.insertUser(user);
+                    toastMaker(getApplicationContext(), username + " is now an admin!");
+                } else {
+                    user.setAdmin(false);
+                    repository.insertUser(user);
+                    toastMaker(getApplicationContext(),
+                            username + " is no longer an admin.");
+                }
+            }
+            adminAlreadyToggled = true;
+        });
     }
 
     /**
