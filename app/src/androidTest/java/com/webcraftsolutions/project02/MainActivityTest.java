@@ -14,44 +14,49 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import com.webcraftsolutions.project02.database.ActivitiRepository;
 import com.webcraftsolutions.project02.database.entities.User;
 
-import junit.framework.Test;
 import junit.framework.TestCase;
 
 public class MainActivityTest extends TestCase {
 
+    // CONSTANT FIELDS
+
+    String TEST_ADMIN_NAME = "TEST_ADMIN";
+    String TEST_USER_NAME = "TEST_USER";
+
+    // FIELDS
+
     // Application Context
-    Context CONTEXT;
+    Context context;
 
     // Logout Boolean
-    boolean LOGOUT;
+    boolean logout;
 
     // Repository
-    ActivitiRepository REPOSITORY;
+    ActivitiRepository repository;
 
     // Test Admin User
-    User TEST_ADMIN;
-    String TEST_ADMIN_NAME = "TEST_ADMIN";
+    User testAdmin;
 
     // Test User
-    User TEST_USER;
-    String TEST_USER_NAME = "TEST_USER";
+    User testUser;
+
 
 
     public void setUp() throws Exception {
         super.setUp();
 
         // Get Application Context
-        CONTEXT = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        context = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
         // Set Logout Boolean
-        LOGOUT = true;
+        logout = true;
 
         // Get Repository
 
         // Set Test Users
-        TEST_ADMIN = new User(TEST_ADMIN_NAME, TEST_ADMIN_NAME);
-        TEST_ADMIN.setAdmin(true);
-        TEST_USER = new User(TEST_USER_NAME, TEST_USER_NAME);
+        testAdmin = new User(TEST_ADMIN_NAME, TEST_ADMIN_NAME);
+        testAdmin.setAdmin(true);
+        testUser = new User(TEST_USER_NAME, TEST_USER_NAME);
 
 
     }
@@ -60,7 +65,10 @@ public class MainActivityTest extends TestCase {
         super.tearDown();
 
         // Invalidate Variables
-        CONTEXT = null;
+        context = null;
+        logout = true;
+        testAdmin = null;
+        testUser = null;
     }
 
     public void testDeleteUser() {
@@ -71,10 +79,10 @@ public class MainActivityTest extends TestCase {
 
     public void testMainActivityIntentFactoryUserId() {
         // Get Intent
-        Intent intent = MainActivity.mainActivityIntentFactory(CONTEXT, TEST_USER.getId());
+        Intent intent = MainActivity.mainActivityIntentFactory(context, testUser.getId());
 
         // Check Intent Extra
-        assertEquals(TEST_USER.getId(), intent.getIntExtra(
+        assertEquals(testUser.getId(), intent.getIntExtra(
                 MainActivity.LOGGED_IN_USER_ID_KEY, MainActivity.LOGGED_OUT));
         assertEquals(MainActivity.LOGGED_OUT, intent
                 .getIntExtra("", MainActivity.LOGGED_OUT));
@@ -83,10 +91,11 @@ public class MainActivityTest extends TestCase {
 
     public void testMainActivityIntentFactoryLogout() {
         // Get Intent
-        Intent intent = MainActivity.mainActivityIntentFactory(CONTEXT, LOGOUT);
+        Intent intent = MainActivity.mainActivityIntentFactory(context, logout);
 
         // Check Intent Extra
-        assertEquals(LOGOUT, intent.getBooleanExtra(MainActivity.USER_LOGOUT_KEY, !LOGOUT));
-        assertEquals(!LOGOUT, intent.getBooleanExtra("", !LOGOUT));
+        assertNotNull(intent);
+        assertEquals(logout, intent.getBooleanExtra(MainActivity.USER_LOGOUT_KEY, !logout));
+        assertEquals(!logout, intent.getBooleanExtra("", !logout));
     }
 }
