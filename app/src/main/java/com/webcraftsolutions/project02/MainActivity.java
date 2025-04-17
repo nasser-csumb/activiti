@@ -70,6 +70,12 @@ public class MainActivity extends AppCompatActivity {
 
     // METHODS
 
+    /**
+     * Attempts to delete a user from the database.
+     * Prints an error message if the user does not exist, is the same as the logged in user,
+     *      or is an admin.
+     * Otherwise, deletes the user and database entries associated with the user.
+     */
     private void deleteUser() {
         // Get username
         String username = binding.mainMenuAdminMenu.adminDeleteUserUsernameEditText
@@ -99,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
             } else if(user.isAdmin()) {
                 message = "Admins cannot be deleted.";
             } else {
-                repository.deleteUser(user);
+                repository.wipeUser(user);
                 message = username + " deleted!";
             }
             toastMaker(getApplicationContext(), message);
