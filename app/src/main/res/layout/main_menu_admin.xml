@@ -9,9 +9,11 @@
         android:layout_width="175dp"
         android:layout_height="50dp"
         android:layout_marginStart="10dp"
+        android:enabled="false"
         android:hint="@string/adminUsernameEditTextHint"
         android:inputType="text"
         android:textSize="20sp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@id/adminToggleAdminButton"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -21,7 +23,9 @@
         android:layout_width="175dp"
         android:layout_height="50dp"
         android:layout_margin="10dp"
+        android:enabled="false"
         android:text="@string/adminToggleAdminButtonText"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -30,7 +34,9 @@
         android:layout_width="175dp"
         android:layout_height="50dp"
         android:layout_margin="10dp"
+        android:enabled="false"
         android:text="@string/adminClearDatabaseButtonText"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
