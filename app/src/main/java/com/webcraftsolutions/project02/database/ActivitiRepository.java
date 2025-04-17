@@ -94,6 +94,8 @@ public class ActivitiRepository {
         return null;
     }
 
+    // METHODS
+
     // EVENT TABLE METHODS
 
     /**
@@ -299,16 +301,11 @@ public class ActivitiRepository {
         ActivitiDatabase.databaseWriteExecutor.execute(() -> userDAO.insert(user));
     }
 
-    /** Deletes all users from the user table */
-    public void deleteAllUsers() {
-        ActivitiDatabase.databaseWriteExecutor.execute(userDAO::deleteAll);
-    }
-
     /**
      * Deletes a user from the user table.
      * @param user The user to be deleted.
      */
-    public void deleteUser(User user) {
+    public void deleteUser(User... user) {
         ActivitiDatabase.databaseWriteExecutor.execute(() -> userDAO.delete(user));
     }
 

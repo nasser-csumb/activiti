@@ -24,7 +24,7 @@ public interface UserDAO {
     void insert(User... user);
 
     @Delete
-    void delete(User user);
+    void delete(User... user);
 
     @Query("SELECT * FROM " + ActivitiDatabase.USER_TABLE)
     LiveData<List<User>> getAllUsers();
