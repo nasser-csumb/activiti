@@ -1,3 +1,9 @@
+/**
+ * Title: CST-338 Project 02: Activiti - LoginActivity Test
+ * @author Noah deFer
+ * Date Created: 4/17/2025
+ * Description: Java class for implementation tests for LoginActivity.java.
+ */
 package com.webcraftsolutions.project02;
 
 import static org.junit.Assert.*;
