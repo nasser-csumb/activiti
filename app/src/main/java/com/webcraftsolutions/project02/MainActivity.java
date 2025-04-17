@@ -76,10 +76,7 @@ public class MainActivity extends AppCompatActivity {
      *      or is an admin.
      * Otherwise, deletes the user and database entries associated with the user.
      */
-    private void deleteUser() {
-        // Get username
-        String username = binding.mainMenuAdminMenu.adminDeleteUserUsernameEditText
-                .getText().toString();
+    private void deleteUser(String username) {
 
         // Check if username is empty.
         if(username.isEmpty()) {
@@ -130,7 +127,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 adminAlreadyToggled = false;
-                toggleUserAdmin();
+                String username = binding.mainMenuAdminMenu.adminDeleteUserUsernameEditText
+                        .getText().toString();
+                toggleUserAdmin(username);
             }
         });
 
@@ -140,7 +139,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 userDeleteAlreadyAttempted = false;
-                deleteUser();
+                // Get username
+                String username = binding.mainMenuAdminMenu.adminDeleteUserUsernameEditText
+                        .getText().toString();
+                deleteUser(username);
             }
         });
     }
@@ -350,11 +352,7 @@ public class MainActivity extends AppCompatActivity {
      * Flips the admin status of the user if a valid username is entered,
      *      and updates the user's database entry.
      */
-    private void toggleUserAdmin() {
-        // Get username
-        String username = binding.mainMenuAdminMenu.adminToggleAdminUsernameEditText
-                .getText().toString();
-
+    private void toggleUserAdmin(String username) {
         // Check if a username has been entered.
         if(username.isEmpty()) {
             toastMaker(getApplicationContext(), "Username cannot be empty.");
