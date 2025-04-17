@@ -25,6 +25,7 @@ import com.webcraftsolutions.project02.database.entities.User;
 import com.webcraftsolutions.project02.databinding.ActivityEventBinding;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class EventActivity extends AppCompatActivity {
@@ -74,12 +75,11 @@ public class EventActivity extends AppCompatActivity {
                 // Update Text
                 binding.eventTopMenu.topMenuUserTextView.setText(String
                         .format("%s", user.getUsername()));
+
+                // Update Events Display
+                updateDisplay();
             }
         });
-
-        // Update display with Event logs.
-        // TODO: Fix updateDisplay
-//        updateDisplay();
 
         // Set OnClickListener for logout button
         binding.eventTopMenu.topMenuUserTextView.setOnClickListener(new View.OnClickListener() {
@@ -146,21 +146,29 @@ public class EventActivity extends AppCompatActivity {
      * Sets text of eventEventsTextView to constructed String.
      */
     private void updateDisplay() {
-        ArrayList<Event> allEvents = repository.allEventLogs;
-        if(allEvents == null) {
-            return;
-        }
-        StringBuilder sb = new StringBuilder();
-        for(Event event : allEvents) {
-            String str = String.format(Locale.US,
-                    "Name: %s%nDesc: %s%nDate: %s%nTime: %s%n-=-=-=-=-=-=-=-=-%n%n",
-                    event.getName(),
-                    event.getDescription(),
-                    event.getDate(),
-                    event.getTime());
-            sb.append(str);
-        }
-        binding.eventEventsTextView.setText(sb.toString());
+        // Get Events
+        LiveData<List<Event>> userObserver = repository.getAllEventsByUserId(user.getId());
+        userObserver.observe(this, events -> {
+            // Check if events is empty
+            if(events.isEmpty()) {
+                String str = "Nothing to display!";
+                binding.eventEventsTextView.setText(str);
+                return;
+            }
+
+            // Get events
+            StringBuilder sb = new StringBuilder();
+            for(Event event : events) {
+                String str = String.format(Locale.US,
+                        "Name: %s%nDesc: %s%nDate: %s%nTime: %s%n-=-=-=-=-=-=-=-=-%n%n",
+                        event.getName(),
+                        event.getDescription(),
+                        event.getDate(),
+                        event.getTime());
+                sb.append(str);
+            }
+            binding.eventEventsTextView.setText(sb.toString());
+        });
     }
 
     // STATIC METHODS
