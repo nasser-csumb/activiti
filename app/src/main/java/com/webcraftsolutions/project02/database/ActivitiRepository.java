@@ -150,7 +150,7 @@ public class ActivitiRepository {
      * @param eventId Used to select a specific Event log.
      * @return An Event object.
      */
-    public Event getEventByEventId(int eventId) {
+    public LiveData<Event> getEventByEventId(int eventId) {
         return eventDAO.getEventByEventId(eventId);
     }
 
