@@ -19,18 +19,24 @@ import org.junit.Test;
 
 public class SignupActivityTest {
 
-    // Test String
-    String SIGNUP_EXTRA = "SIGNUP_INTENT_EXTRA";
-
     // Application Context
-    Context context;
+    private Context context;
 
+
+    /**
+     * Runs before each test. Sets up variables.
+     * @throws Exception Exception
+     */
     @Before
     public void setUp() throws Exception {
         // Get Context
         context = InstrumentationRegistry.getInstrumentation().getTargetContext();
     }
 
+    /**
+     * Runs after each test. Invalidates variables.
+     * @throws Exception Exception
+     */
     @After
     public void tearDown() throws Exception {
         context = null;
@@ -43,6 +49,8 @@ public class SignupActivityTest {
 
         // Check Intent
         assertNotNull(intent);
+        // Test String
+        String SIGNUP_EXTRA = "SIGNUP_INTENT_EXTRA";
         assertFalse(intent.getBooleanExtra(SIGNUP_EXTRA, false));
     }
 }

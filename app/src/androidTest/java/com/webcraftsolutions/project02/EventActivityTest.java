@@ -32,11 +32,15 @@ public class EventActivityTest {
     // FIELDS
 
     // Application Context
-    Context context;
+    private Context context;
 
     // Test User
-    User user;
+    private User user;
 
+    /**
+     * Runs before each test. Sets up variables.
+     * @throws Exception Exception
+     */
     @Before
     public void setUp() throws Exception {
         // Get Context
@@ -46,6 +50,10 @@ public class EventActivityTest {
         user = new User(USERNAME, USERNAME);
     }
 
+    /**
+     * Runs after each test. Invalidates variables.
+     * @throws Exception Exception
+     */
     @After
     public void tearDown() throws Exception {
         // Invalidate Variables
@@ -53,6 +61,9 @@ public class EventActivityTest {
         user = null;
     }
 
+    /**
+     * Implementation Test for EventActivity's intent factory method.
+     */
     @Test
     public void eventActivityIntentFactory() {
         // Get Intent

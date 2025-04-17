@@ -19,24 +19,36 @@ import org.junit.Test;
 
 public class LoginActivityTest {
 
-    // Test String
-    String LOGIN_EXTRA = "LOGIN_INTENT_EXTRA";
+    // CONSTANT FIELDS
+
+    // FIELDS
 
     // Application Context
-    Context context;
+    private Context context;
 
+    /**
+     * Runs before each test. Sets up variables.
+     * @throws Exception Exception
+     */
     @Before
     public void setUp() throws Exception {
         // Get Context
         context = InstrumentationRegistry.getInstrumentation().getTargetContext();
     }
 
+    /**
+     * Runs after each test. Invalidates variables.
+     * @throws Exception Exception
+     */
     @After
     public void tearDown() throws Exception {
         // Invalidate Variables
         context = null;
     }
 
+    /**
+     * Implementation Test for LoginActivity's intent factory method.
+     */
     @Test
     public void loginActivityIntentFactory() {
         // Get Intent
@@ -44,6 +56,7 @@ public class LoginActivityTest {
 
         // Check Intent
         assertNotNull(intent);
+        String LOGIN_EXTRA = "LOGIN_INTENT_EXTRA";
         assertFalse(intent.getBooleanExtra(LOGIN_EXTRA, false));
     }
 }

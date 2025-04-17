@@ -27,7 +27,7 @@ public class UserDAOTest {
     // CONSTANT FIELDS
 
     // User Username/Password String
-    String TEST_USER = "TEST_USER";
+    private final String TEST_USER = "TEST_USER";
 
     // FIELDS
 
@@ -38,8 +38,12 @@ public class UserDAOTest {
     private UserDAO userDAO;
 
     // User Object
-    User user;
+    private User user;
 
+    /**
+     * Runs before each test. Sets up database and user variables.
+     * @throws Exception Exception
+     */
     @Before
     public void setUp() throws Exception {
         // Get Database
@@ -53,6 +57,10 @@ public class UserDAOTest {
         user.setId(1);
     }
 
+    /**
+     * Runs after each test. Closes database and invalidates variables.
+     * @throws Exception Exception
+     */
     @After
     public void tearDown() throws Exception {
         // Close Database
@@ -63,6 +71,9 @@ public class UserDAOTest {
         user = null;
     }
 
+    /**
+     * Implementation Test for the User Table's Insert method.
+     */
     @Test
     public void insert() {
         // Check that user is NOT already in database.
@@ -77,6 +88,9 @@ public class UserDAOTest {
         assertEquals(dbUser, user);
     }
 
+    /**
+     * Implementation Test for the User Table's Delete method.
+     */
     @Test
     public void delete() {
         // Put User in Database
@@ -93,6 +107,9 @@ public class UserDAOTest {
         assertNull(userDAO.getUserByUserIdSynchronous(user.getId()));
     }
 
+    /**
+     * Implementation Test for the User Table's getUserByUsername method.
+     */
     @Test
     public void getUserByUsernameSynchronous() {
         // Put User in Database
@@ -104,6 +121,9 @@ public class UserDAOTest {
         assertEquals(user, dbUser);
     }
 
+    /**
+     * Implementation Test for the User Table's getUserByUserId method.
+     */
     @Test
     public void getUserByUserIdSynchronous() {
         // Put User in Database
@@ -115,6 +135,9 @@ public class UserDAOTest {
         assertEquals(user, dbUser);
     }
 
+    /**
+     * Implementation Test for the User Table's Insert method updating pre-existing users.
+     */
     @Test
     public void update() {
         // Put User in Database
@@ -123,6 +146,7 @@ public class UserDAOTest {
 
         // Update User Entry in Database
         user.setAdmin(true);
+        user.setUsername(TEST_USER+TEST_USER);
         userDAO.insert(user);
 
         // Check old and new versions of users

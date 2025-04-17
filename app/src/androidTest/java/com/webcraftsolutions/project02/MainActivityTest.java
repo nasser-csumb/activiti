@@ -19,28 +19,22 @@ public class MainActivityTest extends TestCase {
 
     // CONSTANT FIELDS
 
-    String TEST_ADMIN_NAME = "TEST_ADMIN";
-    String TEST_USER_NAME = "TEST_USER";
-
     // FIELDS
 
     // Application Context
-    Context context;
+    private Context context;
 
     // Logout Boolean
-    boolean logout;
-
-    // Repository
-//    ActivitiRepository repository;
-
-    // Test Admin User
-    User testAdmin;
+    private boolean logout;
 
     // Test User
-    User testUser;
+    private User testUser;
 
 
-
+    /**
+     * Runs before each test. Sets up variables.
+     * @throws Exception Exception
+     */
     public void setUp() throws Exception {
         super.setUp();
 
@@ -52,31 +46,30 @@ public class MainActivityTest extends TestCase {
 
         // Get Repository
 
-        // Set Test Users
-        testAdmin = new User(TEST_ADMIN_NAME, TEST_ADMIN_NAME);
-        testAdmin.setAdmin(true);
+        // Set Test User
+        String TEST_USER_NAME = "TEST_USER";
         testUser = new User(TEST_USER_NAME, TEST_USER_NAME);
 
 
     }
 
+    /**
+     * Runs after each test. Invalidates variables.
+     * @throws Exception Exception
+     */
     public void tearDown() throws Exception {
         super.tearDown();
 
         // Invalidate Variables
         context = null;
         logout = true;
-        testAdmin = null;
         testUser = null;
     }
 
-//    public void testDeleteUser() {
-//
-//    }
-//
-//    public void testToggleUserAdmin() {
-//    }
-
+    /**
+     * Implementation Test for EventActivity's intent factory method.
+     * Intent stores user id.
+     */
     public void testMainActivityIntentFactoryUserId() {
         // Get Intent
         Intent intent = MainActivity.mainActivityIntentFactory(context, testUser.getId());
@@ -89,6 +82,10 @@ public class MainActivityTest extends TestCase {
 
     }
 
+    /**
+     * Implementation Test for EventActivity's intent factory method.
+     * Intent that the user intends to logout.
+     */
     public void testMainActivityIntentFactoryLogout() {
         // Get Intent
         Intent intent = MainActivity.mainActivityIntentFactory(context, logout);

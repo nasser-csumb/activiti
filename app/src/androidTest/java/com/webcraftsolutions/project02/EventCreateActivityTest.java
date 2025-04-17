@@ -23,29 +23,33 @@ public class EventCreateActivityTest {
 
     // CONSTANT FIELDS
 
-    // Test String
-    String EVENT_CREATE_EXTRA = "EVENT_CREATE_INTENT_EXTRA";
-
-    // User Username/Password String
-    String USERNAME = "TEST_USER";
-
     // FIELDS
 
     // Application Context
-    Context context;
+    private Context context;
 
     // Test User
-    User user;
+    private User user;
 
+    /**
+     * Runs before each test. Sets up variables.
+     * @throws Exception Exception
+     */
     @Before
     public void setUp() throws Exception {
         // Get Context
         context = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
         // Set user
+        // User Username/Password String
+        String USERNAME = "TEST_USER";
         user = new User(USERNAME, USERNAME);
     }
 
+    /**
+     * Runs after each test. Invalidates variables.
+     * @throws Exception Exception
+     */
     @After
     public void tearDown() throws Exception {
         // Invalidate Variables
@@ -53,6 +57,9 @@ public class EventCreateActivityTest {
         user = null;
     }
 
+    /**
+     * Implementation Test for EventCreateActivity's intent factory method.
+     */
     @Test
     public void eventCreateActivityIntentFactory() {
         // Get Intent
@@ -62,6 +69,8 @@ public class EventCreateActivityTest {
         assertNotNull(intent);
         assertEquals(user.getId(), intent.getIntExtra(
                 MainActivity.LOGGED_IN_USER_ID_KEY, MainActivity.LOGGED_OUT));
+        // Test String
+        String EVENT_CREATE_EXTRA = "EVENT_CREATE_INTENT_EXTRA";
         assertFalse(intent.getBooleanExtra(EVENT_CREATE_EXTRA, false));
     }
 }

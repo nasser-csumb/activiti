@@ -14,7 +14,6 @@ import androidx.room.Room;
 import androidx.test.core.app.ApplicationProvider;
 
 import com.webcraftsolutions.project02.database.entities.Event;
-import com.webcraftsolutions.project02.database.entities.User;
 
 import org.junit.After;
 import org.junit.Before;
@@ -27,8 +26,8 @@ public class EventDAOTest {
     // CONSTANT FIELDS
 
     // User Username/Password String
-    private String TEST_EVENT = "TEST_EVENT";
-    private int TEST_USER_ID = -1;
+    private final String TEST_EVENT = "TEST_EVENT";
+    private final int TEST_USER_ID = -1;
 
     // FIELDS
 
@@ -41,6 +40,10 @@ public class EventDAOTest {
     // Event Object
     Event event;
 
+    /**
+     * Runs before each test. Sets up Database and event variables.
+     * @throws Exception Exception
+     */
     @Before
     public void setUp() throws Exception {
         // Get Database
@@ -54,6 +57,10 @@ public class EventDAOTest {
         event.setEventId(1);
     }
 
+    /**
+     * Runs after each test. Closes database and invalidates variables.
+     * @throws Exception Exception
+     */
     @After
     public void tearDown() throws Exception {
         // Close Database
@@ -64,6 +71,9 @@ public class EventDAOTest {
         event = null;
     }
 
+    /**
+     * Implementation Test for the Event Table's Delete method.
+     */
     @Test
     public void delete() {
         // Insert Event into Database
@@ -79,6 +89,9 @@ public class EventDAOTest {
         assertNull(eventDAO.getEventByEventIdSynchronous(event.getEventId()));
     }
 
+    /**
+     * Implementation Test for the Event Table's Insert method.
+     */
     @Test
     public void insert() {
         // Check that Event is NOT in Database
@@ -92,6 +105,9 @@ public class EventDAOTest {
         assertEquals(event, dbEvent);
     }
 
+    /**
+     * Implementation Test for the Event Table's getAllEventsByUserId method.
+     */
     @Test
     public void getAllEventsByUserIdSynchronous() {
         // Insert Event into Database
@@ -104,6 +120,9 @@ public class EventDAOTest {
         assertEquals(eventList.getFirst().getUserId(), event.getUserId());
     }
 
+    /**
+     * Implementation Test for the Event Table's getEventByEventId method.
+     */
     @Test
     public void getEventByEventIdSynchronous() {
         // Insert Event into Database
@@ -114,6 +133,9 @@ public class EventDAOTest {
         assertEquals(event, dbEvent);
     }
 
+    /**
+     * Implementation Test for the Event Table's Insert method updating pre-existing events.
+     */
     @Test
     public void update() {
         // Put Event in Database
@@ -122,6 +144,7 @@ public class EventDAOTest {
 
         // Update Event Entry in Database
         event.setUserId(TEST_USER_ID + 1);
+        event.setName(TEST_EVENT + TEST_EVENT);
         eventDAO.insert(event);
 
         // Check old and new versions of Events
