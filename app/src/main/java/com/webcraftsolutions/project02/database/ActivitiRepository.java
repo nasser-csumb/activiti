@@ -67,8 +67,6 @@ public class ActivitiRepository {
         this.wellnessJournalDAO = db.wellnessJournalDAO();
 
         this.userDAO = db.userDAO();
-
-        this.allEventLogs = getAllEvents();
     }
 
     // STATIC METHODS
@@ -122,8 +120,8 @@ public class ActivitiRepository {
      * Returns an ArrayList containing all Event logs in the repository.
      * @return An ArrayList of Event objects.
      */
-    public ArrayList<Event> getAllEvents() {
-        return (ArrayList<Event>) eventDAO.getAllEvents();
+    public LiveData<List<Event>> getAllEvents() {
+        return eventDAO.getAllEvents();
     }
 
     /**
@@ -131,8 +129,8 @@ public class ActivitiRepository {
      * @param userId Used to select Event logs that were logged by a specific user.
      * @return An ArrayList of Event objects.
      */
-    public ArrayList<Event> getAllEventsByUserId(int userId) {
-        return (ArrayList<Event>) eventDAO.getAllEventsByUserId(userId);
+    public LiveData<List<Event>> getAllEventsByUserId(int userId) {
+        return eventDAO.getAllEventsByUserId(userId);
     }
 
     /**
