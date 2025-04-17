@@ -23,24 +23,24 @@ public class LoginActivityTest {
     String LOGIN_EXTRA = "LOGIN_INTENT_EXTRA";
 
     // Application Context
-    Context CONTEXT;
+    Context context;
 
     @Before
     public void setUp() throws Exception {
         // Get Context
-        CONTEXT = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        context = InstrumentationRegistry.getInstrumentation().getTargetContext();
     }
 
     @After
     public void tearDown() throws Exception {
         // Invalidate Variables
-        CONTEXT = null;
+        context = null;
     }
 
     @Test
     public void loginActivityIntentFactory() {
         // Get Intent
-        Intent intent = LoginActivity.loginActivityIntentFactory(CONTEXT);
+        Intent intent = LoginActivity.loginActivityIntentFactory(context);
 
         // Check Intent
         assertNotNull(intent);
