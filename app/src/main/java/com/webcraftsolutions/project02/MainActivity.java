@@ -65,7 +65,31 @@ public class MainActivity extends AppCompatActivity {
     // METHODS
 
     private void enableAdmin() {
+        // Enable Views
+        binding.mainMenuAdminMenu.adminUsernameEditText.setVisibility(View.VISIBLE);
+        binding.mainMenuAdminMenu.adminUsernameEditText.setEnabled(true);
+        binding.mainMenuAdminMenu.adminToggleAdminButton.setVisibility(View.VISIBLE);
+        binding.mainMenuAdminMenu.adminToggleAdminButton.setEnabled(true);
+        binding.mainMenuAdminMenu.adminClearDatabaseButton.setVisibility(View.VISIBLE);
+        binding.mainMenuAdminMenu.adminClearDatabaseButton.setEnabled(true);
 
+        // Set OnClickListener for Toggle Admin Button
+        binding.mainMenuAdminMenu.adminToggleAdminButton
+                .setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        // Set OnClickListener for Clear Database Button
+        binding.mainMenuAdminMenu.adminClearDatabaseButton
+                .setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     /**
