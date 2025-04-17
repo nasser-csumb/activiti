@@ -62,6 +62,9 @@ public class MainActivity extends AppCompatActivity {
     // Tracks whether the application has toggled a user's admin status already.
     private boolean adminAlreadyToggled = false;
 
+    // Tracks whether the application tried to delete a user already.
+    private boolean userDeleteAlreadyAttempted = false;
+
     // The data of the logged in user.
     private User user;
 
@@ -69,6 +72,39 @@ public class MainActivity extends AppCompatActivity {
 
     private void deleteUser() {
         // Get username
+        String username = binding.mainMenuAdminMenu.adminDeleteUserUsernameEditText
+                .getText().toString();
+
+        // Check if username is empty.
+        if(username.isEmpty()) {
+            toastMaker(getApplicationContext(), "Username cannot be empty.");
+            return;
+        }
+
+        // Get user
+        LiveData<User> userObserver = repository.getUserByUsername(username);
+        userObserver.observe(this, user -> {
+            // Check if user deletion was already attempted.
+            if(userDeleteAlreadyAttempted) { return; }
+            /*
+            If user doesn't exist, is the same as the current user, or is an admin,
+                an error will be displayed.
+            Otherwise, the user will be deleted, and a message will be displayed.
+             */
+            String message;
+            if(user == null) {
+                message = username + " does not exist.";
+            } else if(user.equals(this.user)) {
+                message = "Users cannot delete themselves.";
+            } else if(user.isAdmin()) {
+                message = "Admins cannot be deleted.";
+            } else {
+                repository.deleteUser(user);
+                message = username + " deleted!";
+            }
+            toastMaker(getApplicationContext(), message);
+            userDeleteAlreadyAttempted = true;
+        });
     }
 
     private void enableAdmin() {
@@ -97,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
                 .setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                userDeleteAlreadyAttempted = false;
                 deleteUser();
             }
         });
@@ -309,7 +346,8 @@ public class MainActivity extends AppCompatActivity {
      */
     private void toggleUserAdmin() {
         // Get username
-        String username = binding.mainMenuAdminMenu.adminToggleAdminUsernameEditText.getText().toString();
+        String username = binding.mainMenuAdminMenu.adminToggleAdminUsernameEditText
+                .getText().toString();
 
         // Check if a username has been entered.
         if(username.isEmpty()) {
@@ -326,22 +364,23 @@ public class MainActivity extends AppCompatActivity {
             If user doesn't exist, or is the current user, print an error message.
             Otherwise, set user.isAdmin to true if false, or false if true, and print a message.
              */
+            String message;
             if(user == null) {
-                toastMaker(getApplicationContext(), username + " does not exist.");
+                message = username + " does not exist.";
             } else if(user.equals(this.user)) {
-                toastMaker(getApplicationContext(), "You cannot toggle yourself.");
+                message = "You cannot toggle yourself.";
             } else {
                 if(!user.isAdmin()) {
                     user.setAdmin(true);
                     repository.insertUser(user);
-                    toastMaker(getApplicationContext(), username + " is now an admin!");
+                    message = username + " is now an admin!";
                 } else {
                     user.setAdmin(false);
                     repository.insertUser(user);
-                    toastMaker(getApplicationContext(),
-                            username + " is no longer an admin.");
+                    message = username + " is no longer an admin.";
                 }
             }
+            toastMaker(getApplicationContext(), message);
             adminAlreadyToggled = true;
         });
     }
