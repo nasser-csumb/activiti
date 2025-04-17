@@ -64,6 +64,14 @@ public class MainActivity extends AppCompatActivity {
 
     // METHODS
 
+    private void disableAdmin() {
+
+    }
+
+    private void enableAdmin() {
+
+    }
+
     /**
      * Attempts to get user and user id from the application shared preferences, instance state,
      *      intent extras, and user repository.
@@ -105,6 +113,13 @@ public class MainActivity extends AppCompatActivity {
                         .format("Hello %s!", user.getUsername()));
                 binding.mainMenuTopMenu.topMenuUserTextView.setText(String
                         .format("%s", user.getUsername()));
+
+                // Activate or Deactivate Admin features
+                if(user.isAdmin()) {
+                    enableAdmin();
+                } else {
+                    disableAdmin();
+                }
             }
         });
     }
