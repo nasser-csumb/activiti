@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/adminUsernameEditText"
+        android:id="@+id/adminToggleAdminUsernameEditText"
         android:layout_width="175dp"
         android:layout_height="50dp"
         android:layout_marginStart="10dp"
@@ -29,13 +29,26 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <EditText
+        android:id="@+id/adminDeleteUserUsernameEditText"
+        android:layout_width="175dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="10dp"
+        android:enabled="false"
+        android:hint="@string/adminUsernameEditTextHint"
+        android:inputType="text"
+        android:textSize="20sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@id/adminDeleteUserButton"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <Button
-        android:id="@+id/adminClearDatabaseButton"
+        android:id="@+id/adminDeleteUserButton"
         android:layout_width="175dp"
         android:layout_height="50dp"
         android:layout_margin="10dp"
         android:enabled="false"
-        android:text="@string/adminClearDatabaseButtonText"
+        android:text="@string/adminDeleteUserButtonText"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

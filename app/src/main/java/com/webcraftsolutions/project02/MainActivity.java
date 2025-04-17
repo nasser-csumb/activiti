@@ -67,14 +67,20 @@ public class MainActivity extends AppCompatActivity {
 
     // METHODS
 
+    private void deleteUser() {
+        // Get username
+    }
+
     private void enableAdmin() {
         // Enable Views
-        binding.mainMenuAdminMenu.adminUsernameEditText.setVisibility(View.VISIBLE);
-        binding.mainMenuAdminMenu.adminUsernameEditText.setEnabled(true);
+        binding.mainMenuAdminMenu.adminToggleAdminUsernameEditText.setVisibility(View.VISIBLE);
+        binding.mainMenuAdminMenu.adminToggleAdminUsernameEditText.setEnabled(true);
         binding.mainMenuAdminMenu.adminToggleAdminButton.setVisibility(View.VISIBLE);
         binding.mainMenuAdminMenu.adminToggleAdminButton.setEnabled(true);
-        binding.mainMenuAdminMenu.adminClearDatabaseButton.setVisibility(View.VISIBLE);
-        binding.mainMenuAdminMenu.adminClearDatabaseButton.setEnabled(true);
+        binding.mainMenuAdminMenu.adminDeleteUserUsernameEditText.setVisibility(View.VISIBLE);
+        binding.mainMenuAdminMenu.adminDeleteUserUsernameEditText.setEnabled(true);
+        binding.mainMenuAdminMenu.adminDeleteUserButton.setVisibility(View.VISIBLE);
+        binding.mainMenuAdminMenu.adminDeleteUserButton.setEnabled(true);
 
         // Set OnClickListener for Toggle Admin Button
         binding.mainMenuAdminMenu.adminToggleAdminButton
@@ -87,11 +93,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Set OnClickListener for Clear Database Button
-        binding.mainMenuAdminMenu.adminClearDatabaseButton
+        binding.mainMenuAdminMenu.adminDeleteUserButton
                 .setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                deleteUser();
             }
         });
     }
@@ -303,7 +309,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private void toggleUserAdmin() {
         // Get username
-        String username = binding.mainMenuAdminMenu.adminUsernameEditText.getText().toString();
+        String username = binding.mainMenuAdminMenu.adminToggleAdminUsernameEditText.getText().toString();
 
         // Check if a username has been entered.
         if(username.isEmpty()) {

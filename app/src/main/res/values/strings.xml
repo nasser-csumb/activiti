@@ -66,6 +66,6 @@
     <string name="signupSignupButtonText">SIGN UP!</string>
     <string name="adminUsernameEditTextHint">Enter Username</string>
     <string name="adminToggleAdminButtonText">TOGGLE ADMIN</string>
-    <string name="adminClearDatabaseButtonText">CLEAR DATABASE</string>
+    <string name="adminDeleteUserButtonText">DELETE USER</string>
     <string name="mainMenuGreetingTextViewText">Hello User!</string>
 </resources>
