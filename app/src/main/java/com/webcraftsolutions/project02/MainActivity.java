@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
      *      or is an admin.
      * Otherwise, deletes the user and database entries associated with the user.
      */
-    private void deleteUser(String username) {
+    void deleteUser(String username) {
 
         // Check if username is empty.
         if(username.isEmpty()) {
@@ -352,7 +352,7 @@ public class MainActivity extends AppCompatActivity {
      * Flips the admin status of the user if a valid username is entered,
      *      and updates the user's database entry.
      */
-    private void toggleUserAdmin(String username) {
+    void toggleUserAdmin(String username) {
         // Check if a username has been entered.
         if(username.isEmpty()) {
             toastMaker(getApplicationContext(), "Username cannot be empty.");
