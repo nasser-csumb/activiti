@@ -23,6 +23,9 @@ public interface EventDAO {
     @Delete
     void delete(Event... event);
 
+    @Query("DELETE FROM " + ActivitiDatabase.EVENT_TABLE + " WHERE userId = :userId")
+    void deleteAllEventsByUserId(int userId);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Event... event);
 
