@@ -99,6 +99,16 @@ public class ActivitiRepository {
     // EVENT TABLE METHODS
 
     /**
+     * Deletes all Event logs with the passed in userId.
+     * @param userId The userId used to determine which event logs to delete.
+     */
+    public void deleteAllEventsByUserId(int userId) {
+        ActivitiDatabase.databaseWriteExecutor.execute(() -> {
+            eventDAO.deleteAllEventsByUserId(userId);
+        });
+    }
+
+    /**
      * Deletes an Event log from the database.
      * @param event The Event log to be deleted.
      */
@@ -306,7 +316,29 @@ public class ActivitiRepository {
      * @param user The user to be deleted.
      */
     public void deleteUser(User... user) {
+        // Delete User
         ActivitiDatabase.databaseWriteExecutor.execute(() -> userDAO.delete(user));
+    }
+
+    /**
+     * Deletes a user from the user table, and all logs made by that user.
+     * @param user The user to be deleted.
+     */
+    public void wipeUser(User user) {
+        // Delete User
+        deleteUser(user);
+
+        // Delete User's Event logs
+        deleteAllEventsByUserId(user.getId());
+
+        // Delete User's Exercise Logs
+        // TODO Delete Exercise Logs when they are added.
+
+        // Delete User's Wellness Logs
+        // TODO Delete User's Wellness Logs
+
+        // Delete User's Travel Logs
+        // TODO Delete User's Travel Logs
     }
 
     /** Returns all users in the user table. */
