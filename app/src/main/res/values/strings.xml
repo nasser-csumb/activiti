@@ -64,4 +64,8 @@
     <string name="topMenuUserTextViewText">USER</string>
     <string name="signupTitleTextViewText">Please Sign Up!</string>
     <string name="signupSignupButtonText">SIGN UP!</string>
+    <string name="adminUsernameEditTextHint">Enter Username</string>
+    <string name="adminToggleAdminButtonText">TOGGLE ADMIN</string>
+    <string name="adminDeleteUserButtonText">DELETE USER</string>
+    <string name="mainMenuGreetingTextViewText">Hello User!</string>
 </resources>

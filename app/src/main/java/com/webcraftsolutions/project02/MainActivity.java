@@ -59,10 +59,93 @@ public class MainActivity extends AppCompatActivity {
     // The repository.
     private ActivitiRepository repository;
 
+    // Tracks whether the application has toggled a user's admin status already.
+    private boolean adminAlreadyToggled = false;
+
+    // Tracks whether the application tried to delete a user already.
+    private boolean userDeleteAlreadyAttempted = false;
+
     // The data of the logged in user.
     private User user;
 
     // METHODS
+
+    /**
+     * Attempts to delete a user from the database.
+     * Prints an error message if the user does not exist, is the same as the logged in user,
+     *      or is an admin.
+     * Otherwise, deletes the user and database entries associated with the user.
+     */
+    void deleteUser(String username) {
+
+        // Check if username is empty.
+        if(username.isEmpty()) {
+            toastMaker(getApplicationContext(), "Username cannot be empty.");
+            return;
+        }
+
+        // Get user
+        LiveData<User> userObserver = repository.getUserByUsername(username);
+        userObserver.observe(this, user -> {
+            // Check if user deletion was already attempted.
+            if(userDeleteAlreadyAttempted) { return; }
+            /*
+            If user doesn't exist, is the same as the current user, or is an admin,
+                an error will be displayed.
+            Otherwise, the user will be deleted, and a message will be displayed.
+             */
+            String message;
+            if(user == null) {
+                message = username + " does not exist.";
+            } else if(user.equals(this.user)) {
+                message = "Users cannot delete themselves.";
+            } else if(user.isAdmin()) {
+                message = "Admins cannot be deleted.";
+            } else {
+                repository.wipeUser(user);
+                message = username + " deleted!";
+            }
+            toastMaker(getApplicationContext(), message);
+            userDeleteAlreadyAttempted = true;
+        });
+    }
+
+    private void enableAdmin() {
+        // Enable Views
+        binding.mainMenuAdminMenu.adminToggleAdminUsernameEditText.setVisibility(View.VISIBLE);
+        binding.mainMenuAdminMenu.adminToggleAdminUsernameEditText.setEnabled(true);
+        binding.mainMenuAdminMenu.adminToggleAdminButton.setVisibility(View.VISIBLE);
+        binding.mainMenuAdminMenu.adminToggleAdminButton.setEnabled(true);
+        binding.mainMenuAdminMenu.adminDeleteUserUsernameEditText.setVisibility(View.VISIBLE);
+        binding.mainMenuAdminMenu.adminDeleteUserUsernameEditText.setEnabled(true);
+        binding.mainMenuAdminMenu.adminDeleteUserButton.setVisibility(View.VISIBLE);
+        binding.mainMenuAdminMenu.adminDeleteUserButton.setEnabled(true);
+
+        // Set OnClickListener for Toggle Admin Button
+        binding.mainMenuAdminMenu.adminToggleAdminButton
+                .setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adminAlreadyToggled = false;
+                String username = binding.mainMenuAdminMenu.adminDeleteUserUsernameEditText
+                        .getText().toString();
+                toggleUserAdmin(username);
+            }
+        });
+
+        // Set OnClickListener for Clear Database Button
+        binding.mainMenuAdminMenu.adminDeleteUserButton
+                .setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userDeleteAlreadyAttempted = false;
+                // Get username
+                String username = binding.mainMenuAdminMenu.adminDeleteUserUsernameEditText
+                        .getText().toString();
+                deleteUser(username);
+            }
+        });
+    }
 
     /**
      * Attempts to get user and user id from the application shared preferences, instance state,
@@ -105,6 +188,11 @@ public class MainActivity extends AppCompatActivity {
                         .format("Hello %s!", user.getUsername()));
                 binding.mainMenuTopMenu.topMenuUserTextView.setText(String
                         .format("%s", user.getUsername()));
+
+                // Activate or Deactivate Admin features
+                if(user.isAdmin()) {
+                    enableAdmin();
+                }
             }
         });
     }
@@ -256,6 +344,49 @@ public class MainActivity extends AppCompatActivity {
         });
 
         alertBuilder.create().show();
+    }
+
+    /**
+     * Attempts to toggle the admin status of the user with the entered username.
+     * Returns and prints a message if the entered username is empty or invalid.
+     * Flips the admin status of the user if a valid username is entered,
+     *      and updates the user's database entry.
+     */
+    void toggleUserAdmin(String username) {
+        // Check if a username has been entered.
+        if(username.isEmpty()) {
+            toastMaker(getApplicationContext(), "Username cannot be empty.");
+            return;
+        }
+
+        // Get user from database
+        LiveData<User> userObserver = repository.getUserByUsername(username);
+        userObserver.observe(this, user -> {
+            // Check if admin was recently toggled
+            if(adminAlreadyToggled) { return; }
+            /*
+            If user doesn't exist, or is the current user, print an error message.
+            Otherwise, set user.isAdmin to true if false, or false if true, and print a message.
+             */
+            String message;
+            if(user == null) {
+                message = username + " does not exist.";
+            } else if(user.equals(this.user)) {
+                message = "You cannot toggle yourself.";
+            } else {
+                if(!user.isAdmin()) {
+                    user.setAdmin(true);
+                    repository.insertUser(user);
+                    message = username + " is now an admin!";
+                } else {
+                    user.setAdmin(false);
+                    repository.insertUser(user);
+                    message = username + " is no longer an admin.";
+                }
+            }
+            toastMaker(getApplicationContext(), message);
+            adminAlreadyToggled = true;
+        });
     }
 
     /**

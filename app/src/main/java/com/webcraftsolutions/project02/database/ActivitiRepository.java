@@ -67,8 +67,6 @@ public class ActivitiRepository {
         this.wellnessJournalDAO = db.wellnessJournalDAO();
 
         this.userDAO = db.userDAO();
-
-        this.allEventLogs = getAllEvents();
     }
 
     // STATIC METHODS
@@ -96,7 +94,19 @@ public class ActivitiRepository {
         return null;
     }
 
+    // METHODS
+
     // EVENT TABLE METHODS
+
+    /**
+     * Deletes all Event logs with the passed in userId.
+     * @param userId The userId used to determine which event logs to delete.
+     */
+    public void deleteAllEventsByUserId(int userId) {
+        ActivitiDatabase.databaseWriteExecutor.execute(() -> {
+            eventDAO.deleteAllEventsByUserId(userId);
+        });
+    }
 
     /**
      * Deletes an Event log from the database.
@@ -122,8 +132,8 @@ public class ActivitiRepository {
      * Returns an ArrayList containing all Event logs in the repository.
      * @return An ArrayList of Event objects.
      */
-    public ArrayList<Event> getAllEvents() {
-        return (ArrayList<Event>) eventDAO.getAllEvents();
+    public LiveData<List<Event>> getAllEvents() {
+        return eventDAO.getAllEvents();
     }
 
     /**
@@ -131,8 +141,8 @@ public class ActivitiRepository {
      * @param userId Used to select Event logs that were logged by a specific user.
      * @return An ArrayList of Event objects.
      */
-    public ArrayList<Event> getAllEventsByUserId(int userId) {
-        return (ArrayList<Event>) eventDAO.getAllEventsByUserId(userId);
+    public LiveData<List<Event>> getAllEventsByUserId(int userId) {
+        return eventDAO.getAllEventsByUserId(userId);
     }
 
     /**
@@ -140,7 +150,7 @@ public class ActivitiRepository {
      * @param eventId Used to select a specific Event log.
      * @return An Event object.
      */
-    public Event getEventByEventId(int eventId) {
+    public LiveData<Event> getEventByEventId(int eventId) {
         return eventDAO.getEventByEventId(eventId);
     }
 
@@ -301,17 +311,34 @@ public class ActivitiRepository {
         ActivitiDatabase.databaseWriteExecutor.execute(() -> userDAO.insert(user));
     }
 
-    /** Deletes all users from the user table */
-    public void deleteAllUsers() {
-        ActivitiDatabase.databaseWriteExecutor.execute(userDAO::deleteAll);
-    }
-
     /**
      * Deletes a user from the user table.
      * @param user The user to be deleted.
      */
-    public void deleteUser(User user) {
+    public void deleteUser(User... user) {
+        // Delete User
         ActivitiDatabase.databaseWriteExecutor.execute(() -> userDAO.delete(user));
+    }
+
+    /**
+     * Deletes a user from the user table, and all logs made by that user.
+     * @param user The user to be deleted.
+     */
+    public void wipeUser(User user) {
+        // Delete User
+        deleteUser(user);
+
+        // Delete User's Event logs
+        deleteAllEventsByUserId(user.getId());
+
+        // Delete User's Exercise Logs
+        // TODO Delete Exercise Logs when they are added.
+
+        // Delete User's Wellness Logs
+        // TODO Delete User's Wellness Logs
+
+        // Delete User's Travel Logs
+        // TODO Delete User's Travel Logs
     }
 
     /** Returns all users in the user table. */

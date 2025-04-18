@@ -6,6 +6,7 @@
  */
 package com.webcraftsolutions.project02.database;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -22,15 +23,24 @@ public interface EventDAO {
     @Delete
     void delete(Event... event);
 
+    @Query("DELETE FROM " + ActivitiDatabase.EVENT_TABLE + " WHERE userId = :userId")
+    void deleteAllEventsByUserId(int userId);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Event... event);
 
     @Query("SELECT * FROM " + ActivitiDatabase.EVENT_TABLE)
-    List<Event> getAllEvents();
+    LiveData<List<Event>> getAllEvents();
 
     @Query("SELECT * FROM " + ActivitiDatabase.EVENT_TABLE + " WHERE userId = :userId")
-    List<Event> getAllEventsByUserId(int userId);
+    LiveData<List<Event>> getAllEventsByUserId(int userId);
+
+    @Query("SELECT * FROM " + ActivitiDatabase.EVENT_TABLE + " WHERE userId = :userId")
+    List<Event> getAllEventsByUserIdSynchronous(int userId);
 
     @Query("SELECT * FROM " + ActivitiDatabase.EVENT_TABLE + " WHERE eventId = :eventId")
-    Event getEventByEventId(int eventId);
+    LiveData<Event> getEventByEventId(int eventId);
+
+    @Query("SELECT * FROM " + ActivitiDatabase.EVENT_TABLE + " WHERE eventId = :eventId")
+    Event getEventByEventIdSynchronous(int eventId);
 }

@@ -24,7 +24,7 @@ public interface UserDAO {
     void insert(User... user);
 
     @Delete
-    void delete(User user);
+    void delete(User... user);
 
     @Query("SELECT * FROM " + ActivitiDatabase.USER_TABLE)
     LiveData<List<User>> getAllUsers();
@@ -35,6 +35,12 @@ public interface UserDAO {
     @Query("SELECT * FROM " + ActivitiDatabase.USER_TABLE + " WHERE username == :username")
     LiveData<User> getUserByUsername(String username);
 
+    @Query("SELECT * FROM " + ActivitiDatabase.USER_TABLE + " WHERE username == :username")
+    User getUserByUsernameSynchronous(String username);
+
     @Query("SELECT * FROM " + ActivitiDatabase.USER_TABLE + " WHERE id == :userId")
     LiveData<User> getUserByUserId(int userId);
+
+    @Query("SELECT * FROM " + ActivitiDatabase.USER_TABLE + " WHERE id == :userId")
+    User getUserByUserIdSynchronous(int userId);
 }

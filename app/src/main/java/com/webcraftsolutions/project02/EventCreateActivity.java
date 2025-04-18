@@ -93,8 +93,9 @@ public class EventCreateActivity extends AppCompatActivity {
                 String description = binding.eventCreateDescEditText.getText().toString();
                 String date = binding.eventCreateDateEditText.getText().toString();
                 String time = binding.eventCreateTimeEditText.getText().toString();
-                Event event = new Event(name, description, date, time, -1);
+                Event event = new Event(name, description, date, time, user.getId());
                 repository.insertEvent(event);
+                MainActivity.toastMaker(getApplicationContext(), name + " saved!");
             }
         });
     }
