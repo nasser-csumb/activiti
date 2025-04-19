@@ -277,9 +277,8 @@ public class MainActivity extends AppCompatActivity {
         binding.mainMenuExerciseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO SUHAIB Start Exercise Activity
-//                Intent intent = Exercise Activity Intent Factory
-//                startActivity(intent);
+                Intent intent = ExerciseActivity.exerciseActivityIntentFactory(MainActivity.this);
+                startActivity(intent);
 
             }
         });

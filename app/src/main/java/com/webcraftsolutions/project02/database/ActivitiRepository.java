@@ -21,6 +21,9 @@ import com.webcraftsolutions.project02.database.entities.User;
 import com.webcraftsolutions.project02.database.entities.WellnessJournal;
 import com.webcraftsolutions.project02.database.entities.WellnessMood;
 import com.webcraftsolutions.project02.database.entities.WellnessSleep;
+import com.webcraftsolutions.project02.database.entities.CardioWorkout;
+import com.webcraftsolutions.project02.database.entities.WeightLiftingWorkout;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +68,11 @@ public class ActivitiRepository {
         this.wellnessSleepDAO = db.wellnessSleepDAO();
         this.wellnessMoodDAO = db.wellnessMoodDAO();
         this.wellnessJournalDAO = db.wellnessJournalDAO();
+
+        this.allEventLogs = getAllEvents();
+
+        this.cardioWorkoutDAO = db.cardioWorkoutDAO();
+        this.weightLiftingWorkoutDAO = db.weightLiftingWorkoutDAO();
 
         this.userDAO = db.userDAO();
     }
@@ -177,6 +185,12 @@ public class ActivitiRepository {
     }
 
     // EXERCISE TABLE METHODS
+
+    // Exercise DAO
+    private final CardioWorkoutDAO cardioWorkoutDAO;
+    private final WeightLiftingWorkoutDAO weightLiftingWorkoutDAO;
+
+
 
     // TRAVEL TABLE METHODS
 
@@ -299,6 +313,25 @@ public class ActivitiRepository {
     /** Returns a specific Journal entry by ID. */
     public WellnessJournal getJournalById(int entryId) {
         return wellnessJournalDAO.getEntryById(entryId);
+    }
+
+    // Cardio Workout Methods
+    public void insertCardioWorkout(CardioWorkout... workouts) {
+        ActivitiDatabase.databaseWriteExecutor.execute(() -> cardioWorkoutDAO.insert(workouts));
+    }
+
+    public ArrayList<CardioWorkout> getAllCardioWorkoutsByUserId(int userId) {
+        return new ArrayList<>(cardioWorkoutDAO.getCardioWorkoutsByUserId(userId));
+    }
+
+    // Weight Lifting Methods
+
+    public void insertWeightLiftingWorkout(WeightLiftingWorkout... workouts) {
+        ActivitiDatabase.databaseWriteExecutor.execute(() -> weightLiftingWorkoutDAO.insert(workouts));
+    }
+
+    public ArrayList<WeightLiftingWorkout> getAllWeightLiftingWorkoutsByUserId(int userId) {
+        return new ArrayList<>(weightLiftingWorkoutDAO.getWeightLiftingWorkoutsByUserId(userId));
     }
 
     // USER METHODS
