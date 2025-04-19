@@ -14,10 +14,11 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 
 import com.webcraftsolutions.project02.database.entities.Event;
-import com.webcraftsolutions.project02.database.CardioWorkout;
-import com.webcraftsolutions.project02.database.WeightLiftingWorkout;
+import com.webcraftsolutions.project02.database.entities.CardioWorkout;
+import com.webcraftsolutions.project02.database.entities.WeightLiftingWorkout;
 import com.webcraftsolutions.project02.database.CardioWorkoutDAO;
 import com.webcraftsolutions.project02.database.WeightLiftingWorkoutDAO;
 
@@ -29,6 +30,7 @@ import com.webcraftsolutions.project02.database.entities.WellnessMood;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+@TypeConverters({DateConverter.class})
 @Database(entities = {Event.class, WellnessJournal.class, WellnessMood.class, WellnessSleep.class, TravelExploration.class, CardioWorkout.class,
         WeightLiftingWorkout.class}, version = 4, exportSchema = false)
 public abstract class ActivitiDatabase extends RoomDatabase {

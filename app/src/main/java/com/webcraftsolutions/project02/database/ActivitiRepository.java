@@ -18,6 +18,9 @@ import com.webcraftsolutions.project02.database.entities.TravelExploration;
 import com.webcraftsolutions.project02.database.entities.WellnessJournal;
 import com.webcraftsolutions.project02.database.entities.WellnessMood;
 import com.webcraftsolutions.project02.database.entities.WellnessSleep;
+import com.webcraftsolutions.project02.database.entities.CardioWorkout;
+import com.webcraftsolutions.project02.database.entities.WeightLiftingWorkout;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +63,10 @@ public class ActivitiRepository {
         this.wellnessJournalDAO = db.wellnessJournalDAO();
 
         this.allEventLogs = getAllEvents();
+
+        this.cardioWorkoutDAO = db.cardioWorkoutDAO();
+        this.weightLiftingWorkoutDAO = db.weightLiftingWorkoutDAO();
+
     }
 
     // STATIC METHODS
@@ -158,6 +165,12 @@ public class ActivitiRepository {
     }
 
     // EXERCISE TABLE METHODS
+
+    // Exercise DAO
+    private final CardioWorkoutDAO cardioWorkoutDAO;
+    private final WeightLiftingWorkoutDAO weightLiftingWorkoutDAO;
+
+
 
     // TRAVEL TABLE METHODS
 
@@ -281,4 +294,24 @@ public class ActivitiRepository {
     public WellnessJournal getJournalById(int entryId) {
         return wellnessJournalDAO.getEntryById(entryId);
     }
+
+    // Cardio Workout Methods
+    public void insertCardioWorkout(CardioWorkout... workouts) {
+        ActivitiDatabase.databaseWriteExecutor.execute(() -> cardioWorkoutDAO.insert(workouts));
+    }
+
+    public ArrayList<CardioWorkout> getAllCardioWorkoutsByUserId(int userId) {
+        return new ArrayList<>(cardioWorkoutDAO.getCardioWorkoutsByUserId(userId));
+    }
+
+    // Weight Lifting Methods
+
+    public void insertWeightLiftingWorkout(WeightLiftingWorkout... workouts) {
+        ActivitiDatabase.databaseWriteExecutor.execute(() -> weightLiftingWorkoutDAO.insert(workouts));
+    }
+
+    public ArrayList<WeightLiftingWorkout> getAllWeightLiftingWorkoutsByUserId(int userId) {
+        return new ArrayList<>(weightLiftingWorkoutDAO.getWeightLiftingWorkoutsByUserId(userId));
+    }
+
 }
