@@ -10,12 +10,16 @@
 package com.webcraftsolutions.project02.database;
 
 import android.content.Context;
+import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.webcraftsolutions.project02.MainActivity;
 import com.webcraftsolutions.project02.database.entities.Event;
 import com.webcraftsolutions.project02.database.entities.CardioWorkout;
 import com.webcraftsolutions.project02.database.entities.WeightLiftingWorkout;
@@ -23,6 +27,7 @@ import com.webcraftsolutions.project02.database.CardioWorkoutDAO;
 import com.webcraftsolutions.project02.database.WeightLiftingWorkoutDAO;
 
 import com.webcraftsolutions.project02.database.entities.TravelExploration;
+import com.webcraftsolutions.project02.database.entities.User;
 import com.webcraftsolutions.project02.database.entities.WellnessSleep;
 import com.webcraftsolutions.project02.database.entities.WellnessJournal;
 import com.webcraftsolutions.project02.database.entities.WellnessMood;
@@ -32,7 +37,7 @@ import java.util.concurrent.Executors;
 
 @TypeConverters({DateConverter.class})
 @Database(entities = {Event.class, WellnessJournal.class, WellnessMood.class, WellnessSleep.class, TravelExploration.class, CardioWorkout.class,
-        WeightLiftingWorkout.class}, version = 4, exportSchema = false)
+                      WeightLiftingWorkout.class, User.class}, version = 6, exportSchema = false)
 public abstract class ActivitiDatabase extends RoomDatabase {
 
     // CLASS FIELDS
@@ -77,7 +82,6 @@ public abstract class ActivitiDatabase extends RoomDatabase {
      * @param context The application context.
      * @return A GymLogDatabase instance.
      */
-    //TODO Enable add addCallback call once addDefaultValues is added.
     static ActivitiDatabase getDatabase(final Context context) {
         if(INSTANCE == null) {
             synchronized (ActivitiDatabase.class) {
@@ -87,7 +91,7 @@ public abstract class ActivitiDatabase extends RoomDatabase {
                             ActivitiDatabase.class,
                             DATABASE_NAME)
                             .fallbackToDestructiveMigration()
-//                            .addCallback(addDefaultValues)
+                            .addCallback(addDefaultValues)
                             .build();
                 }
             }
@@ -95,7 +99,35 @@ public abstract class ActivitiDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
-    // TODO Add addDefaultValues, which adds default users to database, method here after User and UserDAO are setup.
+    /** Adds to default users, admin1 and testuser1, to the user table. */
+    private static final RoomDatabase.Callback addDefaultValues = new RoomDatabase.Callback() {
+        @Override
+        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+            super.onCreate(db);
+
+            // Log Message
+            Log.i(MainActivity.TAG, "ACTIVITI DATABASE CREATED");
+
+            // Add default users to database.
+            databaseWriteExecutor.execute(() -> {
+                // Get userDAO
+                UserDAO userDAO = INSTANCE.userDAO();
+                userDAO.deleteAll();
+
+                // Add admin
+                User admin = new User("admin1", "admin1");
+                admin.setId(1);
+                admin.setAdmin(true);
+                userDAO.insert(admin);
+
+                // Add test user
+                User testUser = new User("testuser1", "testuser1");
+                testUser.setId(2);
+                userDAO.insert(testUser);
+
+            });
+        }
+    };
 
 
     // ABSTRACT METHODS
@@ -103,6 +135,7 @@ public abstract class ActivitiDatabase extends RoomDatabase {
     public abstract EventDAO eventDAO();
 
     public abstract TravelExplorationDAO travelExplorationDAO();
+    public abstract UserDAO userDAO();
     // Wellness
     public abstract WellnessSleepDAO wellnessSleepDAO();
     public abstract WellnessMoodDAO wellnessMoodDAO();

@@ -12,9 +12,12 @@ package com.webcraftsolutions.project02.database;
 import android.app.Application;
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
+
 import com.webcraftsolutions.project02.MainActivity;
 import com.webcraftsolutions.project02.database.entities.Event;
 import com.webcraftsolutions.project02.database.entities.TravelExploration;
+import com.webcraftsolutions.project02.database.entities.User;
 import com.webcraftsolutions.project02.database.entities.WellnessJournal;
 import com.webcraftsolutions.project02.database.entities.WellnessMood;
 import com.webcraftsolutions.project02.database.entities.WellnessSleep;
@@ -41,6 +44,7 @@ public class ActivitiRepository {
     // Stores an array of Event instances.
     public ArrayList<Event> allEventLogs;
 
+    // Event DAO
     private final EventDAO eventDAO;
     private final TravelExplorationDAO travelExplorationDAO;
 
@@ -48,6 +52,9 @@ public class ActivitiRepository {
     private final WellnessSleepDAO wellnessSleepDAO;
     private final WellnessMoodDAO wellnessMoodDAO;
     private final WellnessJournalDAO wellnessJournalDAO;
+
+    // User DAO
+    private final UserDAO userDAO;
 
     // CONSTRUCTORS
     private ActivitiRepository(Application application) {
@@ -67,6 +74,7 @@ public class ActivitiRepository {
         this.cardioWorkoutDAO = db.cardioWorkoutDAO();
         this.weightLiftingWorkoutDAO = db.weightLiftingWorkoutDAO();
 
+        this.userDAO = db.userDAO();
     }
 
     // STATIC METHODS
@@ -94,7 +102,19 @@ public class ActivitiRepository {
         return null;
     }
 
+    // METHODS
+
     // EVENT TABLE METHODS
+
+    /**
+     * Deletes all Event logs with the passed in userId.
+     * @param userId The userId used to determine which event logs to delete.
+     */
+    public void deleteAllEventsByUserId(int userId) {
+        ActivitiDatabase.databaseWriteExecutor.execute(() -> {
+            eventDAO.deleteAllEventsByUserId(userId);
+        });
+    }
 
     /**
      * Deletes an Event log from the database.
@@ -120,8 +140,8 @@ public class ActivitiRepository {
      * Returns an ArrayList containing all Event logs in the repository.
      * @return An ArrayList of Event objects.
      */
-    public ArrayList<Event> getAllEvents() {
-        return (ArrayList<Event>) eventDAO.getAllEvents();
+    public LiveData<List<Event>> getAllEvents() {
+        return eventDAO.getAllEvents();
     }
 
     /**
@@ -129,8 +149,8 @@ public class ActivitiRepository {
      * @param userId Used to select Event logs that were logged by a specific user.
      * @return An ArrayList of Event objects.
      */
-    public ArrayList<Event> getAllEventsByUserId(int userId) {
-        return (ArrayList<Event>) eventDAO.getAllEventsByUserId(userId);
+    public LiveData<List<Event>> getAllEventsByUserId(int userId) {
+        return eventDAO.getAllEventsByUserId(userId);
     }
 
     /**
@@ -138,7 +158,7 @@ public class ActivitiRepository {
      * @param eventId Used to select a specific Event log.
      * @return An Event object.
      */
-    public Event getEventByEventId(int eventId) {
+    public LiveData<Event> getEventByEventId(int eventId) {
         return eventDAO.getEventByEventId(eventId);
     }
 
@@ -314,4 +334,66 @@ public class ActivitiRepository {
         return new ArrayList<>(weightLiftingWorkoutDAO.getWeightLiftingWorkoutsByUserId(userId));
     }
 
+    // USER METHODS
+
+    /**
+     * Inserts a new user object into the user table.
+     * @param user The user object to be inserted.
+     */
+    public void insertUser(User... user) {
+        ActivitiDatabase.databaseWriteExecutor.execute(() -> userDAO.insert(user));
+    }
+
+    /**
+     * Deletes a user from the user table.
+     * @param user The user to be deleted.
+     */
+    public void deleteUser(User... user) {
+        // Delete User
+        ActivitiDatabase.databaseWriteExecutor.execute(() -> userDAO.delete(user));
+    }
+
+    /**
+     * Deletes a user from the user table, and all logs made by that user.
+     * @param user The user to be deleted.
+     */
+    public void wipeUser(User user) {
+        // Delete User
+        deleteUser(user);
+
+        // Delete User's Event logs
+        deleteAllEventsByUserId(user.getId());
+
+        // Delete User's Exercise Logs
+        // TODO Delete Exercise Logs when they are added.
+
+        // Delete User's Wellness Logs
+        // TODO Delete User's Wellness Logs
+
+        // Delete User's Travel Logs
+        // TODO Delete User's Travel Logs
+    }
+
+    /** Returns all users in the user table. */
+    public LiveData<List<User>> getAllUsers() {
+        return userDAO.getAllUsers();
+    }
+
+    /**
+     * Returns a LiveData object containing a specific user.
+     * @param userId The unique id for a specific user.
+     * @return A LiveData object containing the user.
+     */
+    public LiveData<User> getUserByUserId(int userId) {
+        return userDAO.getUserByUserId(userId);
+    }
+
+    /**
+     * Returns a LiveData object containing a specific user.
+     * @param username The unique username for a specific user.
+     * @return A LiveData object containing the user.
+     */
+    public LiveData<User> getUserByUsername(String username) {
+        return userDAO.getUserByUsername(username);
+    }
 }

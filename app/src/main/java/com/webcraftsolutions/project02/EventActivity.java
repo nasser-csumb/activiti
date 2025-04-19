@@ -9,18 +9,23 @@
 package com.webcraftsolutions.project02;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 
 import com.webcraftsolutions.project02.database.ActivitiRepository;
 import com.webcraftsolutions.project02.database.entities.Event;
+import com.webcraftsolutions.project02.database.entities.User;
 import com.webcraftsolutions.project02.databinding.ActivityEventBinding;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class EventActivity extends AppCompatActivity {
@@ -33,6 +38,9 @@ public class EventActivity extends AppCompatActivity {
 
     // The repository.
     private ActivitiRepository repository;
+
+    // The logged in user.
+    User user;
 
     // METHODS
 
@@ -58,18 +66,79 @@ public class EventActivity extends AppCompatActivity {
         // Get repository
         repository = ActivitiRepository.getRepository(getApplication());
 
-        // Update display with Event logs.
-        updateDisplay();
+        // Get User
+        LiveData<User> userObserver = repository.getUserByUserId(getIntent()
+                        .getIntExtra(MainActivity.LOGGED_IN_USER_ID_KEY, MainActivity.LOGGED_OUT));
+        userObserver.observe(this, user -> {
+            this.user = user;
+            if (user != null) {
+                // Update Text
+                binding.eventTopMenu.topMenuUserTextView.setText(String
+                        .format("%s", user.getUsername()));
+
+                // Update Events Display
+                updateDisplay();
+            }
+        });
+
+        // Set OnClickListener for logout button
+        binding.eventTopMenu.topMenuUserTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showLogoutDialog(EventActivity.this);
+            }
+        });
+
+        // Set OnClickListener for back button
+        binding.eventTopMenu.topMenuBackTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = MainActivity
+                        .mainActivityIntentFactory(getApplicationContext(), user.getId());
+                startActivity(intent);
+            }
+        });
 
         // Set OnClickListener for eventCreateEventButton
         binding.eventCreateEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = EventCreateActivity
-                        .eventCreateActivityIntentFactory(getApplicationContext());
+                        .eventCreateActivityIntentFactory(getApplicationContext(), user.getId());
                 startActivity(intent);
             }
         });
+    }
+
+    /**
+     * Called when logoutMenuItem is clicked.
+     * Displays an alert message to the user.
+     * User clicks 'Logout': logout() is called.
+     * User clicks 'Cancel': alert message is dismissed.
+     */
+    private void showLogoutDialog(Context context) {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+        final AlertDialog alertDialog = alertBuilder.create();
+
+        alertBuilder.setMessage("Logout?");
+
+        alertBuilder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startActivity(MainActivity
+                        .mainActivityIntentFactory(getApplicationContext(), true));
+
+            }
+        });
+
+        alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                alertDialog.dismiss();
+            }
+        });
+
+        alertBuilder.create().show();
     }
 
     /**
@@ -77,18 +146,29 @@ public class EventActivity extends AppCompatActivity {
      * Sets text of eventEventsTextView to constructed String.
      */
     private void updateDisplay() {
-        ArrayList<Event> allEvents = repository.allEventLogs;
-        StringBuilder sb = new StringBuilder();
-        for(Event event : allEvents) {
-            String str = String.format(Locale.US,
-                    "Name: %s%nDesc: %s%nDate: %s%nTime: %s%n-=-=-=-=-=-=-=-=-%n%n",
-                    event.getName(),
-                    event.getDescription(),
-                    event.getDate(),
-                    event.getTime());
-            sb.append(str);
-        }
-        binding.eventEventsTextView.setText(sb.toString());
+        // Get Events
+        LiveData<List<Event>> userObserver = repository.getAllEventsByUserId(user.getId());
+        userObserver.observe(this, events -> {
+            // Check if events is empty
+            if(events.isEmpty()) {
+                String str = "Nothing to display!";
+                binding.eventEventsTextView.setText(str);
+                return;
+            }
+
+            // Get events
+            StringBuilder sb = new StringBuilder();
+            for(Event event : events) {
+                String str = String.format(Locale.US,
+                        "Name: %s%nDesc: %s%nDate: %s%nTime: %s%n-=-=-=-=-=-=-=-=-%n%n",
+                        event.getName(),
+                        event.getDescription(),
+                        event.getDate(),
+                        event.getTime());
+                sb.append(str);
+            }
+            binding.eventEventsTextView.setText(sb.toString());
+        });
     }
 
     // STATIC METHODS
@@ -96,10 +176,12 @@ public class EventActivity extends AppCompatActivity {
     /**
      * Intent factory for EventActivity.
      * @param context The application context.
+     * @param userId The id of the logged in user.
      * @return The EventActivity Intent.
      */
-    static Intent eventActivityIntentFactory(Context context) {
+    static Intent eventActivityIntentFactory(Context context, int userId) {
         Intent intent = new Intent(context, EventActivity.class);
+        intent.putExtra(MainActivity.LOGGED_IN_USER_ID_KEY, userId);
         return intent;
     }
 
