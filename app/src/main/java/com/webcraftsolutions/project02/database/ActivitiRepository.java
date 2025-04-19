@@ -42,7 +42,7 @@ public class ActivitiRepository {
     // Stores the EventDAO instance.
 
     // Stores an array of Event instances.
-    public ArrayList<Event> allEventLogs;
+    public LiveData<List<Event>> allEventLogs;
 
     // Event DAO
     private final EventDAO eventDAO;
