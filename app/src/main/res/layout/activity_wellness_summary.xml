@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="48dp"
@@ -36,7 +36,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/previousDayBtn"
                 style="@style/Widget.Material3.Button.TextButton.Icon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
                 app:icon="@drawable/arrow_back_ios_24px" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/nextDayBtn"
                 style="@style/Widget.Material3.Button.TextButton.Icon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -56,5 +56,32 @@
                 app:icon="@drawable/arrow_forward_ios_24px"
                 app:iconGravity="end" />
         </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🛏️ Sleep"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <LinearLayout
+            android:id="@+id/sleepEntries"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical"></LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="😄 Mood"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="📝 Journal"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

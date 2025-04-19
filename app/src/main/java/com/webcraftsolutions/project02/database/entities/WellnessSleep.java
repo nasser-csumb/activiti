@@ -107,6 +107,13 @@ public class WellnessSleep {
         this.restless = restless;
     }
 
+    @Override
+    public String toString() {
+        return "Duration: " + durationHours + "hrs\n" +
+                "Refreshing: " + (refreshing ? "Yes" : "No") + "\n" +
+                "Restless: " + (restless ? "Yes" : "No") + "\n";
+    }
+
     // EQUALS & HASHCODE
     @Override
     public boolean equals(Object o) {

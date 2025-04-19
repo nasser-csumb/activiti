@@ -6,10 +6,14 @@
 
 package com.webcraftsolutions.project02;
 
+import static android.view.View.TEXT_ALIGNMENT_CENTER;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,6 +22,8 @@ import com.webcraftsolutions.project02.database.ActivitiRepository;
 import com.webcraftsolutions.project02.databinding.ActivityWellnessSummaryBinding;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +40,8 @@ public class WellnessSummary extends AppCompatActivity {
      */
     ArrayList<WellnessEntry> wellnessEntries = new ArrayList<>();
 
+    int currentEntry = -1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +52,62 @@ public class WellnessSummary extends AppCompatActivity {
 
         repository = ActivitiRepository.getRepository(getApplication());
         populateCache();
+
+        binding.previousDayBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (currentEntry > 0) {
+                    currentEntry--;
+                    refreshUI();
+                }
+            }
+        });
+
+        binding.nextDayBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (wellnessEntries.size() - 1 > currentEntry) {
+                    currentEntry++;
+                    refreshUI();
+                }
+            }
+        });
     }
+
+    /**
+     * Update the UI
+     */
+    private void refreshUI() {
+        // refresh current date view
+
+        WellnessEntry entry = wellnessEntries.get(currentEntry);
+
+        binding.date.setText(String.format("%s/%s/%s",
+                entry.date.getMonth() + 1,
+                entry.date.getDate(),
+                entry.date.getYear() + 1900
+        ));
+
+        binding.previousDayBtn.setEnabled(currentEntry > 0);
+        binding.nextDayBtn.setEnabled(wellnessEntries.size() - 1 > currentEntry);
+
+        binding.sleepEntries.removeAllViews();
+        if (entry.sleepEntries.isEmpty()) {
+            TextView tv = new TextView(getApplicationContext());
+            tv.setText("No sleep recorded for this day.");
+            tv.setTextAlignment(TEXT_ALIGNMENT_CENTER);
+
+            binding.sleepEntries.addView(tv);
+        } else {
+            for (var sleepEntry : entry.sleepEntries) {
+                TextView tv = new TextView(getApplicationContext());
+                tv.setText(sleepEntry.toString());
+
+                binding.sleepEntries.addView(tv);
+            }
+        }
+    }
+
 
     /**
      * Function to populate cache from database itself.
@@ -65,6 +128,14 @@ public class WellnessSummary extends AppCompatActivity {
         } catch (Exception e) {
             Log.e("FUTURE DATABASE", e.getMessage(), e);
         }
+
+        if (wellnessEntries.isEmpty()) {
+            currentEntry = -1;
+            return;
+        }
+
+        currentEntry = wellnessEntries.size() - 1;
+        refreshUI();
     }
 
 
@@ -123,13 +194,22 @@ public class WellnessSummary extends AppCompatActivity {
             }
         }
 
+        wellnessEntries.clear();
         for (var entry : entries.values().toArray()) {
-            Log.d("TESTDEBUGG", entry.toString());
+            wellnessEntries.add((WellnessEntry) entry);
         }
+
+        wellnessEntries.sort(new Comparator<WellnessEntry>() {
+            @Override
+            public int compare(WellnessEntry wellnessEntry, WellnessEntry t1) {
+                return wellnessEntry.date.compareTo(t1.date);
+            }
+        });
     }
 
     /**
      * Intent factory for WellnessActivity.
+     *
      * @param context The application context.
      * @return The WellnessActivity Intent.
      */
