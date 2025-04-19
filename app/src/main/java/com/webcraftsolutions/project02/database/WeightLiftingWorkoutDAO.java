@@ -31,4 +31,8 @@ public interface WeightLiftingWorkoutDAO {
 
     @Query("SELECT * FROM " + ActivitiDatabase.LIFTING_TABLE + " WHERE userId = :userId")
     List<WeightLiftingWorkout> getWeightLiftingWorkoutsByUserId(int userId);
+
+    @Query("DELETE FROM " + ActivitiDatabase.LIFTING_TABLE + " WHERE userId = :userId")
+    void deleteAllByUserId(int userId);
+
 }
