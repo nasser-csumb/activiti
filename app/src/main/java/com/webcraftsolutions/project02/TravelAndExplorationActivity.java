@@ -33,6 +33,11 @@ public class TravelAndExplorationActivity extends AppCompatActivity {
                 saveTravelExploration();
             }
         });
+
+        binding.viewHikingRoutesButton.setOnClickListener(v -> {
+            Intent intent = HikingRoutesActivity.hikingRoutesIntentFactory(this);
+            startActivity(intent);
+        });
     }
 
     private void saveTravelExploration() {

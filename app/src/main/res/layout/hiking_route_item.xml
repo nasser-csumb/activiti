@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+    tools:context=".HikingRoutesActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <!-- Hiking Route Name -->
+        <TextView
+            android:id="@+id/hikingRouteNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hiking Route Name"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <!-- Place -->
+        <TextView
+            android:id="@+id/hikingRoutePlaceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Place"
+            android:textSize="16sp"
+            android:layout_marginTop="4dp"/>
+
+        <!-- Difficulty -->
+        <TextView
+            android:id="@+id/difficultyRatingTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Difficulty"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"/>
+
+        <!-- Time Estimate -->
+        <TextView
+            android:id="@+id/timeEstimateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Time Estimate"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"/>
+
+        <!-- Danger Level -->
+        <TextView
+            android:id="@+id/dangerLevelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Danger Level"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"/>
+
+        <!-- Safety Tips -->
+        <TextView
+            android:id="@+id/safetyTipsTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Safety Tips"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"/>
+
+        <!-- Rating -->
+        <TextView
+            android:id="@+id/ratingTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rating"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
