@@ -82,7 +82,7 @@ public class WellnessJournal extends AppCompatActivity {
 
                     var journalObject =
                             new com.webcraftsolutions.project02.database.entities.WellnessJournal(
-                                    -1, today, title, content
+                                    user.getId(), today, title, content
                             );
 
                     repository.insertJournal(journalObject);

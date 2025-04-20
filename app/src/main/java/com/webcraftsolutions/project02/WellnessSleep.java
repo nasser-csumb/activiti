@@ -109,7 +109,7 @@ public class WellnessSleep extends AppCompatActivity {
 
                     var sleepObject =
                             new com.webcraftsolutions.project02.database.entities.WellnessSleep(
-                                    -1, hoursSlept, today, refreshed, restless);
+                                    user.getId(), hoursSlept, today, refreshed, restless);
 
                     repository.insertSleep(sleepObject);
 

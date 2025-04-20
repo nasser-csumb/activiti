@@ -82,7 +82,7 @@ public class WellnessMood extends AppCompatActivity {
 
                     var moodObject =
                             new com.webcraftsolutions.project02.database.entities.WellnessMood(
-                                    -1, today, moodName, energyLevel
+                                    user.getId(), today, moodName, energyLevel
                             );
 
                     repository.insertMood(moodObject);
