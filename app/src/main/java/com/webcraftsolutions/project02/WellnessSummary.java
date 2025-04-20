@@ -209,9 +209,9 @@ public class WellnessSummary extends AppCompatActivity {
      * Convert three entries per day WelnessEntry items.
      */
     private void getEntries() {
-        var sleepEntries = repository.getAllSleep();
-        var moodEntries = repository.getAllMoods();
-        var journalEntries = repository.getAllJournals();
+        var sleepEntries = repository.getAllSleepByUserId(user.getId());
+        var moodEntries = repository.getAllMoodsByUserId(user.getId());
+        var journalEntries = repository.getAllJournalsByUserId(user.getId());
 
         Map<String, WellnessEntry> entries = new HashMap<>();
 
