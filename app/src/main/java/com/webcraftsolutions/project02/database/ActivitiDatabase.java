@@ -22,6 +22,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.webcraftsolutions.project02.MainActivity;
 import com.webcraftsolutions.project02.database.entities.Event;
 import com.webcraftsolutions.project02.database.entities.CardioWorkout;
+import com.webcraftsolutions.project02.database.entities.HikingRoutes;
 import com.webcraftsolutions.project02.database.entities.WeightLiftingWorkout;
 import com.webcraftsolutions.project02.database.CardioWorkoutDAO;
 import com.webcraftsolutions.project02.database.WeightLiftingWorkoutDAO;
@@ -37,7 +38,7 @@ import java.util.concurrent.Executors;
 
 @TypeConverters({DateConverter.class})
 @Database(entities = {Event.class, WellnessJournal.class, WellnessMood.class, WellnessSleep.class, TravelExploration.class, CardioWorkout.class,
-                      WeightLiftingWorkout.class, User.class}, version = 6, exportSchema = false)
+                      WeightLiftingWorkout.class, User.class, HikingRoutes.class}, version = 11, exportSchema = false)
 public abstract class ActivitiDatabase extends RoomDatabase {
 
     // CLASS FIELDS
@@ -60,6 +61,7 @@ public abstract class ActivitiDatabase extends RoomDatabase {
 
     // ID for the travel exploration table
     public static final String TRAVEL_EXPLORATION_TABLE = "TravelExploration_Table";
+    public static final String HIKING_ROUTES_TABLE = "Hiking_Routes_Table";
 
     // ID for user table
     public static final String USER_TABLE = "User_Table";
@@ -135,6 +137,7 @@ public abstract class ActivitiDatabase extends RoomDatabase {
     public abstract EventDAO eventDAO();
 
     public abstract TravelExplorationDAO travelExplorationDAO();
+    public abstract HikingRoutesDAO hikingRoutesDAO();
     public abstract UserDAO userDAO();
     // Wellness
     public abstract WellnessSleepDAO wellnessSleepDAO();

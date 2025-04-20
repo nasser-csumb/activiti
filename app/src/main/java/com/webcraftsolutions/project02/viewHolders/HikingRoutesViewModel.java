@@ -2,55 +2,44 @@ package com.webcraftsolutions.project02.viewHolders;
 
 import android.app.Application;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
 
 import com.webcraftsolutions.project02.database.ActivitiRepository;
-import com.webcraftsolutions.project02.database.entities.TravelExploration;
+import com.webcraftsolutions.project02.database.entities.HikingRoutes;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HikingRoutesViewModel extends AndroidViewModel {
+    private final ActivitiRepository repository;
+    private LiveData<List<HikingRoutes>> hikingRoutes;
 
-    private final MutableLiveData<Integer> selectedDifficulty = new MutableLiveData<>();
-    private final LiveData<List<TravelExploration>> allExplorations;
-    private final LiveData<List<TravelExploration>> filteredRoutes;
-
-    public HikingRoutesViewModel(@NonNull Application application) {
+    public HikingRoutesViewModel(Application application) {
         super(application);
-        ActivitiRepository repository = ActivitiRepository.getRepository(application);
-
-        allExplorations = repository.getAllTravelExplorationsLive();
-
-        filteredRoutes = Transformations.switchMap(selectedDifficulty, difficulty ->
-                Transformations.map(allExplorations, routes -> {
-                    List<TravelExploration> filtered = new ArrayList<>();
-                    if (routes != null) {
-                        for (TravelExploration route : routes) {
-                            if (route.getHikingRoute() != null && !route.getHikingRoute().isEmpty()) {
-                                // You can apply more filtering logic here using difficulty
-                                filtered.add(route);
-                            }
-                        }
-                    }
-                    return filtered;
-                })
-        );
+        repository = ActivitiRepository.getRepository(application);
     }
 
-    public LiveData<List<TravelExploration>> getFilteredRoutes() {
-        return filteredRoutes;
+    public void insertHikingRoute(HikingRoutes hikingRoute) {
+        repository.insertHikingRoute(hikingRoute);
     }
 
-    public void setSelectedDifficulty(int difficulty) {
-        selectedDifficulty.setValue(difficulty);
+    // Get all hiking routes for a specific user
+    public LiveData<List<HikingRoutes>> getHikingRoutes(int userId) {
+        if (hikingRoutes == null) {
+            hikingRoutes = repository.getRoutesForUser(userId);
+        }
+        return hikingRoutes;
     }
 
-    public LiveData<List<TravelExploration>> getHikingRoutes() {
-        return filteredRoutes;
+    // Set hiking routes manually (not typical, but useful for testing or replacing all data)
+    public void setHikingRoutes(List<HikingRoutes> hikingRoutes) {
+        for (HikingRoutes hikingRoute : hikingRoutes) {
+            repository.insertRoute(hikingRoute);
+        }
+    }
+
+    // Optionally allow single insert
+    public void insert(HikingRoutes hikingRoutes) {
+        repository.insertRoute(hikingRoutes);
     }
 }
