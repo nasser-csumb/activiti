@@ -69,7 +69,7 @@ public class ActivitiRepository {
         this.wellnessMoodDAO = db.wellnessMoodDAO();
         this.wellnessJournalDAO = db.wellnessJournalDAO();
 
-        this.allEventLogs = getAllEvents();
+        //this.allEventLogs = getAllEvents();
 
         this.cardioWorkoutDAO = db.cardioWorkoutDAO();
         this.weightLiftingWorkoutDAO = db.weightLiftingWorkoutDAO();
@@ -328,6 +328,10 @@ public class ActivitiRepository {
         ActivitiDatabase.databaseWriteExecutor.execute(() -> cardioWorkoutDAO.deleteAllByUserId(userId));
     }
 
+    public void deleteCardioWorkout(CardioWorkout workout) {
+        ActivitiDatabase.databaseWriteExecutor.execute(() -> cardioWorkoutDAO.delete(workout));
+    }
+
     // Weight Lifting Methods
 
     public void insertWeightLiftingWorkout(WeightLiftingWorkout... workouts) {
@@ -342,6 +346,9 @@ public class ActivitiRepository {
         ActivitiDatabase.databaseWriteExecutor.execute(() -> weightLiftingWorkoutDAO.deleteAllByUserId(userId));
     }
 
+    public void deleteWeightLiftingWorkout(WeightLiftingWorkout workout) {
+        ActivitiDatabase.databaseWriteExecutor.execute(() -> weightLiftingWorkoutDAO.delete(workout));
+    }
 
     // USER METHODS
 
