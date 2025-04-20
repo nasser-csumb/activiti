@@ -59,12 +59,13 @@
 
     <Button
         android:id="@+id/saveCardioButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="223dp"
+        android:layout_height="76dp"
+        android:layout_marginTop="24dp"
         android:text="Save Cardio"
-        app:layout_constraintTop_toBottomOf="@id/durationEditText"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/durationEditText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
