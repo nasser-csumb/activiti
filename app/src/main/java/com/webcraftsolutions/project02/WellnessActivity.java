@@ -37,6 +37,7 @@ public class WellnessActivity extends AppCompatActivity {
 
     private void setupHandlers() {
         setupSleepClickEventHandler();
+        setupMoodClickEventHandler();
         setupSummaryClickEventHandler();
     }
 
@@ -49,6 +50,17 @@ public class WellnessActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void setupMoodClickEventHandler() {
+        binding.moodButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = WellnessMood.wellnessMoodActivityIntentFactory(getApplicationContext());
+                startActivity(intent);
+            }
+        });
+    }
+
 
     private void setupSummaryClickEventHandler() {
         binding.summaryButton.setOnClickListener(new View.OnClickListener() {

@@ -106,6 +106,38 @@ public class WellnessSummary extends AppCompatActivity {
                 binding.sleepEntries.addView(tv);
             }
         }
+
+        binding.moodEntries.removeAllViews();
+        if (entry.moodEntries.isEmpty()) {
+            TextView tv = new TextView(getApplicationContext());
+            tv.setText("No mood recorded for this day.");
+            tv.setTextAlignment(TEXT_ALIGNMENT_CENTER);
+
+            binding.moodEntries.addView(tv);
+        } else {
+            for (var sleepEntry : entry.moodEntries) {
+                TextView tv = new TextView(getApplicationContext());
+                tv.setText(sleepEntry.toString());
+
+                binding.moodEntries.addView(tv);
+            }
+        }
+
+        binding.journalEntries.removeAllViews();
+        if (entry.journalEntries.isEmpty()) {
+            TextView tv = new TextView(getApplicationContext());
+            tv.setText("No journal entries recorded for this day.");
+            tv.setTextAlignment(TEXT_ALIGNMENT_CENTER);
+
+            binding.journalEntries.addView(tv);
+        } else {
+            for (var sleepEntry : entry.journalEntries) {
+                TextView tv = new TextView(getApplicationContext());
+                tv.setText(sleepEntry.toString());
+
+                binding.journalEntries.addView(tv);
+            }
+        }
     }
 
 
