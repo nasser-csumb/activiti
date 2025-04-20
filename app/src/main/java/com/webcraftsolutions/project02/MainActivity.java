@@ -296,7 +296,7 @@ public class MainActivity extends AppCompatActivity {
         binding.mainMenuTravelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = TravelAndExplorationActivity.travelAndExplorationActivityIntentFactory(getApplicationContext());
+                Intent intent = TravelAndExplorationActivity.travelAndExplorationActivityIntentFactory(getApplicationContext(), loggedInUserId);
                 startActivity(intent);
             }
         });

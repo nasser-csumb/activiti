@@ -16,6 +16,7 @@ import androidx.lifecycle.LiveData;
 
 import com.webcraftsolutions.project02.MainActivity;
 import com.webcraftsolutions.project02.database.entities.Event;
+import com.webcraftsolutions.project02.database.entities.HikingRoutes;
 import com.webcraftsolutions.project02.database.entities.TravelExploration;
 import com.webcraftsolutions.project02.database.entities.User;
 import com.webcraftsolutions.project02.database.entities.WellnessJournal;
@@ -47,6 +48,7 @@ public class ActivitiRepository {
     // Event DAO
     private final EventDAO eventDAO;
     private final TravelExplorationDAO travelExplorationDAO;
+    private final HikingRoutesDAO hikingRoutesDAO;
 
     // Wellness DAO
     private final WellnessSleepDAO wellnessSleepDAO;
@@ -64,12 +66,13 @@ public class ActivitiRepository {
         this.eventDAO = db.eventDAO();
       
         this.travelExplorationDAO = db.travelExplorationDAO();
+        this.hikingRoutesDAO = db.hikingRoutesDAO();
 
         this.wellnessSleepDAO = db.wellnessSleepDAO();
         this.wellnessMoodDAO = db.wellnessMoodDAO();
         this.wellnessJournalDAO = db.wellnessJournalDAO();
 
-        this.allEventLogs = getAllEvents();
+//        this.allEventLogs = getAllEvents();
 
         this.cardioWorkoutDAO = db.cardioWorkoutDAO();
         this.weightLiftingWorkoutDAO = db.weightLiftingWorkoutDAO();
@@ -194,6 +197,20 @@ public class ActivitiRepository {
 
     // TRAVEL TABLE METHODS
 
+    public LiveData<List<HikingRoutes>> getRoutesForUser(int userId) {
+        return hikingRoutesDAO.getHikingRoutesForUser(userId);
+    }
+
+    public void insertRoute(HikingRoutes hikingRoutes) {
+        ActivitiDatabase.databaseWriteExecutor.execute(() -> {
+            hikingRoutesDAO.insert(hikingRoutes);
+        });
+    }
+
+    public void insertHikingRoute(HikingRoutes hikingRoute) {
+        new Thread(() -> hikingRoutesDAO.insert(hikingRoute)).start();
+    }
+
     /**
      * Inserts TravelExploration into the database
      * @param travelExploration the TravelExploration added
@@ -220,6 +237,10 @@ public class ActivitiRepository {
      */
     public List<TravelExploration> getAllTravelExplorations() {
         return travelExplorationDAO.getAllTravelExplorations();
+    }
+
+    public LiveData<List<TravelExploration>> getAllTravelExplorationsLive() {
+        return travelExplorationDAO.getAllTravelExplorationsLive();
     }
 
     /**
