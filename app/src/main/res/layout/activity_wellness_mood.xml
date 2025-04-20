@@ -6,7 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".WellnessMood">
-
+    <include
+        android:id="@+id/topMenu"
+        layout="@layout/top_menu_layout"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="0dp"

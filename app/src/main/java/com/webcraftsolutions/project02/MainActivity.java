@@ -287,7 +287,7 @@ public class MainActivity extends AppCompatActivity {
         binding.mainMenuWellnessButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = WellnessActivity.wellnessActivityIntentFactory(getApplicationContext());
+                Intent intent = WellnessActivity.wellnessActivityIntentFactory(getApplicationContext(), user.getId());
                 startActivity(intent);
             }
         });
