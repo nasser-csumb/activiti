@@ -15,7 +15,10 @@ import android.os.Bundle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.webcraftsolutions.project02.adapters.CardioAdapter;
+import com.webcraftsolutions.project02.adapters.LiftingAdapter;
 import com.webcraftsolutions.project02.database.ActivitiDatabase;
 import com.webcraftsolutions.project02.database.ActivitiRepository;
 import com.webcraftsolutions.project02.database.entities.CardioWorkout;
@@ -32,6 +35,9 @@ public class ProgressActivity extends AppCompatActivity {
     private ActivitiRepository repository;
     private User user;
 
+    private CardioAdapter cardioAdapter;
+    private LiftingAdapter liftingAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +45,28 @@ public class ProgressActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         repository = ActivitiRepository.getRepository(getApplication());
+
+        cardioAdapter = new CardioAdapter(workout -> {
+            ActivitiDatabase.databaseWriteExecutor.execute(() -> {
+                repository.deleteCardioWorkout(workout);
+                try { Thread.sleep(100); } catch (InterruptedException ignored) {}
+                runOnUiThread(() -> updateDisplay(user.getId()));
+            });
+        });
+
+        liftingAdapter = new LiftingAdapter(workout -> {
+            ActivitiDatabase.databaseWriteExecutor.execute(() -> {
+                repository.deleteWeightLiftingWorkout(workout);
+                try { Thread.sleep(100); } catch (InterruptedException ignored) {}
+                runOnUiThread(() -> updateDisplay(user.getId()));
+            });
+        });
+
+        binding.cardioRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        binding.liftingRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        binding.cardioRecyclerView.setAdapter(cardioAdapter);
+        binding.liftingRecyclerView.setAdapter(liftingAdapter);
 
         int userId = getIntent().getIntExtra(MainActivity.LOGGED_IN_USER_ID_KEY, MainActivity.LOGGED_OUT);
         LiveData<User> userObserver = repository.getUserByUserId(userId);
@@ -60,25 +88,35 @@ public class ProgressActivity extends AppCompatActivity {
 
     private void updateDisplay(int userId) {
         ActivitiDatabase.databaseWriteExecutor.execute(() -> {
-            StringBuilder sb = new StringBuilder();
-
             ArrayList<CardioWorkout> cardio = repository.getAllCardioWorkoutsByUserId(userId);
-            if (cardio != null) {
-                for (CardioWorkout c : cardio) {
-                    sb.append(String.format(Locale.US, "Cardio: %s - %d min - %s\n",
-                            c.getType(), c.getDurationMinutes(), c.getIntensity()));
-                }
-            }
-
             ArrayList<WeightLiftingWorkout> lifting = repository.getAllWeightLiftingWorkoutsByUserId(userId);
-            if (lifting != null) {
-                for (WeightLiftingWorkout l : lifting) {
-                    sb.append(String.format(Locale.US, "Lifting: %s - %d sets - %d reps - %d min\n",
-                            l.getExerciseName(), l.getSets(), l.getTotalReps(), l.getDurationMinutes()));
+
+            int totalCalories = 0;
+            for (CardioWorkout c : cardio) {
+                int multiplier;
+                String intensity = c.getIntensity().toLowerCase();
+                if (intensity.equals("high")) {
+                    multiplier = 10;
+                } else if (intensity.equals("medium")) {
+                    multiplier = 8;
+                } else {
+                    multiplier = 6;
                 }
+                totalCalories += c.getDurationMinutes() * multiplier;
+            }
+            for (WeightLiftingWorkout l : lifting) {
+                totalCalories += l.getDurationMinutes() * 6;
             }
 
-            runOnUiThread(() -> binding.progressTextView.setText(sb.toString()));
+            final int totalCaloriesFinal = totalCalories;
+
+            runOnUiThread(() -> {
+                cardioAdapter.setData(cardio);
+                liftingAdapter.setData(lifting);
+                binding.totalCardioTextView.setText("Total cardio sessions: " + cardio.size());
+                binding.totalLiftingTextView.setText("Total lifting sessions: " + lifting.size());
+                binding.estimatedCaloriesTextView.setText("Estimated total calories burned: " + totalCaloriesFinal);
+            });
         });
     }
 
@@ -101,4 +139,5 @@ public class ProgressActivity extends AppCompatActivity {
         return intent;
     }
 }
+
 
