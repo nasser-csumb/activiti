@@ -8,15 +8,19 @@
 package com.webcraftsolutions.project02;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 
 import com.webcraftsolutions.project02.database.ActivitiRepository;
 import com.webcraftsolutions.project02.database.entities.CardioWorkout;
+import com.webcraftsolutions.project02.database.entities.User;
 import com.webcraftsolutions.project02.databinding.ActivityCardioBinding;
 
 import java.util.Date;
@@ -25,6 +29,7 @@ public class CardioActivity extends AppCompatActivity {
 
     private ActivityCardioBinding binding;
     private ActivitiRepository repository;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +39,21 @@ public class CardioActivity extends AppCompatActivity {
 
         repository = ActivitiRepository.getRepository(getApplication());
 
+        int userId = getIntent().getIntExtra(MainActivity.LOGGED_IN_USER_ID_KEY, MainActivity.LOGGED_OUT);
+        LiveData<User> userObserver = repository.getUserByUserId(userId);
+        userObserver.observe(this, user -> {
+            this.user = user;
+            if (user != null) {
+                binding.cardioTopMenu.topMenuUserTextView.setText(user.getUsername());
+
+                binding.cardioTopMenu.topMenuUserTextView.setOnClickListener(v -> showLogoutDialog(CardioActivity.this));
+                binding.cardioTopMenu.topMenuBackTextView.setOnClickListener(v -> {
+                    Intent intent = ExerciseActivity.exerciseActivityIntentFactory(getApplicationContext(), user.getId());
+                    startActivity(intent);
+                });
+            }
+        });
+
         String[] cardioTypes = {"Running", "Cycling", "Walking", "Swimming"};
         ArrayAdapter<String> typeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, cardioTypes);
         binding.cardioTypeDropdown.setAdapter(typeAdapter);
@@ -42,12 +62,7 @@ public class CardioActivity extends AppCompatActivity {
         ArrayAdapter<String> intensityAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, intensityLevels);
         binding.intensityDropdown.setAdapter(intensityAdapter);
 
-        binding.saveCardioButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveCardioWorkout();
-            }
-        });
+        binding.saveCardioButton.setOnClickListener(v -> saveCardioWorkout());
     }
 
     private void saveCardioWorkout() {
@@ -57,7 +72,7 @@ public class CardioActivity extends AppCompatActivity {
 
         if (!durationStr.isEmpty()) {
             int duration = Integer.parseInt(durationStr);
-            int userId = -1; // placeholder
+            int userId = (user != null) ? user.getId() : -1;
             Date date = new Date();
 
             CardioWorkout workout = new CardioWorkout(userId, type, duration, intensity, date);
@@ -66,7 +81,22 @@ public class CardioActivity extends AppCompatActivity {
         }
     }
 
-    public static Intent cardioActivityIntentFactory(Context context) {
-        return new Intent(context, CardioActivity.class);
+    private void showLogoutDialog(Context context) {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+        final AlertDialog alertDialog = alertBuilder.create();
+
+        alertBuilder.setMessage("Logout?");
+        alertBuilder.setPositiveButton("Logout", (dialog, which) -> {
+            startActivity(MainActivity.mainActivityIntentFactory(getApplicationContext(), true));
+        });
+
+        alertBuilder.setNegativeButton("Cancel", (dialog, which) -> alertDialog.dismiss());
+        alertBuilder.create().show();
+    }
+
+    public static Intent cardioActivityIntentFactory(Context context, int userId) {
+        Intent intent = new Intent(context, CardioActivity.class);
+        intent.putExtra(MainActivity.LOGGED_IN_USER_ID_KEY, userId);
+        return intent;
     }
 }

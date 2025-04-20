@@ -8,13 +8,17 @@
 package com.webcraftsolutions.project02;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 
 import com.webcraftsolutions.project02.database.ActivitiRepository;
+import com.webcraftsolutions.project02.database.entities.User;
 import com.webcraftsolutions.project02.database.entities.WeightLiftingWorkout;
 import com.webcraftsolutions.project02.databinding.ActivityWeightLiftingBinding;
 
@@ -24,6 +28,7 @@ public class WeightLiftingActivity extends AppCompatActivity {
 
     private ActivityWeightLiftingBinding binding;
     private ActivitiRepository repository;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +38,23 @@ public class WeightLiftingActivity extends AppCompatActivity {
 
         repository = ActivitiRepository.getRepository(getApplication());
 
-        binding.saveLiftingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveWeightLiftingWorkout();
+        int userId = getIntent().getIntExtra(MainActivity.LOGGED_IN_USER_ID_KEY, MainActivity.LOGGED_OUT);
+
+        LiveData<User> userObserver = repository.getUserByUserId(userId);
+        userObserver.observe(this, user -> {
+            this.user = user;
+            if (user != null) {
+                binding.liftingTopMenu.topMenuUserTextView.setText(user.getUsername());
+
+                binding.liftingTopMenu.topMenuUserTextView.setOnClickListener(v -> showLogoutDialog(WeightLiftingActivity.this));
+                binding.liftingTopMenu.topMenuBackTextView.setOnClickListener(v -> {
+                    Intent intent = ExerciseActivity.exerciseActivityIntentFactory(getApplicationContext(), user.getId());
+                    startActivity(intent);
+                });
             }
         });
+
+        binding.saveLiftingButton.setOnClickListener(v -> saveWeightLiftingWorkout());
     }
 
     private void saveWeightLiftingWorkout() {
@@ -51,7 +67,7 @@ public class WeightLiftingActivity extends AppCompatActivity {
             int sets = Integer.parseInt(setsStr);
             int reps = Integer.parseInt(repsStr);
             int minutes = Integer.parseInt(minutesStr);
-            int userId = -1; // placeholder
+            int userId = (user != null) ? user.getId() : -1;
             Date date = new Date();
 
             WeightLiftingWorkout workout = new WeightLiftingWorkout(userId, exerciseName, sets, reps, minutes, date);
@@ -60,7 +76,22 @@ public class WeightLiftingActivity extends AppCompatActivity {
         }
     }
 
-    public static Intent weightLiftingActivityIntentFactory(Context context) {
-        return new Intent(context, WeightLiftingActivity.class);
+    private void showLogoutDialog(Context context) {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+        final AlertDialog alertDialog = alertBuilder.create();
+
+        alertBuilder.setMessage("Logout?");
+        alertBuilder.setPositiveButton("Logout", (dialog, which) -> {
+            startActivity(MainActivity.mainActivityIntentFactory(getApplicationContext(), true));
+        });
+
+        alertBuilder.setNegativeButton("Cancel", (dialog, which) -> alertDialog.dismiss());
+        alertBuilder.create().show();
+    }
+
+    public static Intent weightLiftingActivityIntentFactory(Context context, int userId) {
+        Intent intent = new Intent(context, WeightLiftingActivity.class);
+        intent.putExtra(MainActivity.LOGGED_IN_USER_ID_KEY, userId);
+        return intent;
     }
 }

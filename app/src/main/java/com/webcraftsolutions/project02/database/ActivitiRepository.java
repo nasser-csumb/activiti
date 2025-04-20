@@ -324,6 +324,10 @@ public class ActivitiRepository {
         return new ArrayList<>(cardioWorkoutDAO.getCardioWorkoutsByUserId(userId));
     }
 
+    public void deleteAllCardioByUserId(int userId) {
+        ActivitiDatabase.databaseWriteExecutor.execute(() -> cardioWorkoutDAO.deleteAllByUserId(userId));
+    }
+
     // Weight Lifting Methods
 
     public void insertWeightLiftingWorkout(WeightLiftingWorkout... workouts) {
@@ -333,6 +337,11 @@ public class ActivitiRepository {
     public ArrayList<WeightLiftingWorkout> getAllWeightLiftingWorkoutsByUserId(int userId) {
         return new ArrayList<>(weightLiftingWorkoutDAO.getWeightLiftingWorkoutsByUserId(userId));
     }
+
+    public void deleteAllWeightLiftingByUserId(int userId) {
+        ActivitiDatabase.databaseWriteExecutor.execute(() -> weightLiftingWorkoutDAO.deleteAllByUserId(userId));
+    }
+
 
     // USER METHODS
 
@@ -365,7 +374,8 @@ public class ActivitiRepository {
         deleteAllEventsByUserId(user.getId());
 
         // Delete User's Exercise Logs
-        // TODO Delete Exercise Logs when they are added.
+        deleteAllCardioByUserId(user.getId());
+        deleteAllWeightLiftingByUserId(user.getId());
 
         // Delete User's Wellness Logs
         // TODO Delete User's Wellness Logs

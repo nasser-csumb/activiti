@@ -31,4 +31,8 @@ public interface CardioWorkoutDAO {
 
     @Query("SELECT * FROM " + ActivitiDatabase.CARDIO_TABLE + " WHERE userId = :userId")
     List<CardioWorkout> getCardioWorkoutsByUserId(int userId);
+
+    @Query("DELETE FROM " + ActivitiDatabase.CARDIO_TABLE + " WHERE userId = :userId")
+    void deleteAllByUserId(int userId);
+
 }
