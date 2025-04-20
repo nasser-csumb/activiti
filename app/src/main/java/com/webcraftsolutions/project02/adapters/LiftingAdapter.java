@@ -43,7 +43,7 @@ public class LiftingAdapter extends RecyclerView.Adapter<LiftingAdapter.LiftingV
     @Override
     public void onBindViewHolder(@NonNull LiftingViewHolder holder, int position) {
         WeightLiftingWorkout item = liftList.get(position);
-        holder.text.setText(item.getExerciseName() + " - " + item.getSets() + " sets - " + item.getTotalReps() + " reps - " + item.getDurationMinutes() + " min");
+        holder.text.setText(item.getExerciseName() + " - " + item.getSets() + " sets - " + item.getTotalReps() + " reps - " + item.getDurationMinutes() + " minutes");
 
         holder.deleteIcon.setOnClickListener(v -> {
             int adapterPosition = holder.getAdapterPosition();

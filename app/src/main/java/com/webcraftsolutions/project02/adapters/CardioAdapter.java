@@ -43,7 +43,7 @@ public class CardioAdapter extends RecyclerView.Adapter<CardioAdapter.CardioView
     @Override
     public void onBindViewHolder(@NonNull CardioViewHolder holder, int position) {
         CardioWorkout item = cardioList.get(position);
-        holder.text.setText(item.getType() + " - " + item.getDurationMinutes() + " min - " + item.getIntensity());
+        holder.text.setText(item.getType() + " - " + item.getDurationMinutes() + " minutes - " + item.getIntensity());
 
         holder.deleteIcon.setOnClickListener(v -> {
             int adapterPosition = holder.getAdapterPosition();
