@@ -23,7 +23,6 @@ public class HikingRoutesViewModel extends AndroidViewModel {
         repository.insertHikingRoute(hikingRoute);
     }
 
-    // Get all hiking routes for a specific user
     public LiveData<List<HikingRoutes>> getHikingRoutes(int userId) {
         if (hikingRoutes == null) {
             hikingRoutes = repository.getRoutesForUser(userId);
@@ -31,14 +30,12 @@ public class HikingRoutesViewModel extends AndroidViewModel {
         return hikingRoutes;
     }
 
-    // Set hiking routes manually (not typical, but useful for testing or replacing all data)
     public void setHikingRoutes(List<HikingRoutes> hikingRoutes) {
         for (HikingRoutes hikingRoute : hikingRoutes) {
             repository.insertRoute(hikingRoute);
         }
     }
 
-    // Optionally allow single insert
     public void insert(HikingRoutes hikingRoutes) {
         repository.insertRoute(hikingRoutes);
     }

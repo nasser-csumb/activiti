@@ -24,10 +24,15 @@ import java.util.List;
 @Dao
 public interface TravelExplorationDAO {
 
-    @Delete
-    void delete(TravelExploration... travelExploration);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(TravelExploration... travelExploration);
+
+    @Update
+    void update(TravelExploration... travelExploration);
+
+    @Delete
+    void delete(TravelExploration... travelExploration);
 
     @Query("SELECT * FROM " + ActivitiDatabase.TRAVEL_EXPLORATION_TABLE)
     List<TravelExploration> getAllTravelExplorations();
