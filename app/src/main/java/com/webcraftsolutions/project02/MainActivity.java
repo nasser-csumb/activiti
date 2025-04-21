@@ -277,7 +277,7 @@ public class MainActivity extends AppCompatActivity {
         binding.mainMenuExerciseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = ExerciseActivity.exerciseActivityIntentFactory(MainActivity.this);
+                Intent intent = ExerciseActivity.exerciseActivityIntentFactory(MainActivity.this, loggedInUserId);
                 startActivity(intent);
 
             }
@@ -296,7 +296,7 @@ public class MainActivity extends AppCompatActivity {
         binding.mainMenuTravelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = TravelAndExplorationActivity.travelAndExplorationActivityIntentFactory(getApplicationContext());
+                Intent intent = TravelAndExplorationActivity.travelAndExplorationActivityIntentFactory(getApplicationContext(), loggedInUserId);
                 startActivity(intent);
             }
         });

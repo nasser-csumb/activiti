@@ -16,6 +16,7 @@ import androidx.lifecycle.LiveData;
 
 import com.webcraftsolutions.project02.MainActivity;
 import com.webcraftsolutions.project02.database.entities.Event;
+import com.webcraftsolutions.project02.database.entities.HikingRoutes;
 import com.webcraftsolutions.project02.database.entities.TravelExploration;
 import com.webcraftsolutions.project02.database.entities.User;
 import com.webcraftsolutions.project02.database.entities.WellnessJournal;
@@ -47,6 +48,7 @@ public class ActivitiRepository {
     // Event DAO
     private final EventDAO eventDAO;
     private final TravelExplorationDAO travelExplorationDAO;
+    private final HikingRoutesDAO hikingRoutesDAO;
 
     // Wellness DAO
     private final WellnessSleepDAO wellnessSleepDAO;
@@ -64,12 +66,13 @@ public class ActivitiRepository {
         this.eventDAO = db.eventDAO();
       
         this.travelExplorationDAO = db.travelExplorationDAO();
+        this.hikingRoutesDAO = db.hikingRoutesDAO();
 
         this.wellnessSleepDAO = db.wellnessSleepDAO();
         this.wellnessMoodDAO = db.wellnessMoodDAO();
         this.wellnessJournalDAO = db.wellnessJournalDAO();
 
-        this.allEventLogs = getAllEvents();
+//        this.allEventLogs = getAllEvents();
 
         this.cardioWorkoutDAO = db.cardioWorkoutDAO();
         this.weightLiftingWorkoutDAO = db.weightLiftingWorkoutDAO();
@@ -194,6 +197,20 @@ public class ActivitiRepository {
 
     // TRAVEL TABLE METHODS
 
+    public LiveData<List<HikingRoutes>> getRoutesForUser(int userId) {
+        return hikingRoutesDAO.getHikingRoutesForUser(userId);
+    }
+
+    public void insertRoute(HikingRoutes hikingRoutes) {
+        ActivitiDatabase.databaseWriteExecutor.execute(() -> {
+            hikingRoutesDAO.insert(hikingRoutes);
+        });
+    }
+
+    public void insertHikingRoute(HikingRoutes hikingRoute) {
+        new Thread(() -> hikingRoutesDAO.insert(hikingRoute)).start();
+    }
+
     /**
      * Inserts TravelExploration into the database
      * @param travelExploration the TravelExploration added
@@ -220,6 +237,10 @@ public class ActivitiRepository {
      */
     public List<TravelExploration> getAllTravelExplorations() {
         return travelExplorationDAO.getAllTravelExplorations();
+    }
+
+    public LiveData<List<TravelExploration>> getAllTravelExplorationsLive() {
+        return travelExplorationDAO.getAllTravelExplorationsLive();
     }
 
     /**
@@ -324,6 +345,14 @@ public class ActivitiRepository {
         return new ArrayList<>(cardioWorkoutDAO.getCardioWorkoutsByUserId(userId));
     }
 
+    public void deleteAllCardioByUserId(int userId) {
+        ActivitiDatabase.databaseWriteExecutor.execute(() -> cardioWorkoutDAO.deleteAllByUserId(userId));
+    }
+
+    public void deleteCardioWorkout(CardioWorkout workout) {
+        ActivitiDatabase.databaseWriteExecutor.execute(() -> cardioWorkoutDAO.delete(workout));
+    }
+
     // Weight Lifting Methods
 
     public void insertWeightLiftingWorkout(WeightLiftingWorkout... workouts) {
@@ -332,6 +361,14 @@ public class ActivitiRepository {
 
     public ArrayList<WeightLiftingWorkout> getAllWeightLiftingWorkoutsByUserId(int userId) {
         return new ArrayList<>(weightLiftingWorkoutDAO.getWeightLiftingWorkoutsByUserId(userId));
+    }
+
+    public void deleteAllWeightLiftingByUserId(int userId) {
+        ActivitiDatabase.databaseWriteExecutor.execute(() -> weightLiftingWorkoutDAO.deleteAllByUserId(userId));
+    }
+
+    public void deleteWeightLiftingWorkout(WeightLiftingWorkout workout) {
+        ActivitiDatabase.databaseWriteExecutor.execute(() -> weightLiftingWorkoutDAO.delete(workout));
     }
 
     // USER METHODS
@@ -365,7 +402,8 @@ public class ActivitiRepository {
         deleteAllEventsByUserId(user.getId());
 
         // Delete User's Exercise Logs
-        // TODO Delete Exercise Logs when they are added.
+        deleteAllCardioByUserId(user.getId());
+        deleteAllWeightLiftingByUserId(user.getId());
 
         // Delete User's Wellness Logs
         // TODO Delete User's Wellness Logs

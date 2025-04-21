@@ -19,6 +19,9 @@
             android:name=".WellnessMood"
             android:exported="false" />
         <activity
+            android:name=".HikingRoutesActivity"
+            android:exported="false" />
+        <activity
             android:name=".ExerciseActivity"
             android:exported="false" />
         <activity

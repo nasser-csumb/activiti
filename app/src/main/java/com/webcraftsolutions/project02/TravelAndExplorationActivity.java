@@ -6,10 +6,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 
 import com.webcraftsolutions.project02.database.ActivitiRepository;
 import com.webcraftsolutions.project02.database.entities.TravelExploration;
+import com.webcraftsolutions.project02.database.entities.User;
 import com.webcraftsolutions.project02.databinding.ActivityTravelAndExplorationBinding;
 
 public class TravelAndExplorationActivity extends AppCompatActivity {
@@ -17,6 +20,8 @@ public class TravelAndExplorationActivity extends AppCompatActivity {
     private ActivityTravelAndExplorationBinding binding;
 
     private ActivitiRepository repository;
+
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +31,34 @@ public class TravelAndExplorationActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         repository = ActivitiRepository.getRepository(getApplication());
+
+        int userId = getIntent().getIntExtra(MainActivity.LOGGED_IN_USER_ID_KEY, MainActivity.LOGGED_OUT);
+
+        LiveData<User> userObserver = repository.getUserByUserId(userId);
+        userObserver.observe(this, user -> {
+            this.user = user;
+            if (user != null) {
+                // Display username in top menu
+                binding.travelTopMenu.topMenuUserTextView.setText(user.getUsername());
+
+                // Set back button behavior
+                binding.travelTopMenu.topMenuBackTextView.setOnClickListener(v -> {
+                    Intent intent = MainActivity.mainActivityIntentFactory(getApplicationContext(), user.getId());
+                    startActivity(intent);
+                });
+
+                // Set logout behavior
+                binding.travelTopMenu.topMenuUserTextView.setOnClickListener(v -> {
+                    showLogoutDialog(TravelAndExplorationActivity.this);
+                });
+
+                // View Hiking Routes Button
+                binding.viewHikingRoutesButton.setOnClickListener(v -> {
+                    Intent intent = HikingRoutesActivity.hikingRoutesIntentFactory(this, user.getId());
+                    startActivity(intent);
+                });
+            }
+        });
 
         binding.saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,8 +91,24 @@ public class TravelAndExplorationActivity extends AppCompatActivity {
         binding.visitedPlacesEditText.setText("");
     }
 
-    public static Intent travelAndExplorationActivityIntentFactory(Context context) {
+    private void showLogoutDialog(Context context) {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+        final AlertDialog alertDialog = alertBuilder.create();
+
+        alertBuilder.setMessage("Logout?");
+
+        alertBuilder.setPositiveButton("Logout", (dialog, which) -> {
+            startActivity(MainActivity.mainActivityIntentFactory(getApplicationContext(), true));
+        });
+
+        alertBuilder.setNegativeButton("Cancel", (dialog, which) -> alertDialog.dismiss());
+
+        alertBuilder.create().show();
+    }
+
+    static Intent travelAndExplorationActivityIntentFactory(Context context, int userId) {
         Intent intent = new Intent(context, TravelAndExplorationActivity.class);
+        intent.putExtra(MainActivity.LOGGED_IN_USER_ID_KEY, userId);
         return intent;
     }
 }

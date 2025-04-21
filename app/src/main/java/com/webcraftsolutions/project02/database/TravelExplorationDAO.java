@@ -9,6 +9,7 @@
 
 package com.webcraftsolutions.project02.database;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -33,4 +34,7 @@ public interface TravelExplorationDAO {
 
     @Query("SELECT * FROM " + ActivitiDatabase.TRAVEL_EXPLORATION_TABLE + " WHERE travelId = :travelId")
     TravelExploration getTravelExplorationById(int travelId);
+
+    @Query("SELECT * FROM " + ActivitiDatabase.TRAVEL_EXPLORATION_TABLE)
+    LiveData<List<TravelExploration>> getAllTravelExplorationsLive();
 }

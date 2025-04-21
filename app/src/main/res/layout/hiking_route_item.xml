@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+    tools:context=".HikingRoutesActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/hikingRouteNameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hiking Route Name"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/hikingRoutePlaceTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Place"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_marginEnd="8dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/difficultyRatingTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Difficulty"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:layout_marginEnd="8dp" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="20dp"
+                android:background="@android:color/darker_gray"
+                android:layout_marginHorizontal="8dp" />
+
+            <TextView
+                android:id="@+id/ratingTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rating"
+                android:textSize="14sp"
+                android:gravity="center" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/timeEstimateTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time Estimate"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:layout_marginEnd="16dp" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="20dp"
+                android:background="@android:color/darker_gray"
+                android:layout_marginEnd="16dp" />
+
+            <TextView
+                android:id="@+id/dangerLevelTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Danger Level"
+                android:textSize="14sp"
+                android:gravity="center" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/safetyTipsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Safety Tips"
+            android:textSize="14sp"
+            android:gravity="center" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
