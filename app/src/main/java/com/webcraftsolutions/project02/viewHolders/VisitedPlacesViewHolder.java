@@ -31,9 +31,9 @@ public class VisitedPlacesViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(VisitedPlaces visitedPlace) {
         placeNameTextView.setText(visitedPlace.getName());
-        placeCategoryTextView.setText(visitedPlace.getCategory());
-        placeNotesTextView.setText(visitedPlace.getNotes());
-        placeDateVisitedTextView.setText("Visited: " + visitedPlace.getDateVisited());
+        placeCategoryTextView.setText(String.format("Category: %s", visitedPlace.getCategory()));
+        placeNotesTextView.setText(String.format("Notes: %s", visitedPlace.getNotes()));
+        placeDateVisitedTextView.setText(String.format("Visited: %s", visitedPlace.getDateVisited()));
 
         // I learned this at https://stackoverflow.com/questions/41324132/how-set-image-into-imageview-using-glide-and-a-uri
         // The following was inspired by the above link to implement a way to get the image.

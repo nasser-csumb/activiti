@@ -34,11 +34,11 @@ public class HikingRoutesViewHolder extends RecyclerView.ViewHolder {
     public void bind(HikingRoutes hikingRoutes) {
         nameTextView.setText(hikingRoutes.getName());
         placeTextView.setText(hikingRoutes.getPlace());
-        difficultyTextView.setText("Difficulty: " + hikingRoutes.getDifficulty());
-        timeEstimateTextView.setText("Time: " + hikingRoutes.getTimeEstimate());
-        dangerLevelTextView.setText("Danger Level: " + hikingRoutes.getDangerLevel());
-        safetyTipsTextView.setText("Safety Tips: " + hikingRoutes.getSafetyTips());
-        ratingTextView.setText("Rating: " + hikingRoutes.getRating());
+        difficultyTextView.setText(String.format("Difficulty: %s", hikingRoutes.getDifficulty()));
+        timeEstimateTextView.setText(String.format("Time: %s", hikingRoutes.getTimeEstimate()));
+        dangerLevelTextView.setText(String.format("Danger Level: %s", hikingRoutes.getDangerLevel()));
+        safetyTipsTextView.setText(String.format("Safety Tips: %s", hikingRoutes.getSafetyTips()));
+        ratingTextView.setText(String.format("Rating: %s", hikingRoutes.getRating()));
     }
 
     static HikingRoutesViewHolder create(ViewGroup parent) {
