@@ -20,6 +20,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/wellness_background" />
 
+    <include
+        android:id="@+id/topMenu"
+        layout="@layout/top_menu_layout"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ScrollView
         android:id="@+id/scroller"
         android:layout_width="0dp"

@@ -15,6 +15,11 @@
         <activity
             android:name=".VisitedPlacesActivity"
             android:exported="false" />
+            android:name=".WellnessJournal"
+            android:exported="false" />
+        <activity
+            android:name=".WellnessMood"
+            android:exported="false" />
         <activity
             android:name=".HikingRoutesActivity"
             android:exported="false" />

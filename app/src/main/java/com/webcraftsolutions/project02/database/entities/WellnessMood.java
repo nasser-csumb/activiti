@@ -81,6 +81,12 @@ public class WellnessMood {
         this.energyLevel = energyLevel;
     }
 
+    @Override
+    public String toString() {
+        return "Mood: " + moodLabel + "\n" +
+                "Energy Level: " + energyLevel + "\n";
+    }
+
     // EQUALS & HASHCODE
     @Override
     public boolean equals(Object o) {

@@ -81,6 +81,12 @@ public class WellnessJournal {
         this.content = content;
     }
 
+    @Override
+    public String toString() {
+        return title + "\n\n" +
+               content + "\n----------------\n";
+    }
+
     // EQUALS & HASHCODE
     @Override
     public boolean equals(Object o) {
