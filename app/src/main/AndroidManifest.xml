@@ -15,6 +15,7 @@
         <activity
             android:name=".VisitedPlacesActivity"
             android:exported="false" />
+        <activity
             android:name=".WellnessJournal"
             android:exported="false" />
         <activity
