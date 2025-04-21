@@ -19,6 +19,7 @@ import com.webcraftsolutions.project02.database.entities.Event;
 import com.webcraftsolutions.project02.database.entities.HikingRoutes;
 import com.webcraftsolutions.project02.database.entities.TravelExploration;
 import com.webcraftsolutions.project02.database.entities.User;
+import com.webcraftsolutions.project02.database.entities.VisitedPlaces;
 import com.webcraftsolutions.project02.database.entities.WellnessJournal;
 import com.webcraftsolutions.project02.database.entities.WellnessMood;
 import com.webcraftsolutions.project02.database.entities.WellnessSleep;
@@ -47,8 +48,11 @@ public class ActivitiRepository {
 
     // Event DAO
     private final EventDAO eventDAO;
+
+    // Travel & Exploration DAO's
     private final TravelExplorationDAO travelExplorationDAO;
     private final HikingRoutesDAO hikingRoutesDAO;
+    private final VisitedPlacesDAO visitedPlacesDAO;
 
     // Wellness DAO
     private final WellnessSleepDAO wellnessSleepDAO;
@@ -67,6 +71,7 @@ public class ActivitiRepository {
       
         this.travelExplorationDAO = db.travelExplorationDAO();
         this.hikingRoutesDAO = db.hikingRoutesDAO();
+        this.visitedPlacesDAO = db.visitedPlacesDAO();
 
         this.wellnessSleepDAO = db.wellnessSleepDAO();
         this.wellnessMoodDAO = db.wellnessMoodDAO();
@@ -196,6 +201,16 @@ public class ActivitiRepository {
 
 
     // TRAVEL TABLE METHODS
+
+    public LiveData<List<VisitedPlaces>> getVisitedPlacesByUserId(int userId) {
+        return visitedPlacesDAO.getVisitedPlacesByUserId(userId);
+    }
+
+    public void insertVisitedPlace(VisitedPlaces place) {
+        ActivitiDatabase.databaseWriteExecutor.execute(() -> {
+            visitedPlacesDAO.insert(place);
+        });
+    }
 
     public LiveData<List<HikingRoutes>> getRoutesForUser(int userId) {
         return hikingRoutesDAO.getHikingRoutesForUser(userId);

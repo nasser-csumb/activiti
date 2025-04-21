@@ -57,6 +57,11 @@ public class TravelAndExplorationActivity extends AppCompatActivity {
                     Intent intent = HikingRoutesActivity.hikingRoutesIntentFactory(this, user.getId());
                     startActivity(intent);
                 });
+
+                binding.viewVisitedPlacesButton.setOnClickListener(v -> {
+                   Intent intent = VisitedPlacesActivity.visitedPlacesIntentFactory(this, user.getId());
+                   startActivity(intent);
+                });
             }
         });
 

@@ -35,41 +35,33 @@ public class HikingRoutesActivity extends AppCompatActivity {
         binding = ActivityHikingRoutesBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Set up repository
         repository = ActivitiRepository.getRepository(getApplication());
 
-        // Get User from intent
         userId = getIntent().getIntExtra(MainActivity.LOGGED_IN_USER_ID_KEY, MainActivity.LOGGED_OUT);
 
         repository.getUserByUserId(userId).observe(this, user -> {
             this.user = user;
             if (user != null) {
-                // Set top menu username
                 binding.hikingTopMenu.topMenuUserTextView.setText(user.getUsername());
             }
         });
 
-        // Back button
         binding.hikingTopMenu.topMenuBackTextView.setOnClickListener(v -> {
             Intent intent = TravelAndExplorationActivity.travelAndExplorationActivityIntentFactory(getApplicationContext(), userId);
             startActivity(intent);
         });
 
-        // Logout prompt (optional)
         binding.hikingTopMenu.topMenuUserTextView.setOnClickListener(v -> showLogoutDialog(this));
 
-        // Set up RecyclerView and Adapter
         final HikingRoutesAdapter adapter = new HikingRoutesAdapter(new HikingRoutesAdapter.HikingRoutesDiff());
         binding.hikingRoutesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         binding.hikingRoutesRecyclerView.setAdapter(adapter);
 
-        // Set up ViewModel
         viewModel = new ViewModelProvider(this).get(HikingRoutesViewModel.class);
         viewModel.getHikingRoutes(userId).observe(this, hikingRoutes -> {
             adapter.submitList(hikingRoutes);
         });
 
-        // Button click listener
         binding.addHikingRouteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,7 +109,6 @@ public class HikingRoutesActivity extends AppCompatActivity {
         viewModel.insertHikingRoute(newRoute);
         Toast.makeText(this, "Hiking route added!", Toast.LENGTH_SHORT).show();
 
-        // Clear input fields
         binding.routeNameEditText.setText("");
         binding.routePlaceEditText.setText("");
         binding.routeDifficultyEditText.setText("");
