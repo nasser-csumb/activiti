@@ -210,6 +210,18 @@ public class ActivitiRepository {
         });
     }
 
+    public LiveData<VisitedPlaces> getById(int travelId) {
+        return visitedPlacesDAO.getById(travelId);
+    }
+
+    public LiveData<VisitedPlaces> getVisitedPlaceByName(String name) {
+        return visitedPlacesDAO.getVisitedPlaceByName(name);
+    }
+
+    public LiveData<HikingRoutes> getHikingRouteByName(String name) {
+        return hikingRoutesDAO.getHikingRouteByName(name);
+    }
+
     public LiveData<List<HikingRoutes>> getRoutesForUser(int userId) {
         return hikingRoutesDAO.getHikingRoutesForUser(userId);
     }

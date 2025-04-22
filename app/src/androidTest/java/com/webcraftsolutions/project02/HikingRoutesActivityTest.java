@@ -17,7 +17,7 @@ import org.junit.Test;
 
 public class HikingRoutesActivityTest {
 
-    private static final String ROUTE_EXTRA = "ROUTE_INTENT_EXTRA";  // Example extra string
+    private static final String ROUTE_EXTRA = "ROUTE_INTENT_EXTRA";
 
     private static final String TEST_USER_ID = "TEST_USER";
 
@@ -57,6 +57,6 @@ public class HikingRoutesActivityTest {
 
         assertEquals(user.getId(), intent.getIntExtra(MainActivity.LOGGED_IN_USER_ID_KEY, MainActivity.LOGGED_OUT));
 
-        assertFalse(intent.getBooleanExtra(ROUTE_EXTRA, false));  // Example of checking an extra
+        assertFalse(intent.getBooleanExtra(ROUTE_EXTRA, false));
     }
 }

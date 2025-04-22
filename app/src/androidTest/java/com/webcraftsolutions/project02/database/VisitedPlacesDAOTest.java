@@ -86,7 +86,7 @@ public class VisitedPlacesDAOTest {
         visitedPlacesDAO.delete(visitedPlace);
 
         VisitedPlaces deletedPlace = visitedPlacesDAO.getVisitedPlaceByIdSynchronous(visitedPlace.getId());
-        assertNull(deletedPlace);  // Should be null after deletion
+        assertNull(deletedPlace);
     }
 
     /**

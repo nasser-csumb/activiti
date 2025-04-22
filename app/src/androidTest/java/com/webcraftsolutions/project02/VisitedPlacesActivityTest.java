@@ -17,7 +17,7 @@ import org.junit.Test;
 
 public class VisitedPlacesActivityTest {
 
-    private static final String VISITED_PLACE_EXTRA = "VISITED_PLACE_INTENT_EXTRA";  // Example extra string
+    private static final String VISITED_PLACE_EXTRA = "VISITED_PLACE_INTENT_EXTRA";
 
     private static final String TEST_USER_ID = "TEST_USER";
 
@@ -57,6 +57,6 @@ public class VisitedPlacesActivityTest {
 
         assertEquals(user.getId(), intent.getIntExtra(MainActivity.LOGGED_IN_USER_ID_KEY, MainActivity.LOGGED_OUT));
 
-        assertFalse(intent.getBooleanExtra(VISITED_PLACE_EXTRA, false));  // Example of checking an extra
+        assertFalse(intent.getBooleanExtra(VISITED_PLACE_EXTRA, false));
     }
 }

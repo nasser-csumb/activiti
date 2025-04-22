@@ -37,8 +37,8 @@ public interface TravelExplorationDAO {
     @Query("SELECT * FROM " + ActivitiDatabase.TRAVEL_EXPLORATION_TABLE)
     List<TravelExploration> getAllTravelExplorations();
 
-    @Query("SELECT * FROM " + ActivitiDatabase.TRAVEL_EXPLORATION_TABLE + " WHERE travelId = :travelId")
-    TravelExploration getTravelExplorationById(int travelId);
+    @Query("SELECT * FROM " + ActivitiDatabase.TRAVEL_EXPLORATION_TABLE + " WHERE userId = :userId ORDER BY timeStamp DESC")
+    TravelExploration getTravelExplorationById(int userId);
 
     @Query("SELECT * FROM " + ActivitiDatabase.TRAVEL_EXPLORATION_TABLE)
     LiveData<List<TravelExploration>> getAllTravelExplorationsLive();

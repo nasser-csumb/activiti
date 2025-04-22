@@ -8,6 +8,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.webcraftsolutions.project02.database.entities.TravelExploration;
 import com.webcraftsolutions.project02.database.entities.VisitedPlaces;
 
 import java.util.List;
@@ -32,4 +33,10 @@ public interface VisitedPlacesDAO {
 
     @Query("SELECT * FROM " + ActivitiDatabase.VISITED_PLACES_TABLE + " WHERE id = :id")
     VisitedPlaces getVisitedPlaceByIdSynchronous(int id);
+
+    @Query("SELECT * FROM " + ActivitiDatabase.VISITED_PLACES_TABLE + " WHERE name LIKE '%' || :name || '%' LIMIT 1")
+    LiveData<VisitedPlaces> getVisitedPlaceByName(String name);
+
+    @Query("SELECT * FROM " + ActivitiDatabase.VISITED_PLACES_TABLE + " WHERE Id = :Id")
+    LiveData<VisitedPlaces> getById(int Id);
 }
