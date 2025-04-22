@@ -12,19 +12,20 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.webcraftsolutions.project02.viewHolders.EventAdapter;
 import com.webcraftsolutions.project02.database.ActivitiRepository;
 import com.webcraftsolutions.project02.database.entities.Event;
 import com.webcraftsolutions.project02.database.entities.User;
 import com.webcraftsolutions.project02.databinding.ActivityEventBinding;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -60,13 +61,15 @@ public class EventActivity extends AppCompatActivity {
         binding = ActivityEventBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // TODO Remove scrolling
         // Add scrolling to eventEventsTextView
-        binding.eventEventsTextView.setMovementMethod(new ScrollingMovementMethod());
+//        binding.eventEventsTextView.setMovementMethod(new ScrollingMovementMethod());
 
         // Get repository
         repository = ActivitiRepository.getRepository(getApplication());
 
         // Get User
+        assert repository != null;
         LiveData<User> userObserver = repository.getUserByUserId(getIntent()
                         .getIntExtra(MainActivity.LOGGED_IN_USER_ID_KEY, MainActivity.LOGGED_OUT));
         userObserver.observe(this, user -> {
@@ -76,8 +79,12 @@ public class EventActivity extends AppCompatActivity {
                 binding.eventTopMenu.topMenuUserTextView.setText(String
                         .format("%s", user.getUsername()));
 
+                // TODO Remove updateDisplay
                 // Update Events Display
-                updateDisplay();
+//                updateDisplay();
+
+                // Setup Recycler
+                setupRecycler();
             }
         });
 
@@ -108,6 +115,20 @@ public class EventActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    /**
+     * Sets up the recycler object.
+     */
+    private void setupRecycler() {
+        // Get Recycler
+        RecyclerView recyclerView = binding.eventRecyclerView;
+        final EventAdapter adapter = new EventAdapter(new EventAdapter.EventDiff());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Pass Event list to Recycler
+        repository.getAllEventsByUserId(user.getId()).observe(this, adapter::submitList);
     }
 
     /**

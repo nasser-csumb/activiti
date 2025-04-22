@@ -67,6 +67,9 @@ public class EventCreateActivity extends AppCompatActivity {
             }
         });
 
+        // Get Recycler
+
+
         // Set OnClickListener for logout button
         binding.eventCreateTopMenu.topMenuUserTextView.setOnClickListener(new View.OnClickListener() {
             @Override

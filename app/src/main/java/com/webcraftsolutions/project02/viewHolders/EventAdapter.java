@@ -4,7 +4,7 @@
  * Date Created: 4/22/2025
  * Description: Adapater class for Event entities.
  */
-package com.webcraftsolutions.project02.adapters;
+package com.webcraftsolutions.project02.viewHolders;
 
 import android.view.ViewGroup;
 
@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
 import com.webcraftsolutions.project02.database.entities.Event;
-import com.webcraftsolutions.project02.viewHolders.EventViewHolder;
 
 public class EventAdapter extends ListAdapter<Event, EventViewHolder> {
 
