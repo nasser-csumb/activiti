@@ -22,6 +22,9 @@ public class EventViewHolder extends RecyclerView.ViewHolder {
 
     // FIELDS
 
+    // The Event
+    private Event event;
+
     // The repository.
     private final ActivitiRepository repository;
 
@@ -61,6 +64,11 @@ public class EventViewHolder extends RecyclerView.ViewHolder {
      * @param event The event used to set text.
      */
     public void bind(Event event) {
+
+        // Get Event
+        this.event = event;
+
+        // Set TextView text.
         nameTextView.setText(event.getName());
         descTextView.setText(event.getDescription());
         dateTextView.setText(String.format("%s @ %s", event.getDate(), event.getTime()));
@@ -69,6 +77,14 @@ public class EventViewHolder extends RecyclerView.ViewHolder {
         // Set OnClickListener for 'Edit Text'
 
         // Set OnClickListener for 'Delete Text'
+        deleteTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Delete Event from Repository
+                assert repository != null;
+                repository.deleteEvent(event);
+            }
+        });
     }
 
     // STATIC METHODS
