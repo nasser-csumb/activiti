@@ -53,7 +53,7 @@ public class EventDAOTest {
         eventDAO = db.eventDAO();
 
         // Get User
-        event = new Event(TEST_EVENT, TEST_EVENT, TEST_EVENT, TEST_EVENT, TEST_USER_ID);
+        event = new Event(TEST_EVENT, TEST_EVENT, TEST_EVENT, TEST_EVENT, TEST_EVENT, TEST_USER_ID);
         event.setEventId(1);
     }
 
