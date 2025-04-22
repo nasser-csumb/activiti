@@ -23,6 +23,9 @@ public class EventCreateActivityTest {
 
     // CONSTANT FIELDS
 
+    // Test String
+    private final String EVENT_CREATE_EXTRA = "EVENT_CREATE_INTENT_EXTRA";
+
     // FIELDS
 
     // Application Context
@@ -41,7 +44,6 @@ public class EventCreateActivityTest {
         context = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
         // Set user
-        // User Username/Password String
         String USERNAME = "TEST_USER";
         user = new User(USERNAME, USERNAME);
     }
@@ -69,8 +71,18 @@ public class EventCreateActivityTest {
         assertNotNull(intent);
         assertEquals(user.getId(), intent.getIntExtra(
                 MainActivity.LOGGED_IN_USER_ID_KEY, MainActivity.LOGGED_OUT));
-        // Test String
-        String EVENT_CREATE_EXTRA = "EVENT_CREATE_INTENT_EXTRA";
+        assertFalse(intent.getBooleanExtra(EVENT_CREATE_EXTRA, false));
+    }
+
+    @Test
+    public void eventCreateActivityIntentFactoryEventId() {
+        // Get Intent
+        Intent intent = EventCreateActivity.eventCreateActivityIntentFactory(context, user.getId(), 1);
+
+        // Check Intent
+        assertNotNull(intent);
+        assertEquals(1, intent.getIntExtra(
+                EventCreateActivity.EVENT_EXTRA, -1));
         assertFalse(intent.getBooleanExtra(EVENT_CREATE_EXTRA, false));
     }
 }

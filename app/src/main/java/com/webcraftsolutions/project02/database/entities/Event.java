@@ -32,15 +32,19 @@ public class Event {
     // The time of the event.
     private String time;
 
+    // The location of the event.
+    private String location;
+
     // The user that saved this event.
     private int userId;
 
     // CONSTRUCTOR
-    public Event(String name, String description, String date, String time, int userId) {
+    public Event(String name, String description, String date, String time, String location, int userId) {
         this.name = name;
         this.description = description;
         this.date = date;
         this.time = time;
+        this.location = location;
         this.userId = userId;
     }
 
@@ -81,6 +85,8 @@ public class Event {
         return time;
     }
 
+    public String getLocation() { return location; }
+
     public int getUserId() {
         return userId;
     }
@@ -104,6 +110,8 @@ public class Event {
     public void setTime(String time) {
         this.time = time;
     }
+
+    public void setLocation(String location) { this.location = location; }
 
     public void setUserId(int userId) {
         this.userId = userId;

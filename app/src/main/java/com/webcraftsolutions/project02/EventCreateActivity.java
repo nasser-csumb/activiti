@@ -25,8 +25,13 @@ public class EventCreateActivity extends AppCompatActivity {
 
     // CLASS FIELDS
 
+    public static final String EVENT_EXTRA = "com.webcraftsolutions.project02.EVENT_EXTRA";
+
     // INSTANCE FIELDS
     private ActivityEventCreateBinding binding;
+
+    // The Event to be saved
+    private Event event;
 
     // The repository.
     private ActivitiRepository repository;
@@ -35,6 +40,35 @@ public class EventCreateActivity extends AppCompatActivity {
     User user;
 
     // INSTANCE METHODS
+
+    /**
+     * Gets text from EditText views,
+     *      creates a new event or edits an existing one,
+     *      and inserts it into the repository.
+     */
+    private void insertEvent() {
+        // Get EditText text
+        String name = binding.eventCreateNameEditText.getText().toString().trim();
+        String description = binding.eventCreateDescEditText.getText().toString().trim();
+        String date = binding.eventCreateDateEditText.getText().toString().trim();
+        String time = binding.eventCreateTimeEditText.getText().toString().trim();
+        String location = binding.eventCreateLocationEditText.getText().toString().trim();
+
+        // Create new event or edit existing event
+        if(event == null) {
+            event = new Event(name, description, date, time, location, user.getId());
+        } else {
+            event.setName(name);
+            event.setDescription(description);
+            event.setDate(date);
+            event.setTime(time);
+            event.setLocation(location);
+        }
+
+        // Store event and display toast to user
+        repository.insertEvent(event);
+        MainActivity.toastMaker(getApplicationContext(), name + " saved!");
+    }
 
     /**
      * Called when this activity is created.
@@ -56,6 +90,7 @@ public class EventCreateActivity extends AppCompatActivity {
         repository = ActivitiRepository.getRepository(getApplication());
 
         // Get user.
+        assert repository != null;
         LiveData<User> userObserver = repository.getUserByUserId(getIntent()
                 .getIntExtra(MainActivity.LOGGED_IN_USER_ID_KEY, MainActivity.LOGGED_OUT));
         userObserver.observe(this, user -> {
@@ -66,6 +101,26 @@ public class EventCreateActivity extends AppCompatActivity {
                         .format("%s", user.getUsername()));
             }
         });
+
+        // Get Intent Extra
+        int extra = getIntent().getIntExtra(EVENT_EXTRA, -1);
+        if(extra != -1) {
+            repository.getEventByEventId(extra).observe(this, event -> {
+                // Save event
+                this.event = event;
+
+                // Set TextView text
+                String str = "Edit Event";
+                binding.eventCreateGreetingTextView.setText(str);
+
+                // Set EditView text
+                binding.eventCreateNameEditText.setText(event.getName());
+                binding.eventCreateDescEditText.setText(event.getDescription());
+                binding.eventCreateDateEditText.setText(event.getDate());
+                binding.eventCreateTimeEditText.setText(event.getTime());
+                binding.eventCreateLocationEditText.setText(event.getLocation());
+            });
+        }
 
         // Set OnClickListener for logout button
         binding.eventCreateTopMenu.topMenuUserTextView.setOnClickListener(new View.OnClickListener() {
@@ -89,13 +144,7 @@ public class EventCreateActivity extends AppCompatActivity {
         binding.eventCreateSaveEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = binding.eventCreateNameEditText.getText().toString();
-                String description = binding.eventCreateDescEditText.getText().toString();
-                String date = binding.eventCreateDateEditText.getText().toString();
-                String time = binding.eventCreateTimeEditText.getText().toString();
-                Event event = new Event(name, description, date, time, user.getId());
-                repository.insertEvent(event);
-                MainActivity.toastMaker(getApplicationContext(), name + " saved!");
+                insertEvent();
             }
         });
     }
@@ -138,9 +187,15 @@ public class EventCreateActivity extends AppCompatActivity {
      * @param context The application context.
      * @return The EventCreateActivity Intent.
      */
-    static Intent eventCreateActivityIntentFactory(Context context, int userId) {
+    public static Intent eventCreateActivityIntentFactory(Context context, int userId) {
         Intent intent = new Intent(context, EventCreateActivity.class);
         intent.putExtra(MainActivity.LOGGED_IN_USER_ID_KEY, userId);
+        return intent;
+    }
+
+    public static Intent eventCreateActivityIntentFactory(Context context, int userId, int eventId) {
+        Intent intent = eventCreateActivityIntentFactory(context, userId);
+        intent.putExtra(EventCreateActivity.EVENT_EXTRA, eventId);
         return intent;
     }
 
