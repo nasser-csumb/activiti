@@ -20,6 +20,8 @@ public class EventViewHolder extends RecyclerView.ViewHolder {
 
     // FIELDS
 
+    // TEXTVIEW
+
     private final TextView nameTextView;
 
     private final TextView descTextView;
@@ -27,6 +29,10 @@ public class EventViewHolder extends RecyclerView.ViewHolder {
     private final TextView dateTextView;
 
     private final TextView locationTextView;
+
+    private final TextView editTextView;
+
+    private final TextView deleteTextView;
 
     // METHODS
 
@@ -38,6 +44,8 @@ public class EventViewHolder extends RecyclerView.ViewHolder {
         descTextView = itemView.findViewById(R.id.eventItemDescTextView);
         dateTextView = itemView.findViewById(R.id.eventItemDateTextView);
         locationTextView = itemView.findViewById(R.id.eventItemLocationTextView);
+        editTextView = itemView.findViewById(R.id.eventItemEditTextView);
+        deleteTextView = itemView.findViewById(R.id.eventItemDeleteTextView);
     }
 
     /**
