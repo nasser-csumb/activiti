@@ -25,6 +25,8 @@ public class EventCreateActivity extends AppCompatActivity {
 
     // CLASS FIELDS
 
+    private static final String EVENT_EXTRA = "com.webcraftsolutions.project02.EVENT_EXTRA";
+
     // INSTANCE FIELDS
     private ActivityEventCreateBinding binding;
 
@@ -56,6 +58,7 @@ public class EventCreateActivity extends AppCompatActivity {
         repository = ActivitiRepository.getRepository(getApplication());
 
         // Get user.
+        assert repository != null;
         LiveData<User> userObserver = repository.getUserByUserId(getIntent()
                 .getIntExtra(MainActivity.LOGGED_IN_USER_ID_KEY, MainActivity.LOGGED_OUT));
         userObserver.observe(this, user -> {
@@ -66,9 +69,6 @@ public class EventCreateActivity extends AppCompatActivity {
                         .format("%s", user.getUsername()));
             }
         });
-
-        // Get Recycler
-
 
         // Set OnClickListener for logout button
         binding.eventCreateTopMenu.topMenuUserTextView.setOnClickListener(new View.OnClickListener() {
@@ -145,6 +145,12 @@ public class EventCreateActivity extends AppCompatActivity {
     static Intent eventCreateActivityIntentFactory(Context context, int userId) {
         Intent intent = new Intent(context, EventCreateActivity.class);
         intent.putExtra(MainActivity.LOGGED_IN_USER_ID_KEY, userId);
+        return intent;
+    }
+
+    static Intent eventCreateActivityIntentFactory(Context context, int userId, int eventId) {
+        Intent intent = eventCreateActivityIntentFactory(context, userId);
+        intent.putExtra(EventCreateActivity.EVENT_EXTRA, eventId);
         return intent;
     }
 
