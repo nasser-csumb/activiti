@@ -31,22 +31,33 @@
     <TextView
         android:id="@+id/eventEventsTextView"
         android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_height="0dp"
         android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/eventGreetingTextView"
         tools:text="EVENT" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/eventRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="450dp"
+        android:layout_margin="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/eventGreetingTextView"
+        tools:listitem="@layout/event_item" />
+
     <Button
         android:id="@+id/eventCreateEventButton"
         android:layout_width="300dp"
         android:layout_height="100dp"
-        android:layout_marginTop="50dp"
+        android:layout_margin="50dp"
         android:text="@string/eventCreateEventButtonText"
         android:textSize="32sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/eventEventsTextView" />
+        app:layout_constraintTop_toBottomOf="@id/eventRecyclerView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
