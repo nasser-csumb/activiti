@@ -46,8 +46,7 @@ public class WellnessSleep extends AppCompatActivity {
         binding.topMenu.topMenuBackTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = LoginActivity.loginActivityIntentFactory(getApplicationContext()); // Replace with intent factory for desired activity.
-                startActivity(intent);
+                WellnessSleep.this.finish();
             }
         });
 
