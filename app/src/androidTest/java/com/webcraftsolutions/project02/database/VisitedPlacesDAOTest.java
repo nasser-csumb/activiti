@@ -19,13 +19,11 @@ import java.util.List;
 
 public class VisitedPlacesDAOTest {
 
-    // CONSTANT FIELDS
     private final int TEST_USER_ID = -1;
 
-    // FIELDS
-    private ActivitiDatabase db; // Database instance
-    private VisitedPlacesDAO visitedPlacesDAO; // DAO instance
-    private VisitedPlaces visitedPlace; // VisitedPlace entity
+    private ActivitiDatabase db;
+    private VisitedPlacesDAO visitedPlacesDAO;
+    private VisitedPlaces visitedPlace;
 
     /**
      * Runs before each test. Sets up Database and VisitedPlace variables.
@@ -33,14 +31,11 @@ public class VisitedPlacesDAOTest {
      */
     @Before
     public void setUp() throws Exception {
-        // Get Database
         Context context = ApplicationProvider.getApplicationContext();
         db = Room.inMemoryDatabaseBuilder(context, ActivitiDatabase.class).build();
 
-        // Get DAO
         visitedPlacesDAO = db.visitedPlacesDAO();
 
-        // Create a VisitedPlace object
         visitedPlace = new VisitedPlaces(
                 TEST_USER_ID,
                 "Test Location",
@@ -49,7 +44,7 @@ public class VisitedPlacesDAOTest {
                 "test_photo_uri",
                 System.currentTimeMillis()
         );
-        visitedPlace.setId(1); // Set a default ID
+        visitedPlace.setId(1);
     }
 
     /**
@@ -58,10 +53,8 @@ public class VisitedPlacesDAOTest {
      */
     @After
     public void tearDown() throws Exception {
-        // Close Database
         db.close();
 
-        // Invalidate Variables
         visitedPlacesDAO = null;
         visitedPlace = null;
     }
@@ -71,13 +64,10 @@ public class VisitedPlacesDAOTest {
      */
     @Test
     public void insert() {
-        // Check that VisitedPlace is NOT in Database initially
         assertNull(visitedPlacesDAO.getVisitedPlaceByIdSynchronous(visitedPlace.getId()));
 
-        // Insert VisitedPlace into Database
         visitedPlacesDAO.insert(visitedPlace);
 
-        // Check that VisitedPlace IS in Database
         VisitedPlaces dbVisitedPlace = visitedPlacesDAO.getVisitedPlaceByIdSynchronous(visitedPlace.getId());
         assertNotNull(dbVisitedPlace);
         assertEquals(visitedPlace.getName(), dbVisitedPlace.getName());
@@ -88,17 +78,13 @@ public class VisitedPlacesDAOTest {
      */
     @Test
     public void delete() {
-        // Insert VisitedPlace into Database
         visitedPlacesDAO.insert(visitedPlace);
 
-        // Check that VisitedPlace is in Database
         VisitedPlaces dbVisitedPlace = visitedPlacesDAO.getVisitedPlaceByIdSynchronous(visitedPlace.getId());
         assertNotNull(dbVisitedPlace);
 
-        // Delete VisitedPlace
         visitedPlacesDAO.delete(visitedPlace);
 
-        // Check that VisitedPlace is NOT in Database
         VisitedPlaces deletedPlace = visitedPlacesDAO.getVisitedPlaceByIdSynchronous(visitedPlace.getId());
         assertNull(deletedPlace);  // Should be null after deletion
     }
@@ -108,17 +94,13 @@ public class VisitedPlacesDAOTest {
      */
     @Test
     public void update() {
-        // Insert VisitedPlace into Database
         visitedPlacesDAO.insert(visitedPlace);
 
-        // Update the VisitedPlace
         visitedPlace.setName("Updated Location");
         visitedPlacesDAO.update(visitedPlace);
 
-        // Get the updated VisitedPlace
         VisitedPlaces dbVisitedPlace = visitedPlacesDAO.getVisitedPlaceByIdSynchronous(visitedPlace.getId());
 
-        // Check that the name has been updated
         assertEquals("Updated Location", dbVisitedPlace.getName());
     }
 }

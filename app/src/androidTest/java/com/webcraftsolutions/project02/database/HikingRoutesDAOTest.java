@@ -22,13 +22,11 @@ import java.util.List;
 
 public class HikingRoutesDAOTest {
 
-    // CONSTANT FIELDS
     private final int TEST_USER_ID = -1;
 
-    // FIELDS
-    private ActivitiDatabase db; // Database instance
-    private HikingRoutesDAO hikingRoutesDAO; // DAO instance
-    private HikingRoutes hikingRoute; // HikingRoute entity
+    private ActivitiDatabase db;
+    private HikingRoutesDAO hikingRoutesDAO;
+    private HikingRoutes hikingRoute;
 
     /**
      * Runs before each test. Sets up Database and HikingRoute variables.
@@ -36,16 +34,13 @@ public class HikingRoutesDAOTest {
      */
     @Before
     public void setUp() throws Exception {
-        // Get Database
         Context context = ApplicationProvider.getApplicationContext();
         db = Room.inMemoryDatabaseBuilder(context, ActivitiDatabase.class).build();
 
-        // Get DAO
         hikingRoutesDAO = db.hikingRoutesDAO();
 
-        // Create a HikingRoute object
         hikingRoute = new HikingRoutes(4.5, "Be careful", "Low", "2 hours", 2, "Test Place", "Test Trail", TEST_USER_ID);
-        hikingRoute.setId(1); // Set a default ID
+        hikingRoute.setId(1);
     }
 
     /**
@@ -54,10 +49,8 @@ public class HikingRoutesDAOTest {
      */
     @After
     public void tearDown() throws Exception {
-        // Close Database
         db.close();
 
-        // Invalidate Variables
         hikingRoutesDAO = null;
         hikingRoute = null;
     }
@@ -67,13 +60,10 @@ public class HikingRoutesDAOTest {
      */
     @Test
     public void insert() {
-        // Check that HikingRoute is NOT in Database initially
         assertNull(hikingRoutesDAO.getHikingRouteByIdSynchronous(hikingRoute.getId()));
 
-        // Insert HikingRoute into Database
         hikingRoutesDAO.insert(hikingRoute);
 
-        // Check that HikingRoute IS in Database
         HikingRoutes dbHikingRoute = hikingRoutesDAO.getHikingRouteByIdSynchronous(hikingRoute.getId());
         assertEquals(hikingRoute, dbHikingRoute);
     }
@@ -83,16 +73,12 @@ public class HikingRoutesDAOTest {
      */
     @Test
     public void delete() {
-        // Insert HikingRoute into Database
         hikingRoutesDAO.insert(hikingRoute);
 
-        // Check that HikingRoute is in Database
         assertNotNull(hikingRoutesDAO.getHikingRouteByIdSynchronous(hikingRoute.getId()));
 
-        // Delete HikingRoute
         hikingRoutesDAO.delete(hikingRoute);
 
-        // Check that HikingRoute is NOT in Database
         assertNull(hikingRoutesDAO.getHikingRouteByIdSynchronous(hikingRoute.getId()));
     }
 
@@ -101,17 +87,13 @@ public class HikingRoutesDAOTest {
      */
     @Test
     public void update() {
-        // Insert HikingRoute into Database
         hikingRoutesDAO.insert(hikingRoute);
 
-        // Update the HikingRoute
         hikingRoute.setName("Updated Trail");
         hikingRoutesDAO.update(hikingRoute);
 
-        // Get the updated HikingRoute
         HikingRoutes dbHikingRoute = hikingRoutesDAO.getHikingRouteByIdSynchronous(hikingRoute.getId());
 
-        // Check that the name has been updated
         assertEquals("Updated Trail", dbHikingRoute.getName());
     }
 }
