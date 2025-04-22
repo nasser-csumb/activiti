@@ -42,4 +42,7 @@ public interface TravelExplorationDAO {
 
     @Query("SELECT * FROM " + ActivitiDatabase.TRAVEL_EXPLORATION_TABLE)
     LiveData<List<TravelExploration>> getAllTravelExplorationsLive();
+
+    @Query("SELECT * FROM " + ActivitiDatabase.TRAVEL_EXPLORATION_TABLE + " WHERE travelId = :travelId")
+    TravelExploration getTravelExplorationByIdSynchronous(int travelId);
 }

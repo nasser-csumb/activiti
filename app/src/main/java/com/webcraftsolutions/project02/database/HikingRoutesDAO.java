@@ -8,6 +8,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.webcraftsolutions.project02.database.entities.Event;
 import com.webcraftsolutions.project02.database.entities.HikingRoutes;
 
 import java.util.List;
@@ -26,4 +27,7 @@ public interface HikingRoutesDAO {
 
     @Query("SELECT * FROM " + ActivitiDatabase.HIKING_ROUTES_TABLE + " WHERE userId = :userId")
     LiveData<List<HikingRoutes>> getHikingRoutesForUser(int userId);
+
+    @Query("SELECT * FROM " + ActivitiDatabase.HIKING_ROUTES_TABLE + " WHERE Id = :Id")
+    HikingRoutes getHikingRouteByIdSynchronous(int Id);
 }

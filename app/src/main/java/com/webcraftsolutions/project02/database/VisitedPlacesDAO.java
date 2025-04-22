@@ -29,4 +29,7 @@ public interface VisitedPlacesDAO {
 
     @Query("SELECT * FROM " + ActivitiDatabase.VISITED_PLACES_TABLE + " WHERE userId = :userId")
     LiveData<List<VisitedPlaces>> getVisitedPlacesByUserId(int userId);
+
+    @Query("SELECT * FROM " + ActivitiDatabase.VISITED_PLACES_TABLE + " WHERE id = :id")
+    VisitedPlaces getVisitedPlaceByIdSynchronous(int id);
 }
