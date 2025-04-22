@@ -73,4 +73,6 @@
     <string name="visited_places">Visited Places</string>
     <string name="eventCreateLocationEditTextHint">Enter Event Location</string>
     <string name="eventCreateLocationTextViewText">Loc</string>
+    <string name="eventItemEditTextViewText">Edit Event</string>
+    <string name="eventItemDeleteTextViewText">Delete Event</string>
 </resources>
