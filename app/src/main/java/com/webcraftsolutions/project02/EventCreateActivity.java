@@ -25,7 +25,7 @@ public class EventCreateActivity extends AppCompatActivity {
 
     // CLASS FIELDS
 
-    private static final String EVENT_EXTRA = "com.webcraftsolutions.project02.EVENT_EXTRA";
+    public static final String EVENT_EXTRA = "com.webcraftsolutions.project02.EVENT_EXTRA";
 
     // INSTANCE FIELDS
     private ActivityEventCreateBinding binding;
