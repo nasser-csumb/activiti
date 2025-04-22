@@ -71,8 +71,8 @@
     <string name="hiking_routes">Hiking Routes</string>
     <string name="travel_amp_exploration"><![CDATA[Travel & Exploration]]></string>
     <string name="visited_places">Visited Places</string>
-    <string name="view_hiking_routes">View Hiking Routes</string>
-    <string name="view_visited_places">View Visited Places</string>
+    <string name="view_hiking_routes">Hiking Routes</string>
+    <string name="view_visited_places">Visited Places</string>
     <string name="search_visited_place_by_name">Search Visited Place by name</string>
     <string name="search_hiking_route_by_name">Search Hiking Route by name</string>
 </resources>
