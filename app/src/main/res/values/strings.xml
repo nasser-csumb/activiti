@@ -75,4 +75,5 @@
     <string name="eventCreateLocationTextViewText">Loc.</string>
     <string name="eventItemEditTextViewText">Edit Event</string>
     <string name="eventItemDeleteTextViewText">Delete Event</string>
+    <string name="eventCreateGreetingTextViewText">Create Event</string>
 </resources>

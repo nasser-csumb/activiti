@@ -110,6 +110,10 @@ public class EventCreateActivity extends AppCompatActivity {
                 this.event = event;
 
                 // Set TextView text
+                String str = "Edit Event";
+                binding.eventCreateGreetingTextView.setText(str);
+
+                // Set EditView text
                 binding.eventCreateNameEditText.setText(event.getName());
                 binding.eventCreateDescEditText.setText(event.getDescription());
                 binding.eventCreateDateEditText.setText(event.getDate());
