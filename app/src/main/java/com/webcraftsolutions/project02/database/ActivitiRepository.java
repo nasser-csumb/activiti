@@ -77,8 +77,6 @@ public class ActivitiRepository {
         this.wellnessMoodDAO = db.wellnessMoodDAO();
         this.wellnessJournalDAO = db.wellnessJournalDAO();
 
-//        this.allEventLogs = getAllEvents();
-
         this.cardioWorkoutDAO = db.cardioWorkoutDAO();
         this.weightLiftingWorkoutDAO = db.weightLiftingWorkoutDAO();
 
