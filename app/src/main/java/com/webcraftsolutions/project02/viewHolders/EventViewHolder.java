@@ -58,7 +58,7 @@ public class EventViewHolder extends RecyclerView.ViewHolder {
      * @param parent The parent
      * @return A new EventViewHolder
      */
-    public static EventViewHolder create(ViewGroup parent) {
+    static EventViewHolder create(ViewGroup parent) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.event_item, parent, false);
         return new EventViewHolder(view);
