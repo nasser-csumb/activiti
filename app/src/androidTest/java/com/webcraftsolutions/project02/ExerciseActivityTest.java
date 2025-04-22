@@ -49,6 +49,9 @@ public class ExerciseActivityTest {
         // Check intent is not null
         assertNotNull(intent);
 
+        // Check intent component is not null
+        assertNotNull(intent.getComponent());
+
         // Check correct class is set
         assertEquals(ExerciseActivity.class.getName(), intent.getComponent().getClassName());
     }
