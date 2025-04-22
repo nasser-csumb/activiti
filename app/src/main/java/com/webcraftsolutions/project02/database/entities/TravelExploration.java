@@ -21,27 +21,32 @@ public class TravelExploration {
 
     @PrimaryKey(autoGenerate = true)
     private int travelId;
+
+    private int userId;
     private String hikingRoute;
     private String outdoors;
     private String visitedPlaces;
 
-    public TravelExploration(String hikingRoute, String outdoors, String visitedPlaces) {
+    private long timeStamp;
+
+    public TravelExploration(int userId, String hikingRoute, String outdoors, String visitedPlaces, long timeStamp) {
+        this.userId = userId;
         this.hikingRoute = hikingRoute;
         this.outdoors = outdoors;
         this.visitedPlaces = visitedPlaces;
-        travelId = -1;
+        this.timeStamp = timeStamp;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         TravelExploration that = (TravelExploration) o;
-        return travelId == that.travelId && Objects.equals(hikingRoute, that.hikingRoute) && Objects.equals(outdoors, that.outdoors) && Objects.equals(visitedPlaces, that.visitedPlaces);
+        return travelId == that.travelId && userId == that.userId && timeStamp == that.timeStamp && Objects.equals(hikingRoute, that.hikingRoute) && Objects.equals(outdoors, that.outdoors) && Objects.equals(visitedPlaces, that.visitedPlaces);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(travelId, hikingRoute, outdoors, visitedPlaces);
+        return Objects.hash(travelId, userId, hikingRoute, outdoors, visitedPlaces, timeStamp);
     }
 
     public int getTravelId() {
@@ -50,6 +55,14 @@ public class TravelExploration {
 
     public void setTravelId(int travelId) {
         this.travelId = travelId;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userrId) {
+        this.userId = userrId;
     }
 
     public String getHikingRoute() {
@@ -74,5 +87,13 @@ public class TravelExploration {
 
     public void setVisitedPlaces(String visitedPlaces) {
         this.visitedPlaces = visitedPlaces;
+    }
+
+    public long getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(long timesstamp) {
+        this.timeStamp = timesstamp;
     }
 }

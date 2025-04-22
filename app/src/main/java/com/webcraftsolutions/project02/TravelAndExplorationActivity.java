@@ -3,97 +3,130 @@ package com.webcraftsolutions.project02;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.EditText;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.webcraftsolutions.project02.database.ActivitiRepository;
-import com.webcraftsolutions.project02.database.entities.TravelExploration;
 import com.webcraftsolutions.project02.database.entities.User;
 import com.webcraftsolutions.project02.databinding.ActivityTravelAndExplorationBinding;
+import com.webcraftsolutions.project02.viewHolders.HikingRoutesAdapter;
+import com.webcraftsolutions.project02.viewHolders.VisitedPlacesAdapter;
+
+import java.util.Collections;
 
 public class TravelAndExplorationActivity extends AppCompatActivity {
 
     private ActivityTravelAndExplorationBinding binding;
-
     private ActivitiRepository repository;
-
+    private int userId;
     private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivityTravelAndExplorationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         repository = ActivitiRepository.getRepository(getApplication());
+        userId = getIntent().getIntExtra(MainActivity.LOGGED_IN_USER_ID_KEY, MainActivity.LOGGED_OUT);
 
-        int userId = getIntent().getIntExtra(MainActivity.LOGGED_IN_USER_ID_KEY, MainActivity.LOGGED_OUT);
-
-        LiveData<User> userObserver = repository.getUserByUserId(userId);
-        userObserver.observe(this, user -> {
+        repository.getUserByUserId(userId).observe(this, user -> {
             this.user = user;
             if (user != null) {
-                // Display username in top menu
                 binding.travelTopMenu.topMenuUserTextView.setText(user.getUsername());
-
-                // Set back button behavior
-                binding.travelTopMenu.topMenuBackTextView.setOnClickListener(v -> {
-                    Intent intent = MainActivity.mainActivityIntentFactory(getApplicationContext(), user.getId());
-                    startActivity(intent);
-                });
-
-                // Set logout behavior
-                binding.travelTopMenu.topMenuUserTextView.setOnClickListener(v -> {
-                    showLogoutDialog(TravelAndExplorationActivity.this);
-                });
-
-                // View Hiking Routes Button
-                binding.viewHikingRoutesButton.setOnClickListener(v -> {
-                    Intent intent = HikingRoutesActivity.hikingRoutesIntentFactory(this, user.getId());
-                    startActivity(intent);
-                });
-
-                binding.viewVisitedPlacesButton.setOnClickListener(v -> {
-                   Intent intent = VisitedPlacesActivity.visitedPlacesIntentFactory(this, user.getId());
-                   startActivity(intent);
-                });
             }
         });
 
-        binding.saveButton.setOnClickListener(new View.OnClickListener() {
+        binding.travelTopMenu.topMenuBackTextView.setOnClickListener(v -> {
+            startActivity(MainActivity.mainActivityIntentFactory(getApplicationContext(), false));
+        });
+
+        binding.travelTopMenu.topMenuUserTextView.setOnClickListener(v -> showLogoutDialog(this));
+
+        binding.viewHikingRoutesButton.setOnClickListener(v -> {
+            Intent intent = HikingRoutesActivity.hikingRoutesIntentFactory(this, userId);
+            startActivity(intent);
+        });
+
+        binding.viewVisitedPlacesButton.setOnClickListener(v -> {
+            Intent intent = VisitedPlacesActivity.visitedPlacesIntentFactory(this, userId);
+            startActivity(intent);
+        });
+
+        // I learned this from the following https://www.geeksforgeeks.org/how-to-implement-textwatcher-in-android/
+        // https://www.geeksforgeeks.org/android-recyclerview/ , https://developer.android.com/develop/ui/views/layout/recyclerview
+        // The following was inspired from the links above
+        EditText searchVisitedPlaceEditText = findViewById(R.id.searchVisitedPlaceEditText);
+        RecyclerView resultRecyclerView = findViewById(R.id.visitedPlaceResultRecyclerView);
+
+        EditText hikingSearchEditText = findViewById(R.id.searchHikingRouteEditText);
+        RecyclerView hikingResultRecyclerView = findViewById(R.id.hikingRouteResultRecyclerView);
+
+        VisitedPlacesAdapter visitedPlacesAdapter = new VisitedPlacesAdapter(new VisitedPlacesAdapter.VisitedPlacesDiff());
+        resultRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        resultRecyclerView.setAdapter(visitedPlacesAdapter);
+
+        HikingRoutesAdapter hikingRoutesAdapter = new HikingRoutesAdapter(new HikingRoutesAdapter.HikingRoutesDiff());
+        hikingResultRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        hikingResultRecyclerView.setAdapter(hikingRoutesAdapter);
+
+        // I learned this from the following https://www.geeksforgeeks.org/how-to-implement-textwatcher-in-android/
+        // https://www.geeksforgeeks.org/android-recyclerview/ , https://developer.android.com/develop/ui/views/layout/recyclerview
+        // The following was inspired from the links above
+        searchVisitedPlaceEditText.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void afterTextChanged(Editable s) {}
+
             @Override
-            public void onClick(View view) {
-                saveTravelExploration();
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                hikingSearchEditText.setEnabled(s.length() == 0);
+
+                String query = s.toString().trim();
+                if (!query.isEmpty()) {
+                    repository.getVisitedPlaceByName(query).observe(TravelAndExplorationActivity.this, place -> {
+                        if (place != null) {
+                            visitedPlacesAdapter.submitList(Collections.singletonList(place));
+                        } else {
+                            visitedPlacesAdapter.submitList(Collections.emptyList());
+                        }
+                    });
+                } else {
+                    visitedPlacesAdapter.submitList(Collections.emptyList());
+                }
             }
         });
-    }
 
-    private void saveTravelExploration() {
-        String hikingRoute = binding.hikingRouteEditText.getText().toString();
-        String outdoors = binding.outdoorsEditText.getText().toString();
-        String visitedPlaces = binding.visitedPlacesEditText.getText().toString();
+        // I learned this from the following https://www.geeksforgeeks.org/how-to-implement-textwatcher-in-android/
+        // https://www.geeksforgeeks.org/android-recyclerview/ , https://developer.android.com/develop/ui/views/layout/recyclerview
+        // The following was inspired from the links above
+        hikingSearchEditText.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void afterTextChanged(Editable s) {}
 
-        if (hikingRoute.isEmpty() || outdoors.isEmpty() || visitedPlaces.isEmpty()) {
-            Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
-            return;
-        }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                searchVisitedPlaceEditText.setEnabled(s.length() == 0);
 
-        TravelExploration travelExploration = new TravelExploration(hikingRoute,outdoors,visitedPlaces);
-        repository.insertTravelExploration(travelExploration);
-
-        Toast.makeText(this, "Travel Exploration Saved!", Toast.LENGTH_SHORT).show();
-        clearFields();
-    }
-
-    private void clearFields() {
-        binding.hikingRouteEditText.setText("");
-        binding.outdoorsEditText.setText("");
-        binding.visitedPlacesEditText.setText("");
+                String query = s.toString().trim();
+                if (!query.isEmpty()) {
+                    repository.getHikingRouteByName(query).observe(TravelAndExplorationActivity.this, route -> {
+                        if (route != null) {
+                            hikingRoutesAdapter.submitList(Collections.singletonList(route));
+                        } else {
+                            hikingRoutesAdapter.submitList(Collections.emptyList());
+                        }
+                    });
+                } else {
+                    hikingRoutesAdapter.submitList(Collections.emptyList());
+                }
+            }
+        });
     }
 
     private void showLogoutDialog(Context context) {
@@ -101,13 +134,11 @@ public class TravelAndExplorationActivity extends AppCompatActivity {
         final AlertDialog alertDialog = alertBuilder.create();
 
         alertBuilder.setMessage("Logout?");
-
-        alertBuilder.setPositiveButton("Logout", (dialog, which) -> {
-            startActivity(MainActivity.mainActivityIntentFactory(getApplicationContext(), true));
-        });
+        alertBuilder.setPositiveButton("Logout", (dialog, which) ->
+                startActivity(MainActivity.mainActivityIntentFactory(getApplicationContext(), true))
+        );
 
         alertBuilder.setNegativeButton("Cancel", (dialog, which) -> alertDialog.dismiss());
-
         alertBuilder.create().show();
     }
 

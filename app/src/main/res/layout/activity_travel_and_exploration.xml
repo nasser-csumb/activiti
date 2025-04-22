@@ -1,92 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_travel_exploration"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TravelAndExplorationActivity">
+    android:fillViewport="true">
 
-    <include
-        android:id="@+id/travelTopMenu"
-        layout="@layout/top_menu_layout"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/activity_travel_exploration"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/travelExplorationTitleTextView"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/travel_amp_exploration"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/white"
-        app:layout_constraintTop_toBottomOf="@id/travelTopMenu"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="12dp"/>
+        tools:context=".TravelAndExplorationActivity">
 
-    <EditText
-        android:id="@+id/hikingRouteEditText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/hiking_route"
-        app:layout_constraintTop_toBottomOf="@id/travelExplorationTitleTextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp" />
+        <include
+            android:id="@+id/travelTopMenu"
+            layout="@layout/top_menu_layout"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-    <EditText
-        android:id="@+id/outdoorsEditText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/outdoor_activity"
-        app:layout_constraintTop_toBottomOf="@id/hikingRouteEditText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+        <TextView
+            android:id="@+id/travelExplorationTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/travel_amp_exploration"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@id/travelTopMenu"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-    <EditText
-        android:id="@+id/visitedPlacesEditText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/visited_place"
-        app:layout_constraintTop_toBottomOf="@id/outdoorsEditText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+        <Button
+            android:id="@+id/viewHikingRoutesButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/view_hiking_routes"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/travelExplorationTitleTextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-    <Button
-        android:id="@+id/saveButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/save_exploration"
-        app:layout_constraintTop_toBottomOf="@id/visitedPlacesEditText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp" />
+        <Button
+            android:id="@+id/viewVisitedPlacesButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/view_visited_places"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/viewHikingRoutesButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-    <Button
-        android:id="@+id/viewHikingRoutesButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="View Hiking Routes"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/saveButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <EditText
+            android:id="@+id/searchVisitedPlaceEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/search_visited_place_by_name"
+            app:layout_constraintTop_toBottomOf="@id/viewVisitedPlacesButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-    <Button
-        android:id="@+id/viewVisitedPlacesButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="View Visited Places"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/viewHikingRoutesButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <EditText
+            android:id="@+id/searchHikingRouteEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/search_hiking_route_by_name"
+            app:layout_constraintTop_toBottomOf="@id/searchVisitedPlaceEditText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/visitedPlaceResultRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/searchHikingRouteEditText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/hikingRouteResultRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/searchHikingRouteEditText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

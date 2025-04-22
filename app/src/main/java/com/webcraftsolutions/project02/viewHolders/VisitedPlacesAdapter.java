@@ -8,6 +8,9 @@ import androidx.recyclerview.widget.ListAdapter;
 
 import com.webcraftsolutions.project02.database.entities.VisitedPlaces;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class VisitedPlacesAdapter extends ListAdapter<VisitedPlaces, VisitedPlacesViewHolder> {
 
     public VisitedPlacesAdapter(@NonNull DiffUtil.ItemCallback<VisitedPlaces> diffCallback) {
