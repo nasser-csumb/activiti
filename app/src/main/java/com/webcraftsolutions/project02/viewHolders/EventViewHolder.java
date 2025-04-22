@@ -6,7 +6,7 @@
  */
 package com.webcraftsolutions.project02.viewHolders;
 
-import android.app.Application;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.webcraftsolutions.project02.EventActivity;
+import com.webcraftsolutions.project02.EventCreateActivity;
 import com.webcraftsolutions.project02.R;
 import com.webcraftsolutions.project02.database.ActivitiRepository;
 import com.webcraftsolutions.project02.database.entities.Event;
@@ -22,8 +24,8 @@ public class EventViewHolder extends RecyclerView.ViewHolder {
 
     // FIELDS
 
-    // The Event
-    private Event event;
+    // The EventActivity activity
+    private final EventActivity eventActivity;
 
     // The repository.
     private final ActivitiRepository repository;
@@ -44,10 +46,11 @@ public class EventViewHolder extends RecyclerView.ViewHolder {
 
     // METHODS
 
-    public EventViewHolder(View itemView, Application application) {
+    public EventViewHolder(View itemView, EventActivity eventActivity) {
         super(itemView);
 
         // Initialize Variables
+        this.eventActivity = eventActivity;
         nameTextView = itemView.findViewById(R.id.eventItemNameTextView);
         descTextView = itemView.findViewById(R.id.eventItemDescTextView);
         dateTextView = itemView.findViewById(R.id.eventItemDateTextView);
@@ -56,7 +59,7 @@ public class EventViewHolder extends RecyclerView.ViewHolder {
         deleteTextView = itemView.findViewById(R.id.eventItemDeleteTextView);
 
         // Get Repository
-        repository = ActivitiRepository.getRepository(application);
+        repository = ActivitiRepository.getRepository(eventActivity.getApplication());
     }
 
     /**
@@ -65,9 +68,6 @@ public class EventViewHolder extends RecyclerView.ViewHolder {
      */
     public void bind(Event event) {
 
-        // Get Event
-        this.event = event;
-
         // Set TextView text.
         nameTextView.setText(event.getName());
         descTextView.setText(event.getDescription());
@@ -75,6 +75,14 @@ public class EventViewHolder extends RecyclerView.ViewHolder {
         locationTextView.setText(event.getLocation());
 
         // Set OnClickListener for 'Edit Text'
+        editTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = EventCreateActivity.eventCreateActivityIntentFactory(
+                        eventActivity.getApplicationContext(), event.getUserId(), event.getEventId());
+                eventActivity.startActivity(intent);
+            }
+        });
 
         // Set OnClickListener for 'Delete Text'
         deleteTextView.setOnClickListener(new View.OnClickListener() {
@@ -92,13 +100,13 @@ public class EventViewHolder extends RecyclerView.ViewHolder {
     /**
      * Creates and returns a new EventViewHolder.
      * @param parent The parent
-     * @param application The application.
+     * @param eventActivity The EventActivity activity
      * @return A new EventViewHolder
      */
-    static EventViewHolder create(ViewGroup parent, Application application) {
+    static EventViewHolder create(ViewGroup parent, EventActivity eventActivity) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.event_item, parent, false);
-        return new EventViewHolder(view, application);
+        return new EventViewHolder(view, eventActivity);
     }
 
 }

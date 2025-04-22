@@ -111,7 +111,7 @@ public class EventActivity extends AppCompatActivity {
     private void setupRecycler() {
         // Get Recycler
         RecyclerView recyclerView = binding.eventRecyclerView;
-        final EventAdapter adapter = new EventAdapter(new EventAdapter.EventDiff(), getApplication());
+        final EventAdapter adapter = new EventAdapter(new EventAdapter.EventDiff(), this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 

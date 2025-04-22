@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
+import com.webcraftsolutions.project02.EventActivity;
 import com.webcraftsolutions.project02.database.entities.Event;
 
 public class EventAdapter extends ListAdapter<Event, EventViewHolder> {
@@ -20,13 +21,13 @@ public class EventAdapter extends ListAdapter<Event, EventViewHolder> {
     // FIELDS
 
     // The Application
-    private Application application;
+    private final EventActivity eventActivity;
 
     // METHODS
 
-    public EventAdapter(@NonNull DiffUtil.ItemCallback<Event> diffCallBack, Application application) {
+    public EventAdapter(@NonNull DiffUtil.ItemCallback<Event> diffCallBack, EventActivity eventActivity) {
         super(diffCallBack);
-        this.application = application;
+        this.eventActivity = eventActivity;
     }
 
     /**
@@ -40,7 +41,7 @@ public class EventAdapter extends ListAdapter<Event, EventViewHolder> {
     @NonNull
     @Override
     public EventViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return EventViewHolder.create(parent, application);
+        return EventViewHolder.create(parent, eventActivity);
     }
 
     /**
