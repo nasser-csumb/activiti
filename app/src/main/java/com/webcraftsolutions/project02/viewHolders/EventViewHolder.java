@@ -6,6 +6,7 @@
  */
 package com.webcraftsolutions.project02.viewHolders;
 
+import android.app.Application;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +15,15 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.webcraftsolutions.project02.R;
+import com.webcraftsolutions.project02.database.ActivitiRepository;
 import com.webcraftsolutions.project02.database.entities.Event;
 
 public class EventViewHolder extends RecyclerView.ViewHolder {
 
     // FIELDS
+
+    // The repository.
+    private final ActivitiRepository repository;
 
     // TEXTVIEW
 
@@ -36,7 +41,7 @@ public class EventViewHolder extends RecyclerView.ViewHolder {
 
     // METHODS
 
-    public EventViewHolder(View itemView) {
+    public EventViewHolder(View itemView, Application application) {
         super(itemView);
 
         // Initialize Variables
@@ -46,6 +51,9 @@ public class EventViewHolder extends RecyclerView.ViewHolder {
         locationTextView = itemView.findViewById(R.id.eventItemLocationTextView);
         editTextView = itemView.findViewById(R.id.eventItemEditTextView);
         deleteTextView = itemView.findViewById(R.id.eventItemDeleteTextView);
+
+        // Get Repository
+        repository = ActivitiRepository.getRepository(application);
     }
 
     /**
@@ -57,6 +65,10 @@ public class EventViewHolder extends RecyclerView.ViewHolder {
         descTextView.setText(event.getDescription());
         dateTextView.setText(String.format("%s @ %s", event.getDate(), event.getTime()));
         locationTextView.setText(event.getLocation());
+
+        // Set OnClickListener for 'Edit Text'
+
+        // Set OnClickListener for 'Delete Text'
     }
 
     // STATIC METHODS
@@ -64,12 +76,13 @@ public class EventViewHolder extends RecyclerView.ViewHolder {
     /**
      * Creates and returns a new EventViewHolder.
      * @param parent The parent
+     * @param application The application.
      * @return A new EventViewHolder
      */
-    static EventViewHolder create(ViewGroup parent) {
+    static EventViewHolder create(ViewGroup parent, Application application) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.event_item, parent, false);
-        return new EventViewHolder(view);
+        return new EventViewHolder(view, application);
     }
 
 }

@@ -6,6 +6,7 @@
  */
 package com.webcraftsolutions.project02.viewHolders;
 
+import android.app.Application;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -16,10 +17,16 @@ import com.webcraftsolutions.project02.database.entities.Event;
 
 public class EventAdapter extends ListAdapter<Event, EventViewHolder> {
 
+    // FIELDS
+
+    // The Application
+    private Application application;
+
     // METHODS
 
-    public EventAdapter(@NonNull DiffUtil.ItemCallback<Event> diffCallBack) {
+    public EventAdapter(@NonNull DiffUtil.ItemCallback<Event> diffCallBack, Application application) {
         super(diffCallBack);
+        this.application = application;
     }
 
     /**
@@ -33,7 +40,7 @@ public class EventAdapter extends ListAdapter<Event, EventViewHolder> {
     @NonNull
     @Override
     public EventViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return EventViewHolder.create(parent);
+        return EventViewHolder.create(parent, application);
     }
 
     /**
