@@ -45,8 +45,7 @@ public class WellnessJournal extends AppCompatActivity {
         binding.topMenu.topMenuBackTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = LoginActivity.loginActivityIntentFactory(getApplicationContext()); // Replace with intent factory for desired activity.
-                startActivity(intent);
+                WellnessJournal.this.finish();
             }
         });
 
