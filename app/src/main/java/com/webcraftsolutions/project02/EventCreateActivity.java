@@ -42,6 +42,35 @@ public class EventCreateActivity extends AppCompatActivity {
     // INSTANCE METHODS
 
     /**
+     * Gets text from EditText views,
+     *      creates a new event or edits an existing one,
+     *      and inserts it into the repository.
+     */
+    private void insertEvent() {
+        // Get EditText text
+        String name = binding.eventCreateNameEditText.getText().toString().trim();
+        String description = binding.eventCreateDescEditText.getText().toString().trim();
+        String date = binding.eventCreateDateEditText.getText().toString().trim();
+        String time = binding.eventCreateTimeEditText.getText().toString().trim();
+        String location = binding.eventCreateLocationEditText.getText().toString().trim();
+
+        // Create new event or edit existing event
+        if(event == null) {
+            event = new Event(name, description, date, time, location, user.getId());
+        } else {
+            event.setName(name);
+            event.setDescription(description);
+            event.setDate(date);
+            event.setTime(time);
+            event.setLocation(location);
+        }
+
+        // Store event and display toast to user
+        repository.insertEvent(event);
+        MainActivity.toastMaker(getApplicationContext(), name + " saved!");
+    }
+
+    /**
      * Called when this activity is created.
      * Sets an OnClickListener for each button.
      * @param savedInstanceState If the activity is being re-initialized after
@@ -111,27 +140,7 @@ public class EventCreateActivity extends AppCompatActivity {
         binding.eventCreateSaveEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Get EditText text
-                String name = binding.eventCreateNameEditText.getText().toString().trim();
-                String description = binding.eventCreateDescEditText.getText().toString().trim();
-                String date = binding.eventCreateDateEditText.getText().toString().trim();
-                String time = binding.eventCreateTimeEditText.getText().toString().trim();
-                String location = binding.eventCreateLocationEditText.getText().toString().trim();
-
-                // Create new event or edit existing event
-                if(event == null) {
-                    event = new Event(name, description, date, time, location, user.getId());
-                } else {
-                    event.setName(name);
-                    event.setDescription(description);
-                    event.setDate(date);
-                    event.setTime(time);
-                    event.setLocation(location);
-                }
-
-                // Store event and display toast to user
-                repository.insertEvent(event);
-                MainActivity.toastMaker(getApplicationContext(), name + " saved!");
+                insertEvent();
             }
         });
     }
