@@ -32,6 +32,8 @@ public class SignupActivity extends AppCompatActivity {
     // The repository object.
     ActivitiRepository repository;
 
+    private boolean signupAttempted = false;
+
     // INSTANCE METHODS
 
     /**
@@ -86,12 +88,18 @@ public class SignupActivity extends AppCompatActivity {
         // Attempt to get user from repository
         LiveData<User> userObserver = repository.getUserByUsername(username);
         userObserver.observe(this, user -> {
+            // Check if signup has already been attempted
+            if(signupAttempted) { return; }
+
             // Check if user exists
             if(user == null) {
                 String password = binding.signupPasswordEditText.getText().toString();
                 if(password.isEmpty()) {
                     MainActivity.toastMaker(this, "Password cannot be empty");
                 } else {
+                    // Set signupAttempted
+                    signupAttempted = true;
+
                     // Add new user to database
                     User newUser = new User(username, password);
                     repository.insertUser(newUser);
