@@ -18,6 +18,8 @@ import com.webcraftsolutions.project02.database.ActivitiRepository;
 import com.webcraftsolutions.project02.database.entities.Outdoors;
 import com.webcraftsolutions.project02.database.entities.User;
 import com.webcraftsolutions.project02.databinding.ActivityOutdoorsBinding;
+import com.webcraftsolutions.project02.viewHolders.OutdoorsAdapter;
+import com.webcraftsolutions.project02.viewHolders.OutdoorsViewModel;
 
 public class OutdoorsActivity extends AppCompatActivity {
 
@@ -57,23 +59,23 @@ public class OutdoorsActivity extends AppCompatActivity {
         binding.outdoorsRecyclerView.setAdapter(adapter);
 
         viewModel = new ViewModelProvider(this).get(OutdoorsViewModel.class);
-        viewModel.getOutdoors(userId).observe(this, outdoorsList -> {
-            adapter.submitList(outdoorsList);
+        viewModel.getOutdoors(userId).observe(this, outdoors -> {
+            adapter.submitList(outdoors);
         });
 
         binding.addOutdoorsButton.setOnClickListener(v -> addOutdoorActivity());
     }
 
     private void addOutdoorActivity() {
-        String name = binding.outdoorNameEditText.getText().toString().trim();
-        String place = binding.outdoorPlaceEditText.getText().toString().trim();
-        String duration = binding.outdoorDurationEditText.getText().toString().trim();
-        String dangerLevel = binding.outdoorDangerLevelEditText.getText().toString().trim();
-        String safetyTips = binding.outdoorSafetyTipsEditText.getText().toString().trim();
-        String ratingStr = binding.outdoorRatingEditText.getText().toString().trim();
+        String name = binding.outdoorsNameEditText.getText().toString().trim();
+        String location = binding.outdoorsLocationEditText.getText().toString().trim();
+        String activityType = binding.outdoorsTypeEditText.getText().toString().trim();
+        String durationStr = binding.outdoorsDurationEditText.getText().toString().trim();
+        String notes = binding.outdoorsNotesEditText.getText().toString().trim();
+        String ratingStr = binding.outdoorsRatingEditText.getText().toString().trim();
 
-        if (name.isEmpty() || place.isEmpty() || duration.isEmpty() || ratingStr.isEmpty()) {
-            Toast.makeText(this, "Please fill all required fields.", Toast.LENGTH_SHORT).show();
+        if (name.isEmpty() || location.isEmpty() || activityType.isEmpty() || durationStr.isEmpty() || ratingStr.isEmpty()) {
+            Toast.makeText(this, "Please fill out all required fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -85,8 +87,17 @@ public class OutdoorsActivity extends AppCompatActivity {
             return;
         }
 
-        Outdoors newOutdoor = new Outdoors(rating, safetyTips, dangerLevel, duration, place, name, userId);
-        viewModel.insertOutdoor(newOutdoor);
+        int duration = 0;
+        if (!durationStr.isEmpty()) {
+            try {
+                duration = Integer.parseInt(durationStr);
+            } catch (NumberFormatException e) {
+                Toast.makeText(this, "Invalid difficulty value", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        Outdoors outdoors = new Outdoors(name, location, activityType, duration, notes, rating, userId);
+        viewModel.insertOutdoor(outdoors);
         Toast.makeText(this, "Outdoor activity added!", Toast.LENGTH_SHORT).show();
 
         binding.outdoorNameEditText.setText("");
@@ -111,7 +122,7 @@ public class OutdoorsActivity extends AppCompatActivity {
         alertBuilder.create().show();
     }
 
-    static Intent outdoorsActivityIntentFactory(Context context, int userId) {
+    static Intent outdoorsIntentFactory(Context context, int userId) {
         Intent intent = new Intent(context, OutdoorsActivity.class);
         intent.putExtra(MainActivity.LOGGED_IN_USER_ID_KEY, userId);
         return intent;

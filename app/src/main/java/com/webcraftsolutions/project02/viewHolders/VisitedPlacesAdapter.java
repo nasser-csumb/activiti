@@ -32,7 +32,7 @@ public class VisitedPlacesAdapter extends ListAdapter<VisitedPlaces, VisitedPlac
     public static class VisitedPlacesDiff extends DiffUtil.ItemCallback<VisitedPlaces> {
         @Override
         public boolean areItemsTheSame(@NonNull VisitedPlaces oldItem, @NonNull VisitedPlaces newItem) {
-            return oldItem == newItem;
+            return oldItem.getId() == newItem.getId();
         }
 
         @Override

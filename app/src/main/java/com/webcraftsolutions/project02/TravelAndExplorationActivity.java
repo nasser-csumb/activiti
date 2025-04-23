@@ -59,6 +59,11 @@ public class TravelAndExplorationActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        binding.viewOutdoorsButton.setOnClickListener(v -> {
+            Intent intent = OutdoorsActivity.outdoorsIntentFactory(this, userId);
+            startActivity(intent);
+        });
+
         // I learned this from the following https://www.geeksforgeeks.org/how-to-implement-textwatcher-in-android/
         // https://www.geeksforgeeks.org/android-recyclerview/ , https://developer.android.com/develop/ui/views/layout/recyclerview
         // The following was inspired from the links above

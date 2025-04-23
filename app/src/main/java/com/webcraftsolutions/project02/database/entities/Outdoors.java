@@ -4,42 +4,44 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.webcraftsolutions.project02.database.ActivitiDatabase;
+
 import java.util.Objects;
 
-@Entity(tableName = "outdoors_activities")
+@Entity(tableName = ActivitiDatabase.OUTDOORS_TABLE)
 public class Outdoors {
+
     @PrimaryKey(autoGenerate = true)
-    public int id;
+    private int id;
 
-    @NonNull
-    public String name;
+    private int userId;
+    private String name;
+    private String location;
+    private String activityType;
+    private int durationMinutes;
+    private String notes;
+    private double rating;
 
-    public String location;
-    public String activityType;
-    public int durationMinutes;
-    public String notes;
-    public float rating;
-
-    public Outdoors(@NonNull String name, String location, String activityType,
-                            int durationMinutes, String notes, float rating) {
+    public Outdoors( String name, String location, String activityType, int durationMinutes, String notes, double rating, int userId) {
         this.name = name;
         this.location = location;
         this.activityType = activityType;
         this.durationMinutes = durationMinutes;
         this.notes = notes;
         this.rating = rating;
+        this.userId = userId;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Outdoors outdoors = (Outdoors) o;
-        return id == outdoors.id && durationMinutes == outdoors.durationMinutes && Float.compare(rating, outdoors.rating) == 0 && Objects.equals(name, outdoors.name) && Objects.equals(location, outdoors.location) && Objects.equals(activityType, outdoors.activityType) && Objects.equals(notes, outdoors.notes);
+        return id == outdoors.id && userId == outdoors.userId && durationMinutes == outdoors.durationMinutes && Double.compare(rating, outdoors.rating) == 0 && Objects.equals(name, outdoors.name) && Objects.equals(location, outdoors.location) && Objects.equals(activityType, outdoors.activityType) && Objects.equals(notes, outdoors.notes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, location, activityType, durationMinutes, notes, rating);
+        return Objects.hash(id, userId, name, location, activityType, durationMinutes, notes, rating);
     }
 
     public int getId() {
@@ -50,12 +52,19 @@ public class Outdoors {
         this.id = id;
     }
 
-    @NonNull
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
     public String getName() {
         return name;
     }
 
-    public void setName(@NonNull String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -91,7 +100,7 @@ public class Outdoors {
         this.notes = notes;
     }
 
-    public float getRating() {
+    public double getRating() {
         return rating;
     }
 

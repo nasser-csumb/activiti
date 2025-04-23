@@ -97,7 +97,6 @@ public class HikingRoutesActivity extends AppCompatActivity {
             try {
                 difficulty = Integer.parseInt(difficultyStr);
             } catch (NumberFormatException e) {
-                // Handle invalid input (e.g., show an error message to the user)
                 Toast.makeText(this, "Invalid difficulty value", Toast.LENGTH_SHORT).show();
             }
         }

@@ -8,12 +8,14 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.webcraftsolutions.project02.database.entities.HikingRoutes;
 import com.webcraftsolutions.project02.database.entities.Outdoors;
 
 import java.util.List;
 
 @Dao
 public interface OutdoorsDAO {
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Outdoors... outdoors);
 
@@ -23,9 +25,9 @@ public interface OutdoorsDAO {
     @Update
     void update(Outdoors... outdoors);
 
-    @Query("SELECT * FROM outdoors_activities")
-    LiveData<List<Outdoors>> getAllActivities();
+    @Query("SELECT * FROM " + ActivitiDatabase.OUTDOORS_TABLE + " WHERE userId = :userId")
+    LiveData<List<HikingRoutes>> getOutdoorForUser(int userId);
 
-    @Query("SELECT * FROM outdoors_activities WHERE activityType = :type")
-    LiveData<List<Outdoors>> getActivitiesByType(String type);
+    @Query("SELECT * FROM " + ActivitiDatabase.OUTDOORS_TABLE + " WHERE Id = :Id")
+    HikingRoutes getOutdoorByIdSynchronous(int Id);
 }
