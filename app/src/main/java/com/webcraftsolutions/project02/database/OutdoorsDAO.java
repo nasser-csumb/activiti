@@ -30,4 +30,7 @@ public interface OutdoorsDAO {
 
     @Query("SELECT * FROM " + ActivitiDatabase.OUTDOORS_TABLE + " WHERE Id = :Id")
     Outdoors getOutdoorByIdSynchronous(int Id);
+
+    @Query("SELECT * FROM " + ActivitiDatabase.OUTDOORS_TABLE + " WHERE name LIKE '%' || :name || '%' LIMIT 1")
+    LiveData<Outdoors> getOutdoorByName(String name);
 }

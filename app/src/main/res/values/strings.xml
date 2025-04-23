@@ -74,10 +74,11 @@
     <string name="view_hiking_routes">View Hiking Routes</string>
     <string name="view_visited_places">View Visited Places</string>
     <string name="search_visited_place_by_name">Search Visited Place by name</string>
-    <string name="search_hiking_route_by_name">Search Hiking Route by Name</string>
+    <string name="search_hiking_route_by_name">Search Hiking Route by name</string>
     <string name="eventCreateLocationEditTextHint">Enter Event Location</string>
     <string name="eventCreateLocationTextViewText">Loc.</string>
     <string name="eventItemEditTextViewText">Edit Event</string>
     <string name="eventItemDeleteTextViewText">Delete Event</string>
     <string name="eventCreateGreetingTextViewText">Create Event</string>
+    <string name="search_outdoor_activity_by_name">Search Outdoor Activity by name</string>
 </resources>

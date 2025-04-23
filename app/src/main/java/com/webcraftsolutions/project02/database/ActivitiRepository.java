@@ -247,6 +247,10 @@ public class ActivitiRepository {
         new Thread(() -> outdoorsDAO.insert(outdoors)).start();
     }
 
+    public LiveData<Outdoors> getOutdoorByName(String name) {
+        return outdoorsDAO.getOutdoorByName(name);
+    }
+
     /**
      * Inserts TravelExploration into the database
      * @param travelExploration the TravelExploration added
