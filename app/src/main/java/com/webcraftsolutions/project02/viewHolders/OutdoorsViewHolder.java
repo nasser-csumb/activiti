@@ -16,17 +16,17 @@ public class OutdoorsViewHolder extends RecyclerView.ViewHolder {
     private final TextView locationTextView;
     private final TextView activityTypeTextView;
     private final TextView durationTextView;
-    private final TextView notesTextView;
     private final TextView ratingTextView;
+    private final TextView notesTextView;
 
     public OutdoorsViewHolder(@NonNull View itemView) {
         super(itemView);
-        nameTextView = itemView.findViewById(R.id.outdoorsNameEditText);
-        locationTextView = itemView.findViewById(R.id.outdoorsLocationEditText);
-        activityTypeTextView = itemView.findViewById(R.id.outdoorsTypeEditText);
-        durationTextView = itemView.findViewById(R.id.outdoorsDurationEditText);
-        notesTextView = itemView.findViewById(R.id.outdoorsNotesEditText);
-        ratingTextView = itemView.findViewById(R.id.outdoorsRatingEditText);
+        nameTextView = itemView.findViewById(R.id.outdoorsNameTextView);
+        locationTextView = itemView.findViewById(R.id.outdoorsLocationTextView);
+        activityTypeTextView = itemView.findViewById(R.id.outdoorsTypeTextView);
+        durationTextView = itemView.findViewById(R.id.outdoorsDurationTextView);
+        ratingTextView = itemView.findViewById(R.id.outdoorsRatingTextView);
+        notesTextView = itemView.findViewById(R.id.outdoorsNotesTextView);
     }
 
     public void bind(Outdoors outdoors) {
@@ -34,13 +34,13 @@ public class OutdoorsViewHolder extends RecyclerView.ViewHolder {
         locationTextView.setText(String.format("Location: %s", outdoors.getLocation()));
         activityTypeTextView.setText(String.format("Type: %s", outdoors.getActivityType()));
         durationTextView.setText(String.format("Duration: %s min", outdoors.getDurationMinutes()));
-        notesTextView.setText(String.format("Notes: %s", outdoors.getNotes()));
         ratingTextView.setText(String.format("Rating: %s", outdoors.getRating()));
+        notesTextView.setText(String.format("Notes: %s", outdoors.getNotes()));
     }
 
     static OutdoorsViewHolder create(ViewGroup parent) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.outdoor_item, parent, false);
+                .inflate(R.layout.outdoor_item, parent, false); // Replace with actual layout file if necessary
         return new OutdoorsViewHolder(view);
     }
 }

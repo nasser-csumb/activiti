@@ -54,12 +54,22 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
+        <Button
+            android:id="@+id/viewOutdoorsButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="View Outdoors"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/viewVisitedPlacesButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
         <EditText
             android:id="@+id/searchVisitedPlaceEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/search_visited_place_by_name"
-            app:layout_constraintTop_toBottomOf="@id/viewVisitedPlacesButton"
+            app:layout_constraintTop_toBottomOf="@id/viewOutdoorsButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

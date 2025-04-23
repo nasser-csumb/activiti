@@ -40,7 +40,7 @@ import java.util.concurrent.Executors;
 
 @TypeConverters({DateConverter.class})
 @Database(entities = {Event.class, WellnessJournal.class, WellnessMood.class, WellnessSleep.class, TravelExploration.class, CardioWorkout.class,
-                      WeightLiftingWorkout.class, User.class, HikingRoutes.class, VisitedPlaces.class, Outdoors.class}, version = 16, exportSchema = false)
+                      WeightLiftingWorkout.class, User.class, HikingRoutes.class, VisitedPlaces.class, Outdoors.class}, version = 18, exportSchema = false)
 public abstract class ActivitiDatabase extends RoomDatabase {
 
     // CLASS FIELDS
