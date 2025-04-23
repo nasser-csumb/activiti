@@ -21,12 +21,12 @@ public class OutdoorsViewHolder extends RecyclerView.ViewHolder {
 
     public OutdoorsViewHolder(@NonNull View itemView) {
         super(itemView);
-        nameTextView = itemView.findViewById(R.id.outdoorNameTextView);
-        locationTextView = itemView.findViewById(R.id.outdoorLocationTextView);
-        activityTypeTextView = itemView.findViewById(R.id.outdoorActivityTypeTextView);
-        durationTextView = itemView.findViewById(R.id.outdoorDurationTextView);
-        notesTextView = itemView.findViewById(R.id.outdoorNotesTextView);
-        ratingTextView = itemView.findViewById(R.id.outdoorRatingTextView);
+        nameTextView = itemView.findViewById(R.id.outdoorsNameEditText);
+        locationTextView = itemView.findViewById(R.id.outdoorsLocationEditText);
+        activityTypeTextView = itemView.findViewById(R.id.outdoorsTypeEditText);
+        durationTextView = itemView.findViewById(R.id.outdoorsDurationEditText);
+        notesTextView = itemView.findViewById(R.id.outdoorsNotesEditText);
+        ratingTextView = itemView.findViewById(R.id.outdoorsRatingEditText);
     }
 
     public void bind(Outdoors outdoors) {

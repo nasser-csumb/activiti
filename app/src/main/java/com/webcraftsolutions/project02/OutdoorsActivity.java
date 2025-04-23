@@ -63,7 +63,7 @@ public class OutdoorsActivity extends AppCompatActivity {
             adapter.submitList(outdoors);
         });
 
-        binding.addOutdoorsButton.setOnClickListener(v -> addOutdoorActivity());
+        binding.saveOutdoorsButton.setOnClickListener(v -> addOutdoorActivity());
     }
 
     private void addOutdoorActivity() {
@@ -100,12 +100,12 @@ public class OutdoorsActivity extends AppCompatActivity {
         viewModel.insertOutdoor(outdoors);
         Toast.makeText(this, "Outdoor activity added!", Toast.LENGTH_SHORT).show();
 
-        binding.outdoorNameEditText.setText("");
-        binding.outdoorPlaceEditText.setText("");
-        binding.outdoorDurationEditText.setText("");
-        binding.outdoorDangerLevelEditText.setText("");
-        binding.outdoorSafetyTipsEditText.setText("");
-        binding.outdoorRatingEditText.setText("");
+        binding.outdoorsNameEditText.setText("");
+        binding.outdoorsLocationEditText.setText("");
+        binding.outdoorsTypeEditText.setText("");
+        binding.outdoorsDurationEditText.setText("");
+        binding.outdoorsNotesEditText.setText("");
+        binding.outdoorsRatingEditText.setText("");
     }
 
     private void showLogoutDialog(Context context) {

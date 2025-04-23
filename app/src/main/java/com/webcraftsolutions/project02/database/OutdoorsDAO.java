@@ -26,8 +26,8 @@ public interface OutdoorsDAO {
     void update(Outdoors... outdoors);
 
     @Query("SELECT * FROM " + ActivitiDatabase.OUTDOORS_TABLE + " WHERE userId = :userId")
-    LiveData<List<HikingRoutes>> getOutdoorForUser(int userId);
+    LiveData<List<Outdoors>> getOutdoorsForUser(int userId);
 
     @Query("SELECT * FROM " + ActivitiDatabase.OUTDOORS_TABLE + " WHERE Id = :Id")
-    HikingRoutes getOutdoorByIdSynchronous(int Id);
+    Outdoors getOutdoorByIdSynchronous(int Id);
 }

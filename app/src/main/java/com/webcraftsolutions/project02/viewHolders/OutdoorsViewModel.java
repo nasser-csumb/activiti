@@ -20,7 +20,7 @@ public class OutdoorsViewModel extends AndroidViewModel {
         repository = ActivitiRepository.getRepository(application);
     }
 
-    public LiveData<List<Outdoors>> getOutdoorsList(int userId) {
+    public LiveData<List<Outdoors>> getOutdoors(int userId) {
         if (outdoorsList == null) {
             outdoorsList = repository.getOutdoorsForUser(userId);
         }
