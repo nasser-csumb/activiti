@@ -64,6 +64,11 @@ public class OutdoorsActivity extends AppCompatActivity {
         });
 
         binding.saveOutdoorsButton.setOnClickListener(v -> addOutdoorActivity());
+
+        binding.goToEventButton.setOnClickListener(v -> {
+            Intent intent = EventActivity.eventActivityIntentFactory(this, userId);
+            startActivity(intent);
+        });
     }
 
     private void addOutdoorActivity() {

@@ -109,12 +109,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="12dp" />
 
+    <Button
+        android:id="@+id/goToEventButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create Event for Outdoor Activity"
+        app:layout_constraintTop_toBottomOf="@id/saveOutdoorsButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="12dp" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/outdoorsRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:overScrollMode="always"
-        app:layout_constraintTop_toBottomOf="@id/saveOutdoorsButton"
+        app:layout_constraintTop_toBottomOf="@id/goToEventButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
