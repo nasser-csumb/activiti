@@ -127,8 +127,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 adminAlreadyToggled = false;
-                String username = binding.mainMenuAdminMenu.adminDeleteUserUsernameEditText
-                        .getText().toString();
+                String username = binding.mainMenuAdminMenu.adminToggleAdminUsernameEditText
+                        .getText().toString().trim();
                 toggleUserAdmin(username);
             }
         });
@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
                 userDeleteAlreadyAttempted = false;
                 // Get username
                 String username = binding.mainMenuAdminMenu.adminDeleteUserUsernameEditText
-                        .getText().toString();
+                        .getText().toString().trim();
                 deleteUser(username);
             }
         });

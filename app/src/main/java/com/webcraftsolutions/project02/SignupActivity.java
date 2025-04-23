@@ -77,7 +77,7 @@ public class SignupActivity extends AppCompatActivity {
 
     private void signup() {
         // Get entered username
-        String username = binding.signupUsernameEditText.getText().toString();
+        String username = binding.signupUsernameEditText.getText().toString().trim();
 
         // Check if username is empty
         if(username.isEmpty()) {
@@ -93,7 +93,7 @@ public class SignupActivity extends AppCompatActivity {
 
             // Check if user exists
             if(user == null) {
-                String password = binding.signupPasswordEditText.getText().toString();
+                String password = binding.signupPasswordEditText.getText().toString().trim();
                 if(password.isEmpty()) {
                     MainActivity.toastMaker(this, "Password cannot be empty");
                 } else {
