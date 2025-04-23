@@ -1,0 +1,4 @@
+package com.webcraftsolutions.project02.viewHolders;
+
+public class OutdoorsViewHolder {
+}
