@@ -17,6 +17,7 @@ import androidx.lifecycle.LiveData;
 import com.webcraftsolutions.project02.MainActivity;
 import com.webcraftsolutions.project02.database.entities.Event;
 import com.webcraftsolutions.project02.database.entities.HikingRoutes;
+import com.webcraftsolutions.project02.database.entities.Outdoors;
 import com.webcraftsolutions.project02.database.entities.TravelExploration;
 import com.webcraftsolutions.project02.database.entities.User;
 import com.webcraftsolutions.project02.database.entities.VisitedPlaces;
@@ -53,6 +54,7 @@ public class ActivitiRepository {
     private final TravelExplorationDAO travelExplorationDAO;
     private final HikingRoutesDAO hikingRoutesDAO;
     private final VisitedPlacesDAO visitedPlacesDAO;
+    private final OutdoorsDAO outdoorsDAO;
 
     // Wellness DAO
     private final WellnessSleepDAO wellnessSleepDAO;
@@ -72,6 +74,7 @@ public class ActivitiRepository {
         this.travelExplorationDAO = db.travelExplorationDAO();
         this.hikingRoutesDAO = db.hikingRoutesDAO();
         this.visitedPlacesDAO = db.visitedPlacesDAO();
+        this.outdoorsDAO = db.outdoorsDAO();
 
         this.wellnessSleepDAO = db.wellnessSleepDAO();
         this.wellnessMoodDAO = db.wellnessMoodDAO();
@@ -234,6 +237,18 @@ public class ActivitiRepository {
 
     public void insertHikingRoute(HikingRoutes hikingRoute) {
         new Thread(() -> hikingRoutesDAO.insert(hikingRoute)).start();
+    }
+
+    public LiveData<List<Outdoors>> getOutdoorsForUser(int userId) {
+        return outdoorsDAO.getOutdoorsForUser(userId);
+    }
+
+    public void insertOutdoors(Outdoors outdoors) {
+        new Thread(() -> outdoorsDAO.insert(outdoors)).start();
+    }
+
+    public LiveData<Outdoors> getOutdoorByName(String name) {
+        return outdoorsDAO.getOutdoorByName(name);
     }
 
     /**

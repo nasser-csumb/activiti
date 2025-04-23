@@ -23,6 +23,7 @@ import com.webcraftsolutions.project02.MainActivity;
 import com.webcraftsolutions.project02.database.entities.Event;
 import com.webcraftsolutions.project02.database.entities.CardioWorkout;
 import com.webcraftsolutions.project02.database.entities.HikingRoutes;
+import com.webcraftsolutions.project02.database.entities.Outdoors;
 import com.webcraftsolutions.project02.database.entities.VisitedPlaces;
 import com.webcraftsolutions.project02.database.entities.WeightLiftingWorkout;
 import com.webcraftsolutions.project02.database.CardioWorkoutDAO;
@@ -39,7 +40,7 @@ import java.util.concurrent.Executors;
 
 @TypeConverters({DateConverter.class})
 @Database(entities = {Event.class, WellnessJournal.class, WellnessMood.class, WellnessSleep.class, TravelExploration.class, CardioWorkout.class,
-                      WeightLiftingWorkout.class, User.class, HikingRoutes.class, VisitedPlaces.class}, version = 16, exportSchema = false)
+                      WeightLiftingWorkout.class, User.class, HikingRoutes.class, VisitedPlaces.class, Outdoors.class}, version = 18, exportSchema = false)
 public abstract class ActivitiDatabase extends RoomDatabase {
 
     // CLASS FIELDS
@@ -64,6 +65,7 @@ public abstract class ActivitiDatabase extends RoomDatabase {
     public static final String TRAVEL_EXPLORATION_TABLE = "TravelExploration_Table";
     public static final String HIKING_ROUTES_TABLE = "Hiking_Routes_Table";
     public static final String VISITED_PLACES_TABLE = "Visited_Places_Table";
+    public static final String OUTDOORS_TABLE = "Outdoors_Table";
 
     // ID for user table
     public static final String USER_TABLE = "User_Table";
@@ -141,6 +143,7 @@ public abstract class ActivitiDatabase extends RoomDatabase {
     public abstract TravelExplorationDAO travelExplorationDAO();
     public abstract HikingRoutesDAO hikingRoutesDAO();
     public abstract VisitedPlacesDAO visitedPlacesDAO();
+    public abstract OutdoorsDAO outdoorsDAO();
     public abstract UserDAO userDAO();
     // Wellness
     public abstract WellnessSleepDAO wellnessSleepDAO();
