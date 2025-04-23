@@ -13,19 +13,16 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="HikingRoutesDAOTest">
+      <SelectionState runConfigName="WellnessActivityTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="VisitedPlacesDAOTest">
+      <SelectionState runConfigName="WellnessSleepActivityTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="HikingRoutesActivityTest">
+      <SelectionState runConfigName="WellnessMoodActivityTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="VisitedPlacesActivityTest">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
-      <SelectionState runConfigName="TravelAndExplorationActivityTest">
+      <SelectionState runConfigName="WellnessJournalActivityTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
