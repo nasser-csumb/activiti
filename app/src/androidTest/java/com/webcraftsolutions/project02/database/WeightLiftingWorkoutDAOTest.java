@@ -1,6 +1,6 @@
 /**
  * Title: CST-338 Project 02: Activiti - WeightLiftingWorkoutDAO Test
- * @author Suhaib Peracha
+ * Author: Suhaib Peracha
  * Date Created: 4/21/2025
  * Description: Unit tests for WeightLiftingWorkoutDAO operations (insert, delete, get).
  */
@@ -24,40 +24,25 @@ import java.util.List;
 
 public class WeightLiftingWorkoutDAOTest {
 
-    // Constants
     private final int TEST_USER_ID = -200;
-
-    // DB and DAO
     private ActivitiDatabase db;
     private WeightLiftingWorkoutDAO liftingDAO;
-
-    // Sample workout
     private WeightLiftingWorkout liftingWorkout;
 
-    /**
-     * Set up test database and DAO before each test.
-     */
     @Before
     public void setUp() {
         Context context = ApplicationProvider.getApplicationContext();
         db = Room.inMemoryDatabaseBuilder(context, ActivitiDatabase.class).build();
         liftingDAO = db.weightLiftingWorkoutDAO();
-
         liftingWorkout = new WeightLiftingWorkout(TEST_USER_ID, "Bench Press", 4, 32, 40, new Date());
     }
 
-    /**
-     * Close the database after each test.
-     */
     @After
     public void tearDown() {
         db.close();
         liftingWorkout = null;
     }
 
-    /**
-     * Test: Insert workout and retrieve by userId.
-     */
     @Test
     public void insertAndGetByUserId() {
         liftingDAO.insert(liftingWorkout);
@@ -66,20 +51,17 @@ public class WeightLiftingWorkoutDAOTest {
         assertEquals("Bench Press", result.get(0).getExerciseName());
     }
 
-    /**
-     * Test: Insert then delete workout.
-     */
     @Test
     public void delete() {
-        liftingDAO.insert(liftingWorkout);
-        liftingDAO.delete(liftingWorkout);
+        long[] ids = liftingDAO.insert(liftingWorkout);
+        int insertedId = (int) ids[0];
+        List<WeightLiftingWorkout> insertedList = liftingDAO.getWeightLiftingWorkoutsByUserId(TEST_USER_ID);
+        liftingDAO.delete(insertedList.get(0));  // delete actual inserted object
         List<WeightLiftingWorkout> result = liftingDAO.getWeightLiftingWorkoutsByUserId(TEST_USER_ID);
         assertEquals(0, result.size());
     }
 
-    /**
-     * Test: Insert multiple workouts and delete all by userId.
-     */
+
     @Test
     public void deleteAllByUserId() {
         liftingDAO.insert(new WeightLiftingWorkout(TEST_USER_ID, "Squat", 3, 24, 30, new Date()));
@@ -89,9 +71,6 @@ public class WeightLiftingWorkoutDAOTest {
         assertEquals(0, result.size());
     }
 
-    /**
-     * Test: Insert multiple workouts and ensure all are returned for the same userId.
-     */
     @Test
     public void multipleInsertsAndQuery() {
         liftingDAO.insert(new WeightLiftingWorkout(TEST_USER_ID, "Shoulder Press", 3, 18, 15, new Date()));

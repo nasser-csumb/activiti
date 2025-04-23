@@ -71,8 +71,9 @@ public class CardioWorkoutDAOTest {
      */
     @Test
     public void delete() {
-        cardioWorkoutDAO.insert(cardioWorkout);
-        cardioWorkoutDAO.delete(cardioWorkout);
+        long id = cardioWorkoutDAO.insert(cardioWorkout)[0];
+        CardioWorkout inserted = cardioWorkoutDAO.getCardioWorkoutById((int) id); // You may need to add this method
+        cardioWorkoutDAO.delete(inserted);
         List<CardioWorkout> result = cardioWorkoutDAO.getCardioWorkoutsByUserId(TEST_USER_ID);
         assertEquals(0, result.size());
     }
