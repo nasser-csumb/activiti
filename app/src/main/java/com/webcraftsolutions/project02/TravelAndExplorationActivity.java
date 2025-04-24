@@ -1,3 +1,13 @@
+/**
+ * Title: Project 02: Activiti - Travel & Exploration
+ * File: TravelAndExplorationActivity.java - Implementation of TravelAndExplorationActivity
+ * @author Jian Mitchell
+ * Professor: Dr. C
+ * Date: 23 April 2025
+ * Explanation/Abstract: The travel and exploration activity will be able to save the
+ * users input into a saved card file on their personal account.
+ */
+
 package com.webcraftsolutions.project02;
 
 import android.content.Context;
