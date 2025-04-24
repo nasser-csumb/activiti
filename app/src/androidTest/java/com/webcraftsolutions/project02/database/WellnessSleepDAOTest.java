@@ -46,4 +46,40 @@ public class WellnessSleepDAOTest {
         db.close();
         entry = null;
     }
+
+    @Test
+    public void insertAndGetByUserId() {
+        dao.insert(entry);
+        List<WellnessSleep> result = dao.getAllEntriesByUserId(TEST_USER_ID);
+        assertEquals(1, result.size());
+        assertTrue(result.get(0).isRefreshing());
+    }
+
+    @Test
+    public void insertAndGetById() {
+        dao.insert(entry);
+        int id = dao.getAllEntriesByUserId(TEST_USER_ID).get(0).getEntryId();
+        WellnessSleep result = dao.getEntryById(id);
+        assertNotNull(result);
+        assertEquals(7.5f, result.getDurationHours(), 0.01);
+    }
+
+    @Test
+    public void insertMultipleAndGetAll() {
+        dao.insert(
+                new WellnessSleep(TEST_USER_ID, 6.0f, new Date(), false, true),
+                new WellnessSleep(TEST_USER_ID, 8.0f, new Date(), true, false)
+        );
+        List<WellnessSleep> result = dao.getAllEntries();
+        assertEquals(2, result.size());
+    }
+
+    @Test
+    public void deleteEntry() {
+        dao.insert(entry);
+        WellnessSleep inserted = dao.getAllEntriesByUserId(TEST_USER_ID).get(0);
+        dao.delete(inserted);
+        List<WellnessSleep> result = dao.getAllEntriesByUserId(TEST_USER_ID);
+        assertTrue(result.isEmpty());
+    }
 }
