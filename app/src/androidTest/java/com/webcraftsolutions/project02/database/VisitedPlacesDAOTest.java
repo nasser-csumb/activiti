@@ -1,3 +1,12 @@
+/**
+ * Title: Project 02: Activiti - Visited Places
+ * File: VisitedPlacesDAOTest.java - Implementation of VisitedPlacesDAOTest
+ * @author Jian Mitchell
+ * Professor: Dr. C
+ * Date: 23 April 2025
+ * Explanation/Abstract: This will test the VisitedPlacesDAO.java file.
+ */
+
 package com.webcraftsolutions.project02.database;
 
 import static org.junit.Assert.assertEquals;
