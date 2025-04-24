@@ -105,6 +105,7 @@ public class WellnessSleep extends AppCompatActivity {
                     boolean restless = binding.restless.isChecked();
 
                     Date today = DateWithoutTimeConverter.getDateWithoutTime(new Date());
+//                    Date today = DateWithoutTimeConverter.getDateWithoutTime(new Date(Date.parse("Tue, 22 Apr 2025 00:00:00")));
 
                     var sleepObject =
                             new com.webcraftsolutions.project02.database.entities.WellnessSleep(

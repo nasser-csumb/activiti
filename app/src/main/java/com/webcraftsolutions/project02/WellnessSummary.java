@@ -103,6 +103,7 @@ public class WellnessSummary extends AppCompatActivity {
                 // Update Text
                 binding.topMenu.topMenuUserTextView.setText(String
                         .format("%s", user.getUsername()));
+                populateCache();
             }
         });
     }
@@ -171,6 +172,7 @@ public class WellnessSummary extends AppCompatActivity {
                 binding.journalEntries.addView(tv);
             }
         }
+
     }
 
 
@@ -208,9 +210,9 @@ public class WellnessSummary extends AppCompatActivity {
      * Convert three entries per day WelnessEntry items.
      */
     private void getEntries() {
-        var sleepEntries = repository.getAllSleepByUserId(user.getId());
-        var moodEntries = repository.getAllMoodsByUserId(user.getId());
-        var journalEntries = repository.getAllJournalsByUserId(user.getId());
+        var sleepEntries = repository.getAllSleepByUserId(WellnessSummary.this.user.getId());
+        var moodEntries = repository.getAllMoodsByUserId(WellnessSummary.this.user.getId());
+        var journalEntries = repository.getAllJournalsByUserId(WellnessSummary.this.user.getId());
 
         Map<String, WellnessEntry> entries = new HashMap<>();
 

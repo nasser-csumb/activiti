@@ -93,14 +93,11 @@ public class WellnessJournal {
         if (o == null || getClass() != o.getClass()) return false;
         WellnessJournal that = (WellnessJournal) o;
         return entryId == that.entryId &&
-                userId == that.userId &&
-                Objects.equals(date, that.date) &&
-                Objects.equals(title, that.title) &&
-                Objects.equals(content, that.content);
+                userId == that.userId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(entryId, userId, date, title, content);
+        return Objects.hash(entryId, userId);
     }
 }
