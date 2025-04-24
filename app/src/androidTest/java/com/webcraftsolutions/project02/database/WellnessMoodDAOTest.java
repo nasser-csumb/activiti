@@ -46,4 +46,40 @@ public class WellnessMoodDAOTest {
         db.close();
         entry = null;
     }
+
+    @Test
+    public void insertAndGetByUserId() {
+        dao.insert(entry);
+        List<WellnessMood> result = dao.getAllEntriesByUserId(TEST_USER_ID);
+        assertEquals(1, result.size());
+        assertEquals("Happy", result.get(0).getMoodLabel());
+    }
+
+    @Test
+    public void insertAndGetById() {
+        dao.insert(entry);
+        int id = dao.getAllEntriesByUserId(TEST_USER_ID).get(0).getEntryId();
+        WellnessMood result = dao.getEntryById(id);
+        assertNotNull(result);
+        assertEquals(8, result.getEnergyLevel());
+    }
+
+    @Test
+    public void insertMultipleAndGetAll() {
+        dao.insert(
+                new WellnessMood(TEST_USER_ID, new Date(), "Relaxed", 7),
+                new WellnessMood(TEST_USER_ID, new Date(), "Tired", 3)
+        );
+        List<WellnessMood> result = dao.getAllEntries();
+        assertEquals(2, result.size());
+    }
+
+    @Test
+    public void deleteEntry() {
+        dao.insert(entry);
+        WellnessMood inserted = dao.getAllEntriesByUserId(TEST_USER_ID).get(0);
+        dao.delete(inserted);
+        List<WellnessMood> result = dao.getAllEntriesByUserId(TEST_USER_ID);
+        assertTrue(result.isEmpty());
+    }
 }
