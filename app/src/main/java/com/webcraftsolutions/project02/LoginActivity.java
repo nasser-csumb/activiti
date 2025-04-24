@@ -80,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void verifyUser() {
         // Get entered username
-        String username = binding.loginUsernameEditText.getText().toString();
+        String username = binding.loginUsernameEditText.getText().toString().trim();
 
         // Check if username is empty
         if(username.isEmpty()) {
@@ -98,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
              * Or show toast if the user does NOT exist.
              */
             if(user != null) {
-                String password = binding.loginPasswordEditText.getText().toString();
+                String password = binding.loginPasswordEditText.getText().toString().trim();
                 if(password.equals(user.getPassword())) {
                     Intent intent = MainActivity
                             .mainActivityIntentFactory(getApplicationContext(), user.getId());
