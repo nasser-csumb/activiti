@@ -21,7 +21,7 @@ import java.util.List;
 public interface WeightLiftingWorkoutDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(WeightLiftingWorkout... workouts);
+    long[] insert(WeightLiftingWorkout... workouts);
 
     @Delete
     void delete(WeightLiftingWorkout... workouts);

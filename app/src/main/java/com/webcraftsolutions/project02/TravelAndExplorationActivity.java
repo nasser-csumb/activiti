@@ -16,6 +16,7 @@ import com.webcraftsolutions.project02.database.ActivitiRepository;
 import com.webcraftsolutions.project02.database.entities.User;
 import com.webcraftsolutions.project02.databinding.ActivityTravelAndExplorationBinding;
 import com.webcraftsolutions.project02.viewHolders.HikingRoutesAdapter;
+import com.webcraftsolutions.project02.viewHolders.OutdoorsAdapter;
 import com.webcraftsolutions.project02.viewHolders.VisitedPlacesAdapter;
 
 import java.util.Collections;
@@ -59,6 +60,11 @@ public class TravelAndExplorationActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        binding.viewOutdoorsButton.setOnClickListener(v -> {
+            Intent intent = OutdoorsActivity.outdoorsIntentFactory(this, userId);
+            startActivity(intent);
+        });
+
         // I learned this from the following https://www.geeksforgeeks.org/how-to-implement-textwatcher-in-android/
         // https://www.geeksforgeeks.org/android-recyclerview/ , https://developer.android.com/develop/ui/views/layout/recyclerview
         // The following was inspired from the links above
@@ -68,6 +74,9 @@ public class TravelAndExplorationActivity extends AppCompatActivity {
         EditText hikingSearchEditText = findViewById(R.id.searchHikingRouteEditText);
         RecyclerView hikingResultRecyclerView = findViewById(R.id.hikingRouteResultRecyclerView);
 
+        EditText searchOutdoorsEditText = findViewById(R.id.searchOutdoorEditText);
+        RecyclerView outdoorResultRecyclerView = findViewById(R.id.outdoorsRecyclerView);
+
         VisitedPlacesAdapter visitedPlacesAdapter = new VisitedPlacesAdapter(new VisitedPlacesAdapter.VisitedPlacesDiff());
         resultRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         resultRecyclerView.setAdapter(visitedPlacesAdapter);
@@ -75,6 +84,10 @@ public class TravelAndExplorationActivity extends AppCompatActivity {
         HikingRoutesAdapter hikingRoutesAdapter = new HikingRoutesAdapter(new HikingRoutesAdapter.HikingRoutesDiff());
         hikingResultRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         hikingResultRecyclerView.setAdapter(hikingRoutesAdapter);
+
+        OutdoorsAdapter outdoorsAdapter = new OutdoorsAdapter(new OutdoorsAdapter.OutdoorsDiff());
+        outdoorResultRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        outdoorResultRecyclerView.setAdapter(outdoorsAdapter);
 
         // I learned this from the following https://www.geeksforgeeks.org/how-to-implement-textwatcher-in-android/
         // https://www.geeksforgeeks.org/android-recyclerview/ , https://developer.android.com/develop/ui/views/layout/recyclerview
@@ -86,6 +99,7 @@ public class TravelAndExplorationActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 hikingSearchEditText.setEnabled(s.length() == 0);
+                searchOutdoorsEditText.setEnabled(s.length() == 0);
 
                 String query = s.toString().trim();
                 if (!query.isEmpty()) {
@@ -112,6 +126,7 @@ public class TravelAndExplorationActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 searchVisitedPlaceEditText.setEnabled(s.length() == 0);
+                searchOutdoorsEditText.setEnabled(s.length() == 0);
 
                 String query = s.toString().trim();
                 if (!query.isEmpty()) {
@@ -124,6 +139,33 @@ public class TravelAndExplorationActivity extends AppCompatActivity {
                     });
                 } else {
                     hikingRoutesAdapter.submitList(Collections.emptyList());
+                }
+            }
+        });
+
+        // I learned this from the following https://www.geeksforgeeks.org/how-to-implement-textwatcher-in-android/
+        // https://www.geeksforgeeks.org/android-recyclerview/ , https://developer.android.com/develop/ui/views/layout/recyclerview
+        // The following was inspired from the links above
+        searchOutdoorsEditText.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void afterTextChanged(Editable s) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                hikingSearchEditText.setEnabled(s.length() == 0);
+                searchVisitedPlaceEditText.setEnabled(s.length() == 0);
+
+                String query = s.toString().trim();
+                if (!query.isEmpty()) {
+                    repository.getOutdoorByName(query).observe(TravelAndExplorationActivity.this, place -> {
+                        if (place != null) {
+                            outdoorsAdapter.submitList(Collections.singletonList(place));
+                        } else {
+                            outdoorsAdapter.submitList(Collections.emptyList());
+                        }
+                    });
+                } else {
+                    outdoorsAdapter.submitList(Collections.emptyList());
                 }
             }
         });

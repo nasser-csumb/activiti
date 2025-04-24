@@ -13,7 +13,6 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.webcraftsolutions.project02.database.entities.CardioWorkout;
-import com.webcraftsolutions.project02.database.ActivitiDatabase;
 
 import java.util.List;
 
@@ -21,7 +20,7 @@ import java.util.List;
 public interface CardioWorkoutDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(CardioWorkout... workouts);
+    long[] insert(CardioWorkout... workouts);
 
     @Delete
     void delete(CardioWorkout... workouts);
@@ -35,4 +34,6 @@ public interface CardioWorkoutDAO {
     @Query("DELETE FROM " + ActivitiDatabase.CARDIO_TABLE + " WHERE userId = :userId")
     void deleteAllByUserId(int userId);
 
+    @Query("SELECT * FROM " + ActivitiDatabase.CARDIO_TABLE + " WHERE entryId = :entryId LIMIT 1")
+    CardioWorkout getCardioWorkoutById(int entryId);
 }
