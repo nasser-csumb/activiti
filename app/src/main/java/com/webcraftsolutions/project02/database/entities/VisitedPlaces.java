@@ -1,3 +1,12 @@
+/**
+ * Title: Project 02: Activiti - Visited Places
+ * File: VisitedPlaces.java - Implementation of VisitedPlaces
+ * @author Jian Mitchell
+ * Professor: Dr. C
+ * Date: 23 April 2025
+ * Explanation/Abstract: This stores the visitedPlaces data.
+ */
+
 package com.webcraftsolutions.project02.database.entities;
 
 import androidx.room.Entity;

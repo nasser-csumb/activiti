@@ -1,3 +1,12 @@
+/**
+ * Title: Project 02: Activiti - Outdoors
+ * File: Outdoors.java - Implementation of Outdoors
+ * @author Jian Mitchell
+ * Professor: Dr. C
+ * Date: 23 April 2025
+ * Explanation/Abstract: This stores the outdoors data.
+ */
+
 package com.webcraftsolutions.project02.database.entities;
 
 import androidx.annotation.NonNull;
