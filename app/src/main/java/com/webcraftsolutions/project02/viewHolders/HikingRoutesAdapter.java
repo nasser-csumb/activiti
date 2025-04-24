@@ -1,3 +1,12 @@
+/**
+ * Title: Project 02: Activiti - Hiking Routes
+ * File: HikingRoutesAdapter.java - Implementation of HikingRoutesAdapter
+ * @author Jian Mitchell
+ * Professor: Dr. C
+ * Date: 23 April 2025
+ * Explanation/Abstract: The adapter for hiking routes.
+ */
+
 package com.webcraftsolutions.project02.viewHolders;
 
 import android.view.ViewGroup;
