@@ -47,4 +47,39 @@ public class WellnessJournalDAOTest {
         entry = null;
     }
 
+    @Test
+    public void insertAndGetByUserId() {
+        dao.insert(entry);
+        List<WellnessJournal> result = dao.getAllEntriesByUserId(TEST_USER_ID);
+        assertEquals(1, result.size());
+        assertEquals("Gratitude", result.get(0).getTitle());
+    }
+
+    @Test
+    public void insertAndGetById() {
+        dao.insert(entry);
+        int id = dao.getAllEntriesByUserId(TEST_USER_ID).get(0).getEntryId();
+        WellnessJournal result = dao.getEntryById(id);
+        assertNotNull(result);
+        assertEquals("Thankful for life", result.getContent());
+    }
+
+    @Test
+    public void insertMultipleAndGetAll() {
+        dao.insert(
+                new WellnessJournal(TEST_USER_ID, new Date(), "Mood", "Feeling good"),
+                new WellnessJournal(TEST_USER_ID, new Date(), "Sleep", "Slept 8 hours")
+        );
+        List<WellnessJournal> result = dao.getAllEntries();
+        assertEquals(2, result.size());
+    }
+
+    @Test
+    public void deleteEntry() {
+        dao.insert(entry);
+        WellnessJournal inserted = dao.getAllEntries().get(0);
+        dao.delete(inserted);
+        List<WellnessJournal> result = dao.getAllEntriesByUserId(TEST_USER_ID);
+        assertTrue(result.isEmpty());
+    }
 }
