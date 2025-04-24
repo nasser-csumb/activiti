@@ -1,3 +1,12 @@
+/**
+ * Title: Project 02: Activiti - Hiking Routes
+ * File: HikingRoutesDAO.java - Implementation of HikingRoutesDAO
+ * @author Jian Mitchell
+ * Professor: Dr. C
+ * Date: 23 April 2025
+ * Explanation/Abstract: DAO for the hikingRoutes table.
+ */
+
 package com.webcraftsolutions.project02.database;
 
 import androidx.lifecycle.LiveData;
