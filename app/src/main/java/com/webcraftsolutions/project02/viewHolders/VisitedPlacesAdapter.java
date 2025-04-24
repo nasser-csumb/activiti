@@ -1,3 +1,12 @@
+/**
+ * Title: Project 02: Activiti - Visited Places
+ * File: VisitedPlacesAdapter.java - Implementation of VisitedPlacesAdapter
+ * @author Jian Mitchell
+ * Professor: Dr. C
+ * Date: 23 April 2025
+ * Explanation/Abstract: The adapter for visited places.
+ */
+
 package com.webcraftsolutions.project02.viewHolders;
 
 import android.view.ViewGroup;

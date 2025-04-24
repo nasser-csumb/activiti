@@ -1,3 +1,12 @@
+/**
+ * Title: Project 02: Activiti - Outdoors
+ * File: OutdoorsActivityTest.java - Implementation of OutdoorsActivityTest
+ * @author Jian Mitchell
+ * Professor: Dr. C
+ * Date: 23 April 2025
+ * Explanation/Abstract: This will test the OutdoorsActivity.java file.
+ */
+
 package com.webcraftsolutions.project02;
 
 import static org.junit.Assert.assertEquals;

@@ -1,3 +1,12 @@
+/**
+ * Title: Project 02: Activiti - Outdoors
+ * File: OutdoorsViewHolder.java - Implementation of OutdoorsViewHolder
+ * @author Jian Mitchell
+ * Professor: Dr. C
+ * Date: 23 April 2025
+ * Explanation/Abstract: The viewHolder for outdoors.
+ */
+
 package com.webcraftsolutions.project02.viewHolders;
 
 import android.view.LayoutInflater;

@@ -1,3 +1,12 @@
+/**
+ * Title: Project 02: Activiti - Outdoors
+ * File: OutdoorsDAO.java - Implementation of OutdoorsDAO
+ * @author Jian Mitchell
+ * Professor: Dr. C
+ * Date: 23 April 2025
+ * Explanation/Abstract: DAO for the oudoors table.
+ */
+
 package com.webcraftsolutions.project02.database;
 
 import androidx.lifecycle.LiveData;

@@ -1,3 +1,12 @@
+/**
+ * Title: Project 02: Activiti - Visited Places
+ * File: VisitedPlacesViewHolder.java - Implementation of VisitedPlacesViewHolder
+ * @author Jian Mitchell
+ * Professor: Dr. C
+ * Date: 23 April 2025
+ * Explanation/Abstract: The viewHolder for visitedPlaces.
+ */
+
 package com.webcraftsolutions.project02.viewHolders;
 
 import android.view.LayoutInflater;

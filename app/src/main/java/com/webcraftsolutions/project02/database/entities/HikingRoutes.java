@@ -1,3 +1,12 @@
+/**
+ * Title: Project 02: Activiti - Hiking Routes
+ * File: HikingRoutes.java - Implementation of HikingRoutes
+ * @author Jian Mitchell
+ * Professor: Dr. C
+ * Date: 23 April 2025
+ * Explanation/Abstract: This stores hikingRoutes data.
+ */
+
 package com.webcraftsolutions.project02.database.entities;
 
 import androidx.room.Entity;

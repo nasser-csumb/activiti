@@ -1,3 +1,12 @@
+/**
+ * Title: Project 02: Activiti - Outdoors
+ * File: OutdoorsAdapter.java - Implementation of OutdoorsAdapter
+ * @author Jian Mitchell
+ * Professor: Dr. C
+ * Date: 23 April 2025
+ * Explanation/Abstract: The adapter for outdoors.
+ */
+
 package com.webcraftsolutions.project02.viewHolders;
 
 import android.view.ViewGroup;
